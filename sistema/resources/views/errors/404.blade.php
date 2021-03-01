@@ -1,6 +1,17 @@
-@extends('adminapp')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Erro 404</title>
+    <meta charset="utf-8">
 
-@section('content')
+    <link rel="shortcut icon" href="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
 
 <section class="content">
     <div class="error-page">
@@ -18,4 +29,5 @@
     </div>
 </section>
 
-@endsection
+</body>
+</html>

@@ -38,7 +38,7 @@ class UsersController extends Controller
                 'titulo' => 'SEM ACESSO ',
 
             );
-            return view('erro', $dados);
+            return view('errors.404', $dados);
         }
     }
 
@@ -55,7 +55,7 @@ class UsersController extends Controller
                 'titulo' => 'SEM ACESSO ',
 
             );
-            return view('erro', $dados);
+            return view('errors.404', $dados);
         }
     }
 
@@ -83,7 +83,7 @@ class UsersController extends Controller
                     'titulo' => 'SEM ACESSO ',
 
                 );
-                return view('erro', $dados);
+                return view('errors.404', $dados);
             }
         } catch (\Throwable $th) {
 
@@ -91,7 +91,7 @@ class UsersController extends Controller
                 'titulo' => 'SEM ACESSO ',
 
             );
-            return view('erro', $dados);
+            return view('errors.404', $dados);
         }
     }
 
@@ -118,7 +118,7 @@ class UsersController extends Controller
                 'titulo' => 'SEM ACESSO ',
 
             );
-            return view('erro', $dados);
+            return view('errors.404', $dados);
         }
     }
 
@@ -155,7 +155,7 @@ class UsersController extends Controller
                 'titulo' => 'SEM ACESSO ',
 
             );
-            return view('erro', $dados);
+            return view('errors.404', $dados);
         }
     }
 
@@ -174,8 +174,8 @@ class UsersController extends Controller
                 return Redirect::to('dashboard');
             }
         } else {
-            \Session::flash('autentica_ok', 'Erro Sem permissão!');
-            return view('erros');
+            \Session::flash('autentica_ok', 'errors.404 Sem permissão!');
+            return view('errors.404s');
         }
     }
 
@@ -197,7 +197,7 @@ class UsersController extends Controller
                 'titulo' => 'SEM ACESSO ',
 
             );
-            return view('erro', $dados);
+            return view('errors.404', $dados);
         }
     }
 
@@ -237,7 +237,7 @@ class UsersController extends Controller
                 'titulo' => 'SEM ACESSO ',
 
             );
-            return view('erro', $dados);
+            return view('errors.404', $dados);
         }
     }
     public function search(Request $request)
@@ -256,11 +256,11 @@ class UsersController extends Controller
 
                 return view('users.index',  $dados);
             } else {
-                $titulo = 'Erro';
-                return view('erro', compact('titulo'));
+                $titulo = 'errors.404';
+                return view('errors.404', compact('titulo'));
             }
         } catch (\Throwable $th) {
-            return view('erro', $th);
+            return view('errors.404', $th);
         }
     }
     public function ordenar_asc($ordernar_por)
@@ -280,7 +280,7 @@ class UsersController extends Controller
                 return view('users.index',  $dados);
             }
         } catch (\Throwable $th) {
-            return view('erro', $th);
+            return view('errors.404', $th);
         }
     }
     public function ordenar_desc($ordernar_por)
@@ -299,7 +299,7 @@ class UsersController extends Controller
                 return view('users.index',  $dados);
             }
         } catch (\Throwable $th) {
-            return view('erro', $th);
+            return view('errors.404', $th);
         }
     }
 }

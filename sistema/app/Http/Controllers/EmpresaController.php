@@ -23,10 +23,10 @@ class EmpresaController extends Controller
             } else {
                 $titulo = "SEM ACESSO ";
 
-                return view('erro', compact( 'titulo'));
+                return view('errors.404', compact( 'titulo'));
             }
         } catch (\Throwable $th) {
-            dd($th);
+            return view('errors.404', compact( 'titulo'));
         }
     }
     public function atualizar(Request $request)
@@ -57,7 +57,7 @@ class EmpresaController extends Controller
         } catch (\Throwable $th) {
             $titulo = "SEM ACESSO ";
             dd($th);
-            return view('erro', compact( 'titulo'));
+            return view('errors.404', compact( 'titulo'));
         }
     }
 }

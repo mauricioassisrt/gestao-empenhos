@@ -25,7 +25,7 @@ class Permissions_rolesController extends Controller {
             );
             return view('acl.roles', $dados);
         } else {
-            return view('erro');
+            return view('errors.404');
         }
     }
 
@@ -34,7 +34,7 @@ class Permissions_rolesController extends Controller {
             $dados = array('titulo' => 'Adicionar Role');
             return view('acl.formulariorole', $dados);
         } else {
-            return view('erro');
+            return view('errors.404');
         }
     }
 
@@ -52,7 +52,7 @@ class Permissions_rolesController extends Controller {
             \Session::flash('delete_ok', 'Role excluido com sucesso!');
             return Redirect::to('acl/roles');
         } else {
-          return view('erro');
+          return view('errors.404');
         }
     }
 
@@ -70,7 +70,7 @@ class Permissions_rolesController extends Controller {
             );
             return view('acl.view_role', $dados);
         } else {
-           return view('erro');
+           return view('errors.404');
         }
     }
 
@@ -104,7 +104,7 @@ class Permissions_rolesController extends Controller {
             );
             return view('acl.permissions', $dados);
         } else {
-           return view('erro');
+           return view('errors.404');
         }
     }
 
@@ -113,7 +113,7 @@ class Permissions_rolesController extends Controller {
             $dados = array('titulo' => 'Adicionar Permission');
             return view('acl.formulario', $dados);
         } else {
-            return view('erro');
+            return view('errors.404');
         }
     }
 

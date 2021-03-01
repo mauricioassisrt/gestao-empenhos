@@ -36,12 +36,12 @@ class PessoaController extends Controller
             } else {
                 $titulo = "SEM ACESSO ";
 
-                return view('erro', compact('titulo'));
+                return view('errors.404', compact('titulo'));
             }
         } catch (\Throwable $th) {
             $titulo = "SEM ACESSO ";
 
-            return view('erro', compact('titulo'));
+            return view('errors.404', compact('titulo'));
         }
     }
 
@@ -55,7 +55,7 @@ class PessoaController extends Controller
             } else {
                 $titulo = "SEM ACESSO ";
 
-                return view('erro', compact('titulo'));
+                return view('errors.404', compact('titulo'));
             }
         } catch (\Throwable $th) {
             //throw $th;
@@ -91,11 +91,11 @@ class PessoaController extends Controller
                 Pessoa::create($objetoPessoa);
                 return redirect()->to("users/visualizar/" . $objetoUsuario->id);
             }else{
-                return view('erro');
+                return view('errors.404');
             }
         } catch (\Throwable $th) {
             dd($th);
-            return view('erro');
+            return view('errors.404');
         }
     }
 
@@ -115,7 +115,7 @@ class PessoaController extends Controller
         } catch (\Exception $e) {
 
             return $e->getMessage();
-            //return view('erro');
+            //return view('errors.404rs.404rs.404');
         }
     }
 
@@ -128,13 +128,13 @@ class PessoaController extends Controller
                 return redirect()->to('pessoas');
             }
         } catch (\Throwable $th) {
-            return view('erro');
+            return view('errors.404');
         }
     }
     /** EDITA AS PESSOAS DO SISTEMA DE MODO GERAL e usuario logado -$ID pega o id do usuario do sistema da tabela users */
     public function editar_pessoa($id)
     {
-        //exculta o try caso tenha erros cai no catch
+        //exculta o try caso tenha errors.404rs.404s cai no catch
         try {
             /** faz a consulta verificando o id do usuario está vinculado a uma pessoa  */
             $pessoa = Pessoa::where('user_id', $id)->first();
@@ -151,11 +151,11 @@ class PessoaController extends Controller
                 return view('pessoa.formulario', compact('pessoa', 'titulo'));
             } else {
                 $titulo = "Acesso não autorizado ";
-                return view('erro', compact('titulo'));
+                return view('errors.404', compact('titulo'));
             }
         } catch (\Throwable $th) {
             $titulo = "dsa";
-            return view('erro', compact('titulo', 'th'));
+            return view('errors.404', compact('titulo', 'th'));
         }
     }
 
@@ -170,23 +170,33 @@ class PessoaController extends Controller
                 $pessoas = Pessoa::where('name', 'like', '%' . $search . '%')->paginate(10);
                 return view('pessoa.index', compact('titulo', 'pessoas'));
             } else {
-                return view('erro', compact('titulo'));
+                return view('errors.404', compact('titulo'));
             }
         } catch (\Throwable $th) {
-            return view('erro', $th);
+            return view('errors.404', $th);
         }
     }
 
     public function retorna_senhas(Request $request)
     {
-        // dd($request->pessoa_id);
-        $senhaAntigaBanco = User::find($request->user_id)->password;
-        return response()->json(['success' => 'Senha confirmada,' ,'data'=> $senhaAntigaBanco]);
-        // if ($request->senha_antiga === $senhaAntigaBanco) {
-        //     return response()->json(['result' => true]);
-        // } else {
-        //     return response()->json(['result' => false]);
-        // }
+          //pegar o email e comparar, e pegar a senha vinda e comparar
+          if ($request->user_id) {
+            $usuario = User::findOrFail($request->user_id);
+            if ($usuario->email === $request->email && Hash::check($request->senha_antiga, $usuario->password)) {
+                return response()->json(['success' => 'success']);
+            } else {
+                return response()->json(['error' => 'Email incorreto,']);
+            }
+        } else {
+            $user = User::where('email', 'like', '%' . $request->email . '%')->first();
+
+            if ($user) {
+
+                return response()->json(['error' => 'error', 'data' => 'Este e-mail já está sendo utilizado por um usuário!']);
+            } else {
+                return response()->json(['success' => 'success', 'data' => 'Email disponivel!']);
+            }
+        }
 
     }
 }

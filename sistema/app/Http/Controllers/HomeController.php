@@ -54,29 +54,31 @@ class HomeController extends Controller
     {
 
         try {
-            if (Gate::allows('dashboard_empresa')) {
+            if(Auth::user()->find(Auth::user()->id)->pessoas()->first()->foto_pessoa){
+                if (Gate::allows('dashboard_empresa')) {
 
-                $dados = array(
-                    'titulo' => "Dashboard EMPRESA",
-                    'empresa'=> Empresa::all()
-                );
+                    $dados = array(
+                        'titulo' => "Dashboard EMPRESA",
+                        'empresa'=> Empresa::all()
+                    );
 
-                return view('dashboard_empresa', $dados);
-            } else {
+                    return view('dashboard_empresa', $dados);
+                } else {
 
-                $dados = array(
-                    'titulo' => 'Dashboard ADM',
-                    'total_user' => User::count(),
-                    // 'total_posts' => Post::count(),
-                    'total_permissions' => Permission::count(),
-                    'total_roles' => Role::count(),
-                    'empresa'=> Empresa::all()
-                );
+                    $dados = array(
+                        'titulo' => 'Dashboard ADM',
+                        'total_user' => User::count(),
+                        // 'total_posts' => Post::count(),
+                        'total_permissions' => Permission::count(),
+                        'total_roles' => Role::count(),
+                        'empresa'=> Empresa::all()
+                    );
 
-                return view('dashboard', $dados);
+                    return view('dashboard', $dados);
+                }
             }
         } catch (\Throwable $th) {
-           return view('error');
+           return view('errors.404', compact($th));
         }
 
 

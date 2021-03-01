@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Pessoa;
 
 class UserTableSeeder extends Seeder
 {
@@ -19,6 +20,9 @@ class UserTableSeeder extends Seeder
       ] );
       foreach ($users as $key => $value) {
         User::create($value);
+
       }
+    
+      
     }
   }
