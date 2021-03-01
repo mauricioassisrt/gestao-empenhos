@@ -89,6 +89,10 @@ class PermissionTableSeeder extends Seeder
             [
                 'name' => 'dashboard_empresa',
                 'label' => 'Exibe ao usuário logar o dashboard da empresa e não o dashboard do administrador '
+            ],
+            [
+                'name'=>'alter_empresa',
+                'label' => 'Permite alterar os dados da empresa inserida no sistema '
             ]
 
         );

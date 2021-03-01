@@ -1,7 +1,7 @@
 @php
 //GET DADOS DA EMPRESA E CARREGA EM TODAS AS PAGINAS
 use App\Empresa;
-$empresa= Empresa::all();
+$empresa = Empresa::all();
 @endphp
 @extends('layouts.auth')
 
@@ -43,28 +43,18 @@ $empresa= Empresa::all();
                             <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
-                    <hr />
-
-
 
                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-
-
-
                     </div>
-                    <hr />
-
-                    <div class="card-footer clearfix">
-                        <a href="{{ url('/login') }}" class="btn btn-primary">
+                    <div class="social-auth-links text-center mb-12">
+                        <button type="submit" class="btn btn-block btn-success">
+                            <i class="fas fa-envelope"></i>   {{ __('Recuperar E-mail') }}
+                        </button>
+                        <a href="{{ url('/login') }}" class="btn btn-block btn-primary">
 
                             <i class="fas fa-arrow-left"></i> Voltar </a>
-                        <button type="submit" class="btn btn-success ">
-                            {{ __('Recuperar E-mail') }}
-                        </button>
+
                     </div>
-
-                    <!--<a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>-->
-
 
                 </div>
             </form>
