@@ -1,10 +1,6 @@
 @extends('layouts.auth')
 
-@php
-//GET DADOS DA EMPRESA E CARREGA EM TODAS AS PAGINAS
-use App\Empresa;
-$empresa= Empresa::all();
-@endphp
+
 @section('content')
 
     <!-- /.login-box -->

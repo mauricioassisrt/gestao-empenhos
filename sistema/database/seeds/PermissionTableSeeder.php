@@ -98,6 +98,11 @@ class PermissionTableSeeder extends Seeder
                 'name'=>'Edit_user_logado',
                 'label' => 'Permite alterar os dados da empresa inserida no sistema '
             ],
+            [
+                'name'=>'pessoa_redefinir_senha',
+                'label' => 'Habilita a redefinição de senha  '
+            ],
+
 
 
         );
@@ -184,6 +189,10 @@ class PermissionTableSeeder extends Seeder
             ],
             [
                 'permission_id' => '20',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '21',
                 'role_id' => '1'
             ],
         );

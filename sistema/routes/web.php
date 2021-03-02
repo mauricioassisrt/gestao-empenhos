@@ -5,9 +5,7 @@ use Illuminate\Support\Facades\Auth;
 //rotas autenticadas
 Auth::routes();
 //REDIRECIONA PARA TELA DE LOGIN
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', 'Auth\LoginController@showLoginForm');
 //###### ROTAS PRINCIPAL
 Route::get('/home', 'HomeController@dashboard');
 Route::get('/logout', 'Auth\LoginController@logout');

@@ -3,7 +3,7 @@
 
 ## Install Project 
  Copie o arquivo env.example
-```shell php -r "copy('.env.example', '.env'); ```
+NAO```shell php -r "copy('.env.example', '.env'); ```
  ## Caso haja necessidade 
  exculte o comando para gerar uma nova key 
 ```shell php artisan key:generate ```
@@ -77,6 +77,18 @@ public function toMail($notifiable)
 ## problemas e erros ao redefinir senha  erros recorrentes a porta ou ao gmail 
 
 https://stackoverflow.com/questions/33939393/failed-to-authenticate-on-smtp-server-error-using-gmail
+
+HABILITA APP MENOS SEGUROS 
+https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4N2oRzjfYRyPqNiIAEp2MmwYdVgKNLaq2b1CoU3RemM1HQfF0fOHCQzmle-rYmC0Gva5DNkf3VU5IDPAv6aJSOf1Rr0Rw
+
+CONFIGURAÇÂO DO SMTP PARA REDEFINCAO DE SENHA 
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.googlemail.com
+MAIL_PORT=587
+MAIL_USERNAME=evento.tads@gmail.com
+MAIL_PASSWORD=tads2016
+MAIL_ENCRYPTION=tls
 
 ### criar model controller e migrations
 php artisan make:model Todo -mcr

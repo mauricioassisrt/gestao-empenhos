@@ -48,7 +48,11 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         $empresa = AppEmpresa::all();
+        if (empty($empresa)) {
+            return view('errors.404');
+        } else {
+            return view('auth.login', compact('empresa'));
 
-        return view('auth.login', compact('empresa'));
+        }
     }
 }
