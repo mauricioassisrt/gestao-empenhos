@@ -13,7 +13,7 @@ $empresa= Empresa::all();
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title> {{ $titulo }}</title>
-    <link rel="shortcut icon" href="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}">
+    {{--  <link rel="shortcut icon" href="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}">  --}}
     <link rel="stylesheet" href="/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="/css/app.css">
     @yield('topo')
@@ -118,12 +118,12 @@ $empresa= Empresa::all();
 
                                         </a>
                                     @endcan
-                                    @can('View_user')
+                                    {{--  @can('View_user')
                                         <a href="{{ url('/users') }}" class="nav-link active">
                                             <i class="fas fa-user nav-icon"></i>
                                             <p>Usuários</p>
                                         </a>
-                                    @endcan
+                                    @endcan  --}}
                                     @can('View_role')
                                         <a href="{{ url('/acl/roles') }}" class="nav-link active">
                                             <i class="fas fa-file nav-icon"></i>

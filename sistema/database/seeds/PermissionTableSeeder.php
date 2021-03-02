@@ -93,7 +93,12 @@ class PermissionTableSeeder extends Seeder
             [
                 'name'=>'alter_empresa',
                 'label' => 'Permite alterar os dados da empresa inserida no sistema '
-            ]
+            ],
+            [
+                'name'=>'Edit_user_logado',
+                'label' => 'Permite alterar os dados da empresa inserida no sistema '
+            ],
+
 
         );
         foreach ($permissions as $key => $value) {
@@ -171,6 +176,14 @@ class PermissionTableSeeder extends Seeder
             ],
             [
                 'permission_id' => '18',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '19',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '20',
                 'role_id' => '1'
             ],
         );
