@@ -6,10 +6,14 @@ use App\Pessoa;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+
+use Illuminate\Mail\Message;
 
 class PessoaController extends Controller
 {
@@ -233,6 +237,27 @@ class PessoaController extends Controller
             } else {
                 return response()->json(['success' => 'success', 'data' => 'Email disponivel!']);
             }
+        }
+    }
+
+    /*
+        Reset password
+    */
+    public function sendEmail(Request $request)
+    {
+
+        $credentials = ['email' => $request->email];
+        $response = Password::sendResetLink($credentials, function (Message $message) {
+            $message->subject($this->getEmailSubject());
+        });
+
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+
+                return redirect('/pessoas')->with('status', trans($response));
+            case Password::INVALID_USER:
+                return redirect('/pessoas')->with('email', trans($response));
+
         }
     }
 }

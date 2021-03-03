@@ -15,7 +15,6 @@ Route::get('/erros', 'HomeController@sem');
 
 ###################### CAMADA E CONTROLE E SEGURAÇA ---- ROTAS #################
 //## ROUTES USUARIOS####
-
 Route::get('users', 'UsersController@index');
 Route::get('autenticar/{id}', 'UsersController@autenticar');
 Route::get('users/cadastrar', 'UsersController@cadastrar');
@@ -26,7 +25,7 @@ Route::get('users/deletar/{user}', 'UsersController@deletar');
 Route::get('users/visualizar/{user}', 'UsersController@view');
 Route::post('users/user_role', 'UsersController@user_role');
 
-#ROUTES PESQUISA
+#ROUTES PESQUISA VISÃO USUARIO
 Route::get('users/search', 'UsersController@search');
 Route::get('users/ordenar/asc/{ordenar}', 'UsersController@ordenar_asc');
 Route::get('users/ordenar/desc/{ordenar}', 'UsersController@ordenar_desc');
@@ -47,20 +46,18 @@ Route::get('empresa', 'EmpresaController@editar');
 Route::post('empresa/atualizar', 'EmpresaController@atualizar');
 
 //## ROUTES PESSOAS####
-
 Route::get('/pessoas', 'PessoaController@index')->name('pessoa');
-
 Route::get('pessoas/cadastrar', 'PessoaController@create');
 Route::post('pessoas/insert', 'PessoaController@store');
 Route::get('pessoas/editar/{pessoa}', 'PessoaController@editar_pessoa');
 Route::patch('pessoas/update/{pessoa}', 'PessoaController@update');
 Route::get('pessoas/deletar/{pessoa}', 'PessoaController@destroy');
 Route::get('pessoas/visualizar/{user}', 'PessoaController@view');
+Route::post('pessoas/redefinirSenha', 'PessoaController@sendEmail')->name('pessoas.redefinirSenha');
 #edita pessoa logada
 Route::get('dadosPessoais/{id}', 'PessoaController@edit');
 #ROUTES PESQUISA
 Route::get('pessoas/search', 'PessoaController@search');
-
 Route::post('pessoas/carregaSenha', 'PessoaController@retorna_senhas');
 //Route::post('api/pessoas/{id}', 'PessoaController@retorna_senhas');
 

@@ -34,6 +34,11 @@
                 </div>
 
             @endif
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             @can('insert_pessoa')
                 <a href="{{ url('pessoas/cadastrar') }}" class="btn btn-primary float-right">
                     <i class="fas fa-plus"></i> Novo </a>
@@ -91,8 +96,8 @@
 
                             <td>
 
-                                <img src="/{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2" width="40px"
-                                    height="40px" />
+                                <img src="/{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
+                                    width="40px" height="40px" />
                             </td>
                             <td>
                                 {{ $pessoa->name }}
@@ -129,12 +134,13 @@
                                 @can('pessoa_redefinir_senha')
 
 
-                                <a href="" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modal-redefinir-senha-{{ $pessoa->id }}"><span
-                                        class="glyphicon glyphicon-remove"></span> <i class="fas fa-paper-plane"></i> Redefinir senha
-                                </a>
-                                </a>
-                            @endcan
+                                    <a href="" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#modal-redefinir-senha-{{ $pessoa->id }}"><span
+                                            class="glyphicon glyphicon-remove"></span> <i class="fas fa-paper-plane"></i>
+                                        Redefinir senha
+                                    </a>
+                                    </a>
+                                @endcan
                             </td>
 
                         </tr>
@@ -166,33 +172,38 @@
                             <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal-redefinir senha -->
-                        <div class="modal fade" id="modal-redefinir-senha-{{ $pessoa->id }}" style="display: none;" tabindex='-1'
-                            aria-hidden="true">
+                        <div class="modal fade" id="modal-redefinir-senha-{{ $pessoa->id }}" style="display: none;"
+                            tabindex='-1' aria-hidden="true">
                             <div class="modal-dialog">
-                                <form method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
+                                <form method="POST" action="{{ route('pessoas.redefinirSenha') }}"
+                                    aria-label="{{ __('Reset Password') }}">
                                     {{ csrf_field() }}
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Deseja enviar um e-mail de redefinição de senha para a pesssoa ?</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Tem certeza que deseja enviar um email de redefinição de senha para esta pessoa {{ $pessoa->name }}</p>
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                        name="email"  value="{{ $pessoa->users->email }}" required>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Deseja enviar um e-mail de redefinição de senha para a
+                                                pesssoa ?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Tem certeza que deseja enviar um email de redefinição de senha para esta
+                                                pessoa {{ $pessoa->name }}</p>
+                                            <input id="email" type="email" disabled
+                                                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                name="email" value="{{ $pessoa->users->email }}" required>
 
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-success ">
-                                            {{ __('Recuperar E-mail') }}
-                                        </button>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Fechar</button>
+                                            <button type="submit" class="btn btn-success ">
+                                                {{ __('Recuperar E-mail') }}
+                                            </button>
 
 
+                                        </div>
                                     </div>
-                                </div>
                                 </form>
                                 <!-- /.modal-content -->
                             </div>
