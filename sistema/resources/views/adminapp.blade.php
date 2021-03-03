@@ -1,7 +1,7 @@
 @php
 //GET DADOS DA EMPRESA E CARREGA EM TODAS AS PAGINAS
 use App\Empresa;
-$empresa= Empresa::all();
+$empresa = Empresa::all();
 @endphp
 <!DOCTYPE html>
 
@@ -13,7 +13,7 @@ $empresa= Empresa::all();
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title> {{ $titulo }}</title>
-    {{--  <link rel="shortcut icon" href="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}">  --}}
+    {{-- <link rel="shortcut icon" href="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}"> --}}
     <link rel="stylesheet" href="/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="/css/app.css">
     @yield('topo')
@@ -51,7 +51,9 @@ $empresa= Empresa::all();
             <a href="index3.html" class="brand-link navba-dark-white">
                 <img src="/..{{ $empresa[0]->foto_caminho }}" class="brand-image img-circle elevation-3"
                     style="width: 30px; height: 30px;">
-                <span class="brand-text font-weight-light"> <h6>{{ $empresa[0]->nome_fantasia }}</h6> </span>
+                <span class="brand-text font-weight-light">
+                    <h6>{{ $empresa[0]->nome_fantasia }}</h6>
+                </span>
             </a>
 
             <!-- Sidebar -->
@@ -60,10 +62,11 @@ $empresa= Empresa::all();
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
 
-                        <img src="/../{{ Auth::user()->find(Auth::user()->id)->pessoas()->first()->foto_pessoa }}" class="img-circle elevation-2"  style="width: 30px; height: 30px;">
+                        <img src="/../{{ Auth::user()->find(Auth::user()->id)->pessoas()->first()->foto_pessoa }}"
+                            class="img-circle elevation-2" style="width: 30px; height: 30px;">
                     </div>
                     <div class="info">
-                        <a href="{{ url('pessoas/editar/'.Auth::user()->id ) }}"
+                        <a href="{{ url('pessoas/editar/' . Auth::user()->id) }}"
                             class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
@@ -84,7 +87,7 @@ $empresa= Empresa::all();
                             </a>
                         </li>
                         <li class="nav-item has-treeview menu-close">
-                            <a href="{{ url('pessoas/editar/'.Auth::user()->id) }}" class="nav-link active">
+                            <a href="{{ url('pessoas/editar/' . Auth::user()->id) }}" class="nav-link active">
                                 <i class="nav-icon fas fa-info"></i>
                                 <p>
                                     Meus dados
@@ -92,6 +95,15 @@ $empresa= Empresa::all();
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item has-treeview menu-close">
+                            <a href="{{ route('requisicao') }}" class="nav-link active">
+                                <i class="nav-icon fas fa-file-invoice"></i>
+                                <p>
+                                    Requisição
+                                </p>
+                            </a>
+                        </li>
+
                         <li class="nav-item has-treeview menu-close">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-edit"></i>
@@ -118,12 +130,12 @@ $empresa= Empresa::all();
 
                                         </a>
                                     @endcan
-                                    {{--  @can('View_user')
+                                    {{-- @can('View_user')
                                         <a href="{{ url('/users') }}" class="nav-link active">
                                             <i class="fas fa-user nav-icon"></i>
                                             <p>Usuários</p>
                                         </a>
-                                    @endcan  --}}
+                                    @endcan --}}
                                     @can('View_role')
                                         <a href="{{ url('/acl/roles') }}" class="nav-link active">
                                             <i class="fas fa-file nav-icon"></i>

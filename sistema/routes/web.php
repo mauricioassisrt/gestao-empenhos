@@ -62,6 +62,12 @@ Route::post('pessoas/carregaSenha', 'PessoaController@retorna_senhas');
 //Route::post('api/pessoas/{id}', 'PessoaController@retorna_senhas');
 
 
+/*
+    REQUISICAO ROUTES
+*/
+
+Route::get('/requisicao', 'RequisicaoController@index')->name('requisicao');
+
 
 // Route::get('/getmacshellexec',function()
 //     {
