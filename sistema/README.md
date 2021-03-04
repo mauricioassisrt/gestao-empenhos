@@ -18,7 +18,7 @@ Instalação das tabelas no banco de dados, entre no terminal até a pasta do si
 # refresh no migrate  php artisan migrate:fresh
 Após a instalação das migrations instale as seeds
 
-
+instale os permissions php artisan db:seed --class=EmpresaSeeder
 instale os usuários php artisan db:seed --class=UserTableSeeder
 instale o arquivo da tabela pessoa  php artisan db:seed --class=PessoaSeeder
 instale os roles php artisan db:seed --class=RoleTableSeeder
@@ -96,4 +96,19 @@ php artisan make:model Todo -mcr
 
 Route::resource('nome','Controller');
 
-## Learning Laravel
+# GETMAC 
+
+<!-- // Route::get('/getmacshellexec',function()
+//     {
+//         $shellexec = shell_exec('getmac');
+
+//         dd(substr(exec('getmac'), 0, 17));
+//     }
+// );
+
+// Route::get('/getmacexec',function()
+//     {
+//         $shellexec = exec('getmac');
+//         dd($shellexec);
+//     }
+// ); -->

@@ -91,16 +91,102 @@ class PermissionTableSeeder extends Seeder
                 'label' => 'Exibe ao usuário logar o dashboard da empresa e não o dashboard do administrador '
             ],
             [
-                'name'=>'alter_empresa',
+                'name' => 'alter_empresa',
                 'label' => 'Permite alterar os dados da empresa inserida no sistema '
             ],
             [
-                'name'=>'Edit_user_logado',
+                'name' => 'Edit_user_logado',
                 'label' => 'Permite alterar os dados da empresa inserida no sistema '
             ],
             [
-                'name'=>'pessoa_redefinir_senha',
+                'name' => 'pessoa_redefinir_senha',
                 'label' => 'Habilita a redefinição de senha  '
+            ],
+            [
+                'name' => 'Edit_categoria',
+                'label' => 'Editar categoria do produto',
+            ],
+            [
+                'name' => 'View_categoria',
+                'label' => 'Visualizar categoria',
+            ],
+            [
+                'name' => 'Delete_categoria',
+                'label' => 'Deletar categoria ',
+            ],
+            [
+                'name' => 'Insert_categoria',
+                'label' => 'Adicionar categoria',
+            ],
+
+            [
+                'name' => 'Edit_fornecedor',
+                'label' => 'Editar fornecedor do produto',
+            ],
+            [
+                'name' => 'View_fornecedor',
+                'label' => 'Visualizar fornecedor',
+            ],
+            [
+                'name' => 'Delete_fornecedor',
+                'label' => 'Deletar fornecedor ',
+            ],
+            [
+                'name' => 'Insert_fornecedor',
+                'label' => 'Adicionar fornecedor',
+            ],
+
+
+            [
+                'name' => 'Edit_secretaria',
+                'label' => 'Editar secretaria do produto',
+            ],
+            [
+                'name' => 'View_secretaria',
+                'label' => 'Visualizar secretaria',
+            ],
+            [
+                'name' => 'Delete_secretaria',
+                'label' => 'Deletar secretaria ',
+            ],
+            [
+                'name' => 'Insert_secretaria',
+                'label' => 'Adicionar secretaria',
+            ],
+
+            [
+                'name' => 'Edit_unidade',
+                'label' => 'Editar unidade vinculada a secretaria ',
+            ],
+            [
+                'name' => 'View_unidade',
+                'label' => 'Visualizar unidade',
+            ],
+            [
+                'name' => 'Delete_unidade',
+                'label' => 'Deletar unidade ',
+            ],
+            [
+                'name' => 'Insert_unidade',
+                'label' => 'Adicionar unidade',
+            ],
+
+
+            [
+                'name' => 'Edit_produto',
+                'label' => 'Editar  do produto',
+            ],
+            [
+                'name' => 'View_produto',
+                'label' => 'Visualizar produto',
+            ],
+            [
+                'name' => 'Delete_produto',
+                'label' => 'Deletar produto ',
+            ],
+            [
+                'name' => 'Insert_produto',
+                'label' => 'Adicionar produto',
             ],
 
 
@@ -194,6 +280,169 @@ class PermissionTableSeeder extends Seeder
             [
                 'permission_id' => '21',
                 'role_id' => '1'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '22',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '23',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '24',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '25',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '26',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '27',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '28',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '29',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '30',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '31',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '32',
+                'role_id' => '1'
+            ],  [
+                'permission_id' => '33',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '34',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '35',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '36',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '37',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '38',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '39',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '40',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '41',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '22',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '23',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '24',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '25',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '26',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '27',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '28',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '29',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '30',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '31',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '32',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '33',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '34',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '35',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '36',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '37',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '38',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '39',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '40',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '41',
+                'role_id' => '2'
             ],
         );
         foreach ($permission_roles as $key => $value) {

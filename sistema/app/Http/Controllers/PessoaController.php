@@ -200,7 +200,9 @@ class PessoaController extends Controller
         }
     }
 
-    /** METODO DE PESQUISAR */
+    /*
+     METODO DE PESQUISAR
+    */
     public function search(Request $request)
     {
         try {

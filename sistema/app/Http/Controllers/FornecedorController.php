@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Requisicao;
+use App\Fornecedor;
 use Illuminate\Http\Request;
 
-class RequisicaoController extends Controller
+class FornecedorController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -14,7 +15,7 @@ class RequisicaoController extends Controller
 
     public function index()
     {
-        dd('no request');
+        //
     }
 
     public function create()
@@ -22,29 +23,31 @@ class RequisicaoController extends Controller
         //
     }
 
+
     public function store(Request $request)
     {
         //
     }
 
-
-    public function show(Requisicao $requisicao)
-    {
-        //
-    }
-
-    public function edit(Requisicao $requisicao)
-    {
-        //
-    }
-
-    public function update(Request $request, Requisicao $requisicao)
+    public function show(Fornecedor $fornecedor)
     {
         //
     }
 
 
-    public function destroy(Requisicao $requisicao)
+    public function edit(Fornecedor $fornecedor)
+    {
+        //
+    }
+
+
+    public function update(Request $request, Fornecedor $fornecedor)
+    {
+        //
+    }
+
+
+    public function destroy(Fornecedor $fornecedor)
     {
         //
     }

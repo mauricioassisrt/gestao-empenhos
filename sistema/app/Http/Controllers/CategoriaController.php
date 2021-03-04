@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Requisicao;
+use App\Categoria;
 use Illuminate\Http\Request;
 
-class RequisicaoController extends Controller
+class CategoriaController extends Controller
 {
     public function __construct()
     {
@@ -14,8 +14,9 @@ class RequisicaoController extends Controller
 
     public function index()
     {
-        dd('no request');
+        //
     }
+
 
     public function create()
     {
@@ -27,24 +28,23 @@ class RequisicaoController extends Controller
         //
     }
 
-
-    public function show(Requisicao $requisicao)
+    public function show(Categoria $categoria)
     {
         //
     }
 
-    public function edit(Requisicao $requisicao)
+    public function edit(Categoria $categoria)
     {
         //
     }
 
-    public function update(Request $request, Requisicao $requisicao)
+    public function update(Request $request, Categoria $categoria)
     {
         //
     }
 
 
-    public function destroy(Requisicao $requisicao)
+    public function destroy(Categoria $categoria)
     {
         //
     }

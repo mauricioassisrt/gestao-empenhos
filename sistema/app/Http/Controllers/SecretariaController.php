@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Requisicao;
+use App\Secretaria;
 use Illuminate\Http\Request;
 
-class RequisicaoController extends Controller
+class SecretariaController extends Controller
 {
     public function __construct()
     {
@@ -14,8 +14,9 @@ class RequisicaoController extends Controller
 
     public function index()
     {
-        dd('no request');
+        //
     }
+
 
     public function create()
     {
@@ -28,23 +29,23 @@ class RequisicaoController extends Controller
     }
 
 
-    public function show(Requisicao $requisicao)
-    {
-        //
-    }
-
-    public function edit(Requisicao $requisicao)
-    {
-        //
-    }
-
-    public function update(Request $request, Requisicao $requisicao)
+    public function show(Secretaria $secretaria)
     {
         //
     }
 
 
-    public function destroy(Requisicao $requisicao)
+    public function edit(Secretaria $secretaria)
+    {
+        //
+    }
+
+    public function update(Request $request, Secretaria $secretaria)
+    {
+        //
+    }
+
+    public function destroy(Secretaria $secretaria)
     {
         //
     }

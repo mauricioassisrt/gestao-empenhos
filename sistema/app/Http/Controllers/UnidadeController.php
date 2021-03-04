@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Requisicao;
+use App\Unidade;
 use Illuminate\Http\Request;
 
-class RequisicaoController extends Controller
+class UnidadeController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -14,8 +15,9 @@ class RequisicaoController extends Controller
 
     public function index()
     {
-        dd('no request');
+        //
     }
+
 
     public function create()
     {
@@ -28,23 +30,24 @@ class RequisicaoController extends Controller
     }
 
 
-    public function show(Requisicao $requisicao)
+    public function show(Unidade $unidade)
     {
         //
     }
 
-    public function edit(Requisicao $requisicao)
-    {
-        //
-    }
-
-    public function update(Request $request, Requisicao $requisicao)
+    public function edit(Unidade $unidade)
     {
         //
     }
 
 
-    public function destroy(Requisicao $requisicao)
+    public function update(Request $request, Unidade $unidade)
+    {
+        //
+    }
+
+
+    public function destroy(Unidade $unidade)
     {
         //
     }

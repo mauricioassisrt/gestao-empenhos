@@ -13,12 +13,9 @@ class Pessoa extends Model
     {
         return $this->belongsTo(User::class, 'user_id' );
     }
-    public function titulo(){
-       $titulo = 'Pessoas';
-        return $titulo;
-    }
-    public function pessoas()
-    {
-          return $this->belongsTo(User::class, 'user_id', 'id' );
-    }
+
+    // public function pessoas()
+    // {
+    //       return $this->belongsTo(User::class, 'user_id', 'id' );
+    // }
 }
