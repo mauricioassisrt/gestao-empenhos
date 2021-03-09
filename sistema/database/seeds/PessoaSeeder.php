@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Pessoa;
+
 class PessoaSeeder extends Seeder
 {
     /**
@@ -11,27 +12,30 @@ class PessoaSeeder extends Seeder
      */
     public function run()
     {
-        $pessoa = array([
-            'name' => 'Nome Admin',
-            'data_nascimento'=> '2021-03-01 12:00:15',
-            'sexo'=> 'M',
-            'celular'=> '(44) 9 9999-9999',
-            'foto_pessoa'=> '/caminho',
-            'updated_at'=> '2021-03-01 12:00:15',
-            'user_id'=> '1'
-          ]);
+        $pessoa = array(
+            [
+                'name' => 'Nome Admin',
+                'data_nascimento' => '2021-03-01 12:00:15',
+                'sexo' => 'Masculino',
+                'celular' => '(44) 9 9999-9999',
+                'foto_pessoa' => 'img/pessoa/user.jpg',
+                'updated_at' => '2021-03-01 12:00:15',
+                'user_id' => '1'
+            ],
+            [
+                'name' => 'Gestor Prefeitura ',
+                'data_nascimento' => '2021-03-01 12:00:15',
+                'sexo' => 'Masculino',
+                'celular' => '(44) 9 9999-9999',
+                'foto_pessoa' => 'img/pessoa/user.jpg',
+                'updated_at' => '2021-03-01 12:00:15',
+                'user_id' => '2'
+            ]
+        );
 
-        //   $pessoa = array([
-        //     'name' => 'Gestor Prefeitura ',
-        //     'data_nascimento'=> '2021-03-01 12:00:15',
-        //     'sexo'=> 'M',
-        //     'celular'=> '(44) 9 9999-9999',
-        //     'foto_pessoa'=> '/caminho',
-        //     'updated_at'=> '2021-03-01 12:00:15',
-        //     'user_id'=> '2'
-        //   ]);
-          foreach ($pessoa as $key => $value) {
+
+        foreach ($pessoa as $key => $value) {
             Pessoa::create($value);
-          }
+        }
     }
 }

@@ -19,11 +19,11 @@ class UserTableSeeder extends Seeder
                 'email' => 'admin@laravel.com',
                 'password' => bcrypt('123')
             ],
-            // [
-            //     'name' => 'MASTER PREFEITURA',
-            //     'email' => 'master@laravel.com',
-            //     'password' => bcrypt('123')
-            // ]
+            [
+                'name' => 'MASTER PREFEITURA',
+                'email' => 'master@laravel.com',
+                'password' => bcrypt('123')
+            ]
         );
         foreach ($users as $key => $value) {
             User::create($value);

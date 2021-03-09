@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 /*
     rotas autenticadas
 */
+
 Auth::routes();
 
 /*
@@ -82,4 +83,13 @@ Route::get('/requisicao', 'RequisicaoController@index')->name('requisicao');
 /*
     Fornecedor Routers
 */
-Route::resource('fornecedor','FornecedorController');
+
+Route::group(['middleware' => 'web'], function () {
+   Route::get('fornecedor', 'FornecedorController@index');
+    Route::get('fornecedor/cadastrar', 'FornecedorController@cadastrar');
+    Route::post('fornecedor/insert', 'FornecedorController@insert');
+    Route::get('fornecedor/editar/{fornecedor}', 'FornecedorController@editar');
+    Route::patch('fornecedor/update/{id}', 'FornecedorController@update');
+    Route::get('fornecedor/deletar/{fornecedor}', 'FornecedorController@deletar');
+    Route::get('fornecedor/visualizar/{fornecedor}', 'FornecedorController@view');
+});
