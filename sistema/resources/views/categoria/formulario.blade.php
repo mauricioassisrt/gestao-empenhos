@@ -22,25 +22,21 @@
 
             <!-- /.box-header -->
             @if (Request::is('*/editar/*'))
-                {!! Form::model($fornecedor, ['method' => 'PATCH', 'url' => 'fornecedor/update/' . $fornecedor->id]) !!}
+                {!! Form::model($categoria, ['method' => 'PATCH', 'url' => 'categoria/update/' . $categoria->id]) !!}
             @else
-                {!! Form::open(['url' => 'fornecedor/insert']) !!}
+                {!! Form::open(['url' => 'categoria/insert']) !!}
             @endif
             <div class="form-group">
                 <label>Nome</label>
-                <input type="text" class="form-control" id="nome_fornecedor" placeholder="Digite o nome da empresa"
-                    name="nome_fornecedor" @if (Request::is('*/editar/*')) value="{{ $fornecedor->nome_fornecedor }}" @endif required>
+                <input type="text" class="form-control" id="nome_categoria" placeholder="Exemplo medicamentos, limpeza, informática"
+                    name="nome_categoria" @if (Request::is('*/editar/*')) value="{{ $categoria->nome_categoria }}" @endif required>
 
             </div>
-            <div class="form-group">
-                <label>CNPJ</label>
-                <input type="text" class="form-control" placeholder="Número do CNPJ" name="cnpj" data-inputmask="'mask': ['99.999.999/9999-99']" data-mask="" inputmode="text"  @if (Request::is('*/editar/*'))
-                value="{{ $fornecedor->cnpj  }}" @endif>
-            </div>
+
         </div>
         <div class="card-footer clearfix">
 
-            <a href="{{ url('/fornecedor') }}" class="btn btn-primary">
+            <a href="{{ url('/categoria') }}" class="btn btn-primary">
 
                 <i class="fas fa-arrow-left"></i> Voltar </a>
 
@@ -70,8 +66,8 @@
     <script src="/js/sweetalert2.all.js"></script>
     <script src="/js/toastr.min.js"></script>
     <!-- FIM TOAST SWEETALERT  -->
-    <!-- Modulo fornecedor-->
-    <script src="/js/modulos/fornecedor-cadastro.js"></script>
+    <!-- Modulo categoria-->
+    <script src="/js/modulos/categoria-cadastro.js"></script>
 
 @endsection
 

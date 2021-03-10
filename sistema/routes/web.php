@@ -80,10 +80,11 @@ Route::post('pessoas/carregaSenha', 'PessoaController@retorna_senhas');
     REQUISICAO ROUTES
 */
 Route::get('/requisicao', 'RequisicaoController@index')->name('requisicao');
+
+
 /*
     Fornecedor Routers
 */
-
 Route::group(['middleware' => 'web'], function () {
    Route::get('fornecedor', 'FornecedorController@index');
     Route::get('fornecedor/cadastrar', 'FornecedorController@cadastrar');
@@ -92,4 +93,32 @@ Route::group(['middleware' => 'web'], function () {
     Route::patch('fornecedor/update/{id}', 'FornecedorController@update');
     Route::get('fornecedor/deletar/{fornecedor}', 'FornecedorController@deletar');
     Route::get('fornecedor/visualizar/{fornecedor}', 'FornecedorController@view');
+    Route::get('fornecedor/search', 'FornecedorController@search');
 });
+/*
+    Categoria Routers
+*/
+Route::group(['middleware' => 'web'], function () {
+    Route::get('categoria', 'CategoriaController@index');
+     Route::get('categoria/cadastrar', 'CategoriaController@cadastrar');
+     Route::post('categoria/insert', 'CategoriaController@insert');
+     Route::get('categoria/editar/{categoria}', 'CategoriaController@editar');
+     Route::patch('categoria/update/{id}', 'CategoriaController@update');
+     Route::get('categoria/deletar/{categoria}', 'CategoriaController@deletar');
+     Route::get('categoria/visualizar/{categoria}', 'CategoriaController@view');
+     Route::get('categoria/search', 'CategoriaController@search');
+ });
+/*
+    Secretarias Routers
+*/
+ Route::group(['middleware' => 'web'], function () {
+    Route::get('secretaria', 'SecretariaController@index');
+     Route::get('secretaria/cadastrar', 'SecretariaController@cadastrar');
+     Route::post('secretaria/insert', 'SecretariaController@insert');
+     Route::get('secretaria/editar/{secretaria}', 'SecretariaController@editar');
+     Route::patch('secretaria/update/{id}', 'SecretariaController@update');
+     Route::get('secretaria/deletar/{secretaria}', 'SecretariaController@deletar');
+     Route::get('secretaria/visualizar/{secretaria}', 'SecretariaController@view');
+     Route::get('secretaria/search', 'SecretariaController@search');
+ });
+

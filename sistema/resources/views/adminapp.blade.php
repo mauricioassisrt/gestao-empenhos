@@ -114,6 +114,28 @@ $empresa = Empresa::all();
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    @can('View_categoria')
+                                        <a href="{{ url('secretaria') }}" class="nav-link active">
+                                            <i class="fas fa-university nav-icon"></i>
+                                            <p>Secretaria</p>
+
+                                        </a>
+                                    @endcan
+                                    @can('View_categoria')
+                                        <a href="{{ url('categoria') }}" class="nav-link active">
+                                            <i class="fas fa-boxes nav-icon"></i>
+                                            <p>Categoria</p>
+
+                                        </a>
+                                    @endcan
+
+                                    @can('View_fornecedor')
+                                        <a href="{{ url('fornecedor') }}" class="nav-link active">
+                                            <i class="fas fa-building nav-icon"></i>
+                                            <p>Fornecedores</p>
+
+                                        </a>
+                                    @endcan
                                     @can('pessoa_view')
                                         <a href="{{ route('pessoa') }}" class="nav-link active">
                                             <i class="fas fa-user-friends nav-icon"></i>

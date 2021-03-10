@@ -39,12 +39,12 @@
                     {{ session('status') }}
                 </div>
             @endif
-            @can('Insert_fornecedor')
-                <a href="{{ url('fornecedor/cadastrar') }}" class="btn btn-primary float-right">
+            @can('Insert_categoria')
+                <a href="{{ url('categoria/cadastrar') }}" class="btn btn-primary float-right">
                     <i class="fas fa-plus"></i> Novo </a>
 
             @endcan
-            <form action="{{ url('/fornecedor/search') }}" method="get">
+            <form action="{{ url('/categoria/search') }}" method="get">
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
 
@@ -64,32 +64,32 @@
         <div class="card-body table-responsive p-0">
             <table class="table table-striped table-bordered table-hover" style='background:#fff'>
                 <thead>
-                    <th>Nome do Fornecedor</th>
-                    <th>CNPJ</th>
+                    <th>Nome da categoria</th>
+
                     <th>Ações </th>
                 </thead>
                 <tbody>
-                    @foreach ($fornecedors as $fornecedor)
+                    @foreach ($categorias as $categoria)
                         <tr>
-                            <td>{!! $fornecedor->nome_fornecedor !!}</td>
-                            <td>{!! $fornecedor->cnpj !!}</td>
-                            <td>
-                                @can('Edit_fornecedor')
+                            <td>{!! $categoria->nome_categoria !!}</td>
 
-                                    <a href="{{ url('fornecedor/editar/' . $fornecedor->id) }}" class="btn btn-primary"><span
+                            <td>
+                                @can('Edit_categoria')
+
+                                    <a href="{{ url('categoria/editar/' . $categoria->id) }}" class="btn btn-primary"><span
                                             class="glyphicon glyphicon-pencil">
                                         </span>
                                         <i class="fas fa-edit"></i> Editar </a>
                                 @endcan
-                                @can('Delete_fornecedor')
+                                @can('Delete_categoria')
 
 
                                     <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-default-{{ $fornecedor->id }}"><span
+                                        data-target="#modal-default-{{ $categoria->id }}"><span
                                             class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
                                     </a>
                                     </a>
-                                    <div class="modal fade" id="modal-default-{{ $fornecedor->id }}" style="display: none;"
+                                    <div class="modal fade" id="modal-default-{{ $categoria->id }}" style="display: none;"
                                         tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -101,12 +101,12 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Tem certeza que deseja excluir esta pessoa
-                                                        {{ $fornecedor->nome_fornecedor }}</p>
+                                                        {{ $categoria->nome_categoria }}</p>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Fechar</button>
-                                                    <a href="{{ url('fornecedor/deletar/' . $fornecedor->id) }}"
+                                                    <a href="{{ url('categoria/deletar/' . $categoria->id) }}"
                                                         class="btn btn-danger">
                                                         <span class="glyphicon glyphicon-remove"></span> <i
                                                             class="fas fa-trash"></i>
@@ -128,7 +128,7 @@
             </table>
         </div>
         <div class="card-footer clearfix">
-            {{ $fornecedors->links() }}
+            {{ $categorias->links() }}
         </div>
     </div>
 
