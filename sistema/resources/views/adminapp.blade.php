@@ -146,8 +146,8 @@ $empresa = Empresa::all();
                                     @endcan
                                     @can('empresa_view')
                                         <a href="{{ url('/empresa') }}" class="nav-link active">
-                                            <i class="fas fa-store-alt nav-icon"></i>
-                                            <p>Dados Empresa </p>
+                                            <i class="fas fa-gavel nav-icon"></i>
+                                            <p>Dados da Prefeitura </p>
                                         </a>
 
                                         </a>

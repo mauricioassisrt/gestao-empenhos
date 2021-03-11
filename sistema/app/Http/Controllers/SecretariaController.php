@@ -53,7 +53,7 @@ class SecretariaController extends Controller
         if (Gate::allows('Edit_secretaria')) {
             $secretaria = Secretaria::findOrFail($secretaria->id);
             $titulo = "Editar ";
-            return view('secretaria.formulario', compact('secretarias', 'titulo'));
+            return view('secretaria.formulario', compact('secretaria', 'titulo'));
         } else {
             return view('errors.sem_permissao');
         }
@@ -89,11 +89,12 @@ class SecretariaController extends Controller
         try {
             $titulo = 'Pesquisa de Secretarias com o nome de  ' . $request->get('table_search');
             if (Gate::allows('View_secretaria')) {
-                $secretaria = new Secretaria();
+                $secretarias = new Secretaria();
                 $search = $request->get('table_search');
-                $secretaria = Secretaria::where('nome_do_campo_da_consulta', 'like', '%' . $search . '%')->paginate(10);
 
-                return view('secretaria.index', compact('titulo', 'secretaria'));
+                $secretarias = Secretaria::where('nome', 'like', '%' . $search . '%')->paginate(10);
+
+                return view('secretaria.index', compact('titulo', 'secretarias'));
             } else {
                 return view('errors.404');
             }

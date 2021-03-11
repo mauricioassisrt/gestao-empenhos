@@ -30,14 +30,18 @@
             <table class="table table-striped table-bordered table-hover" style='background:#fff'>
                 <thead>
                     <th>Nome do secretaria</th>
-
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Endereço</th>
                     <th>Ações </th>
                 </thead>
                 <tbody>
                     @foreach ($secretarias as $secretaria)
                         <tr>
                             <td>{!! $secretaria->nome !!}</td>
-
+                            <td>{!! $secretaria->telefone !!}</td>
+                            <td>{!! $secretaria->email !!}</td>
+                            <td>{!! $secretaria->endereco !!}</td>
                             <td>
                                 @can('Edit_secretaria')
 
