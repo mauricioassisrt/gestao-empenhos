@@ -188,7 +188,22 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Insert_produto',
                 'label' => 'Adicionar produto',
             ],
-
+            [
+                'name' => 'Insert_setor',
+                'label' => 'Adicionar setor',
+            ],
+            [
+                'name' => 'View_setor',
+                'label' => 'Visualizar setor',
+            ],
+            [
+                'name' => 'Edit_setor',
+                'label' => 'Editar setor',
+            ],
+            [
+                'name' => 'Delete_setor',
+                'label' => 'Apagar setor',
+            ],
 
 
         );

@@ -122,3 +122,16 @@ Route::group(['middleware' => 'web'], function () {
      Route::get('secretaria/search', 'SecretariaController@search');
  });
 
+/*
+    Setores Routers
+*/
+Route::group(['middleware' => 'web'], function () {
+    Route::get('setor', 'SetorController@index');
+     Route::get('setor/cadastrar', 'SetorController@cadastrar');
+     Route::post('setor/insert', 'SetorController@insert');
+     Route::get('setor/editar/{setor}', 'SetorController@editar');
+     Route::patch('setor/update/{id}', 'SetorController@update');
+     Route::get('setor/deletar/{setor}', 'SetorController@deletar');
+     Route::get('setor/visualizar/{setor}', 'SetorController@view');
+     Route::get('setor/search', 'SetorController@search');
+ });
