@@ -7,7 +7,7 @@
 
     <div class="card">
         <div class="card-body login-card-body col-sm-12">
-            <form class="form-signin" role="form" method="POST" action="{{ url('/login') }}" class="">
+            <form class="form-signin" role="form" method="POST" action="{{ route('login') }}" class="">
                 {{ csrf_field() }}
 
                 <div class="login-logo ">
@@ -70,20 +70,5 @@
 
     <!-- /container -->
 
-    <!-- jQuery 3 -->
-    <!--<script src="../../bower_components/jquery/dist/jquery.min.js"></script>-->
-    <!-- Bootstrap 3.3.7 -->
-    <!--<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
-    <!-- iCheck -->
-    <!--<script src="../../plugins/iCheck/icheck.min.js"></script>-->
-    <!--<script>
-        $(function () {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' /* optional */
-            });
-        });
-        </script>-->
 
 @endsection
