@@ -14,8 +14,9 @@ $empresa = Empresa::all();
 
     <title> {{ $titulo }}</title>
     {{-- <link rel="shortcut icon" href="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}"> --}}
-    <link rel="stylesheet" href="css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href=" {{ asset('css/fontawesome-all.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield('topo')
 </head>
 
@@ -236,9 +237,9 @@ $empresa = Empresa::all();
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="js/app.js"></script>
+    <script src=" {{ asset('js/app.js') }}"></script>
 
-    <script src="js/jquery.form.min.js"> </script>
+    <script src=" {{ asset('js/jquery.form.min.js') }}"></script>
     <!-- FECHAR DIALOG -->
     <script type="text/javascript">
         setTimeout(function() {
