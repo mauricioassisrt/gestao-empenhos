@@ -3,10 +3,10 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- JS para CEP --}}
-    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('js/scripts/busca-cep.js') }}"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/scripts/busca-cep.js"></script>
     <!-- toast CSS-->
-    <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }}"/>
+    <link rel="stylesheet" href="css/toastr.min.css">
 @endsection
 
 @section('content')
@@ -112,13 +112,13 @@
 @section('rodape')
 
     <!-- mask de telefone -->
-    <script src=" {{ asset('js/jquery.inputmask.min.js') }}"></script>
+    <script src="js/jquery.inputmask.min.js"></script>
 
     <!-- Modulo categoria-->
-    <script src=" {{ asset('js/modulos/secretaria-cadastro.js') }}"></script>
+    <script src="js/modulos/secretaria-cadastro.js"></script>
     <!-- TOAST SWEETALERT -->
-    <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
-    <script src=" {{ asset('js/toastr.min.js') }}" ></script>
+    <script src="js/sweetalert2.all.js"></script>
+    <script src="js/toastr.min.js"></script>
 
 
 @endsection

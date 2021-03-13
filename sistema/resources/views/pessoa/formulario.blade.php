@@ -2,9 +2,9 @@
 @section('topo')
     <!-- DATA TIME PICKER Style -->
 
-    <link rel="stylesheet" href=" {{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="css/tempusdominus-bootstrap-4.min.css">
     <!-- toast CSS-->
-    <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href="css/toastr.min.css">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -188,17 +188,17 @@
 
 {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>  --}}
     <!-- CALENDARIo-->
-    <script src=" {{ asset('js/moment.min.js') }}"></script>
-    <script src=" {{ asset('js/tempusdominus-bootstrap-4.min.js') }}"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- mask de telefone -->
-    <script src=" {{ asset('js/jquery.inputmask.min.js') }}"></script>
+    <script src="js/jquery.inputmask.min.js"></script>
 
     <!-- TOAST SWEETALERT -->
-    <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
-    <script src=" {{ asset('js/toastr.min.js') }}"></script>
+    <script src="js/sweetalert2.all.js"></script>
+    <script src="js/toastr.min.js"></script>
     <!-- FIM TOAST SWEETALERT  -->
     <!-- Modulo usuarios-->
-    <script src=" {{ asset('js/modulos/pessoa-cadastro.js') }}"></script>
+    <script src="js/modulos/pessoa-cadastro.js"></script>
 
     <script>
         //verifica o envio de senha
