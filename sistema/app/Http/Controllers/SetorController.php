@@ -16,7 +16,7 @@ class SetorController extends Controller
     {
         try {
             if (Gate::allows('View_setor')) {
-                $titulo = "setores";
+                $titulo = "Setores";
                 $setors = Setor::paginate(20);
                 return view('setor.index', compact('setors', 'titulo'));
             } else {
@@ -88,9 +88,9 @@ class SetorController extends Controller
         try {
             $titulo = 'Pesquisa de setores com o nome de  ' . $request->get('table_search');
             if (Gate::allows('View_setor')) {
-                $setor = new Setor();
+                $setors = new Setor();
                 $search = $request->get('table_search');
-                $setor = Setor::where('nome_setor', 'like', '%' . $search . '%')->paginate(10);
+                $setors = Setor::where('descricao', 'like', '%' . $search . '%')->paginate(10);
 
                 return view('setor.index', compact('titulo', 'setors'));
             } else {

@@ -16,11 +16,11 @@ class CreateRequisicaosTable extends Migration
 
 
         Schema::create('requisicaos', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('name');
 
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

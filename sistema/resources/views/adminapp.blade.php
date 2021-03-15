@@ -129,6 +129,13 @@ $empresa = Empresa::all();
 
                                         </a>
                                     @endcan
+                                    @can('View_produto')
+                                    <a href="{{ url('produto') }}" class="nav-link active">
+                                        <i class="fas fa-box nav-icon"></i>
+                                        <p>Produto</p>
+
+                                    </a>
+                                @endcan
 
                                     @can('View_fornecedor')
                                         <a href="{{ url('fornecedor') }}" class="nav-link active">

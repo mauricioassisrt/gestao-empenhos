@@ -13,8 +13,8 @@ class EmpresaSeeder extends Seeder
     public function run()
     {
         $obj = new Empresa();
-        $obj->nome_fantasia = "Nome fantasia da empresa";
-        $obj->razao_social = "Nome fantasia da empresa";
+        $obj->nome_fantasia = "Nome Prefeitura";
+        $obj->razao_social = "Nome";
         $obj->cnpj = "CNPJ";
         $obj->contato = "contato";
         $obj->email = "email";

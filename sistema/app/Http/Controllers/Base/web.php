@@ -1,13 +1,13 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('secretaria', 'SecretariaController@index');
-     Route::get('secretaria/cadastrar', 'SecretariaController@cadastrar');
-     Route::post('secretaria/insert', 'SecretariaController@insert');
-     Route::get('secretaria/editar/{secretaria}', 'SecretariaController@editar');
-     Route::patch('secretaria/update/{id}', 'SecretariaController@update');
-     Route::get('secretaria/deletar/{secretaria}', 'SecretariaController@deletar');
-     Route::get('secretaria/visualizar/{secretaria}', 'SecretariaController@view');
-     Route::get('secretaria/search', 'SecretariaController@search');
+    Route::get('produto', 'ProdutoController@index');
+     Route::get('produto/cadastrar', 'ProdutoController@cadastrar');
+     Route::post('produto/insert', 'ProdutoController@insert');
+     Route::get('produto/editar/{produto}', 'ProdutoController@editar');
+     Route::patch('produto/update/{id}', 'ProdutoController@update');
+     Route::get('produto/deletar/{produto}', 'ProdutoController@deletar');
+     Route::get('produto/visualizar/{produto}', 'ProdutoController@view');
+     Route::get('produto/search', 'ProdutoController@search');
  });
 
