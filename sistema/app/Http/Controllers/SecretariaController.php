@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Secretaria;
 use Illuminate\Http\Request;
 use Gate;
+
 class SecretariaController extends Controller
 {
 
@@ -75,12 +76,16 @@ class SecretariaController extends Controller
 
     public function deletar($id)
     {
-        if (Gate::allows('Delete_secretaria')) {
-            $secretaria = Secretaria::findOrFail($id);
-            $secretaria->delete();
-            return redirect('secretaria');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Delete_secretaria')) {
+                $secretaria = Secretaria::findOrFail($id);
+                $secretaria->delete();
+                return redirect('secretaria');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+           return view('errors.404');
         }
     }
 

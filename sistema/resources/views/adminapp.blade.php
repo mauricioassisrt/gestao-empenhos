@@ -35,7 +35,7 @@ $empresa = Empresa::all();
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
-                <a class="nav-link" href="/../logout">
+                <a class="nav-link" href="{{ asset('logout')}}">
                     Sair <i class="fas fa-sign-in-alt"></i>
 
                 </a>
@@ -115,13 +115,21 @@ $empresa = Empresa::all();
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    @can('View_categoria')
+                                    @can('View_secretaria')
                                         <a href="{{ url('secretaria') }}" class="nav-link active">
                                             <i class="fas fa-university nav-icon"></i>
                                             <p>Secretaria</p>
 
                                         </a>
                                     @endcan
+                                    @can('View_unidade')
+                                    <a href="{{ url('unidade') }}" class="nav-link active">
+                                        <i class="fas fa-archway nav-icon"></i>
+                                        <p>Unidade</p>
+
+                                    </a>
+                                @endcan
+
                                     @can('View_categoria')
                                         <a href="{{ url('categoria') }}" class="nav-link active">
                                             <i class="fas fa-boxes nav-icon"></i>

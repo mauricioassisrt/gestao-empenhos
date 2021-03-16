@@ -39,12 +39,12 @@
                     {{ session('status') }}
                 </div>
             @endif
-            @can('Insert_produto')
-                <a href="{{ url('produto/cadastrar') }}" class="btn btn-primary float-right">
+            @can('Insert_unidade')
+                <a href="{{ url('unidade/cadastrar') }}" class="btn btn-primary float-right">
                     <i class="fas fa-plus"></i> Novo </a>
 
             @endcan
-            <form action="{{ url('/produto/search') }}" method="get">
+            <form action="{{ url('/unidade/search') }}" method="get">
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
 
@@ -64,37 +64,40 @@
         <div class="card-body table-responsive p-0">
             <table class="table table-striped table-bordered table-hover" style='background:#fff'>
                 <thead>
-                    <th> Produto</th>
-                    <th> Fornecedor</th>
-                    <th>Categoria </th>
+                    <th> Unidade</th>
+                    <th> Endereço</th>
+                    <th>Secretaria que pertence </th>
+                    <th>Telefone </th>
                     <th>Criado/Alterado </th>
                     <th>Ações </th>
                 </thead>
                 <tbody>
-                    @foreach ($produtos as $produto)
+                    @foreach ($unidades as $unidade)
                         <tr>
-                            <td>{!! $produto->nome !!}</td>
-                            <td>{!! $produto->fornecedor->nome_fornecedor  !!}</td>
+                            <td>{!! $unidade->nome !!}</td>
+                            <td>{!! $unidade->endereco !!}</td>
+                            <td>{!! $unidade->secretaria->nome !!}</td>
+                            <td>{!! $unidade->telefone !!}</td>
 
-                            <td>{!! $produto->categoria->nome_categoria  !!}</td>
-                            <td>{!!  date('d/m/Y  H:m:s', strtotime($produto->created_at)) !!} -- {{ 	 date('d/m/Y H:m:s', strtotime($produto->updated_at))  }}</td>
+                            <td>{!! date('d/m/Y  H:m:s', strtotime($unidade->created_at)) !!} -- {{ date('d/m/Y H:m:s', strtotime($unidade->updated_at)) }}
+                            </td>
                             <td>
-                                @can('Edit_produto')
+                                @can('Edit_unidade')
 
-                                    <a href="{{ url('produto/editar/' . $produto->id) }}" class="btn btn-primary"><span
+                                    <a href="{{ url('unidade/editar/' . $unidade->id) }}" class="btn btn-primary"><span
                                             class="glyphicon glyphicon-pencil">
                                         </span>
                                         <i class="fas fa-edit"></i> Editar </a>
                                 @endcan
-                                @can('Delete_produto')
+                                @can('Delete_unidade')
 
 
                                     <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-default-{{ $produto->id }}"><span
+                                        data-target="#modal-default-{{ $unidade->id }}"><span
                                             class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
                                     </a>
                                     </a>
-                                    <div class="modal fade" id="modal-default-{{ $produto->id }}" style="display: none;"
+                                    <div class="modal fade" id="modal-default-{{ $unidade->id }}" style="display: none;"
                                         tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -105,13 +108,13 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Tem certeza que deseja excluir este produto cadastrado ?
-                                                        {{ $produto->nome }}</p>
+                                                    <p>Tem certeza que deseja excluir este unidade cadastrado ?
+                                                        {{ $unidade->nome }}</p>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Fechar</button>
-                                                    <a href="{{ url('produto/deletar/' . $produto->id) }}"
+                                                    <a href="{{ url('unidade/deletar/' . $unidade->id) }}"
                                                         class="btn btn-danger">
                                                         <span class="glyphicon glyphicon-remove"></span> <i
                                                             class="fas fa-trash"></i>
@@ -133,7 +136,7 @@
             </table>
         </div>
         <div class="card-footer clearfix">
-            {{ $produtos->links() }}
+            {{ $unidades->links() }}
         </div>
     </div>
 
