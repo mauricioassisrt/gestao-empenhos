@@ -25,7 +25,7 @@ class UnidadeController extends Controller
 
                 $titulo = "Unidades";
                 $unidades = Unidade::paginate(20);
-                return view('Unidade.index', compact('unidades', 'titulo'));
+                return view('unidade.index', compact('unidades', 'titulo'));
             } else {
                 return view('errors.sem_permissao');
             }
@@ -49,7 +49,7 @@ class UnidadeController extends Controller
         if (Gate::allows('Insert_unidade')) {
 
             Unidade::create($request->all());
-            return redirect('Unidade');
+            return redirect('unidade');
         } else {
             return view('errors.sem_permissao');
         }

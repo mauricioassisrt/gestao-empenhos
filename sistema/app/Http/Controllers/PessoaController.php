@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Pessoa;
+use App\PessoaUnidade;
+use App\Unidade;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
@@ -76,7 +78,7 @@ class PessoaController extends Controller
             /* INSERE UM USUARIO PARA ACESSAR O SISTEMA  */
             $input = $request->all();
 
-            if (Gate::allows('insert_pessoa') ) {
+            if (Gate::allows('insert_pessoa')) {
                 $user = array(
                     'remember_token' => $input['_token'],
                     'name' => $input['name'],
@@ -128,7 +130,7 @@ class PessoaController extends Controller
                     );
                     $new_user->update($user);
                     $objetoPessoa = Pessoa::findOrFail($pessoa->id);
-                    $objetoPessoa=$request->all();
+                    $objetoPessoa = $request->all();
                     $objetoPessoa['user_id'] = $new_user->id;
                     /* fim do insere usuario */
                     /* UPLOAD de imagem  */
@@ -142,11 +144,11 @@ class PessoaController extends Controller
                     //convert data nascimento
 
 
-                    $var =  date('Y-m-d', strtotime( $objetoPessoa['data_nascimento']));
+                    $var =  date('Y-m-d', strtotime($objetoPessoa['data_nascimento']));
 
-                    dd(   $var   );
+                    dd($var);
                     /* fim do upload  */
-                 //   $objetoPessoa->update($request->all());
+                    //   $objetoPessoa->update($request->all());
                     return redirect()->to("users/visualizar/" . $new_user->id);
                 } else {
                     dd('no else');
@@ -155,7 +157,7 @@ class PessoaController extends Controller
             }
         } catch (\Throwable $th) {
             dd($th);
-          //  return $e->getMessage();
+            //  return $e->getMessage();
             //return view('errors.404rs.404rs.404');
         }
     }
@@ -259,7 +261,41 @@ class PessoaController extends Controller
                 return redirect('/pessoas')->with('status', trans($response));
             case Password::INVALID_USER:
                 return redirect('/pessoas')->with('email', trans($response));
+        }
+    }
 
+    public function vincularUnidade(Pessoa $pessoa)
+    {
+
+        try {
+            $titulo = 'Vincular uma Unidade a pessoa  ';
+            if (Gate::allows('pessoa_view')) {
+                $unidades = Unidade::all();
+                $pessoa_unidades = PessoaUnidade::all();
+                $unidade_id = 0;
+                return view('pessoa.formulario-vincular-unidade', compact('titulo', 'unidades', 'pessoa', 'pessoa_unidades', 'unidade_id'));
+            } else {
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function insertUnidadePessoa(Request $request)
+    {
+        try {
+
+            $unidadePessoa = new  PessoaUnidade();
+
+            if (Gate::allows('insert_unidade_pessoa')) {
+
+                foreach ($request->unidade_id as $unidadePessoa) {
+                    PessoaUnidade::update($unidadePessoa);
+                }
+                redirect('pessoas');
+            } else {
+                return view('errors.404');
+            }
+        } catch (\Throwable $th) {
         }
     }
 }

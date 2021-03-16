@@ -76,17 +76,29 @@ Route::get('dadosPessoais/{id}', 'PessoaController@edit');
 #ROUTES PESQUISA
 Route::get('pessoas/search', 'PessoaController@search');
 Route::post('pessoas/carregaSenha', 'PessoaController@retorna_senhas');
+Route::get('vincularUnidade/{pessoa}', 'PessoaController@vincularUnidade');
+Route::post('vincularUnidade/insert', 'PessoaController@insertUnidadePessoa');
 /*
     REQUISICAO ROUTES
 */
-Route::get('/requisicao', 'RequisicaoController@index')->name('requisicao');
+Route::group(['middleware' => 'web'], function () {
+    Route::get('requisicao', 'RequisicaoController@index');
+    Route::get('requisicao/cadastrar', 'RequisicaoController@cadastrar');
+    Route::post('requisicao/insert', 'RequisicaoController@insert');
+    Route::get('requisicao/editar/{requisicao}', 'RequisicaoController@editar');
+    Route::patch('requisicao/update/{id}', 'RequisicaoController@update');
+    Route::get('requisicao/deletar/{requisicao}', 'RequisicaoController@deletar');
+    Route::get('requisicao/visualizar/{requisicao}', 'RequisicaoController@view');
+    Route::get('requisicao/search', 'RequisicaoController@search');
+});
+
 
 
 /*
     Fornecedor Routers
 */
 Route::group(['middleware' => 'web'], function () {
-   Route::get('fornecedor', 'FornecedorController@index');
+    Route::get('fornecedor', 'FornecedorController@index');
     Route::get('fornecedor/cadastrar', 'FornecedorController@cadastrar');
     Route::post('fornecedor/insert', 'FornecedorController@insert');
     Route::get('fornecedor/editar/{fornecedor}', 'FornecedorController@editar');
@@ -100,66 +112,74 @@ Route::group(['middleware' => 'web'], function () {
 */
 Route::group(['middleware' => 'web'], function () {
     Route::get('categoria', 'CategoriaController@index');
-     Route::get('categoria/cadastrar', 'CategoriaController@cadastrar');
-     Route::post('categoria/insert', 'CategoriaController@insert');
-     Route::get('categoria/editar/{categoria}', 'CategoriaController@editar');
-     Route::patch('categoria/update/{id}', 'CategoriaController@update');
-     Route::get('categoria/deletar/{categoria}', 'CategoriaController@deletar');
-     Route::get('categoria/visualizar/{categoria}', 'CategoriaController@view');
-     Route::get('categoria/search', 'CategoriaController@search');
- });
+    Route::get('categoria/cadastrar', 'CategoriaController@cadastrar');
+    Route::post('categoria/insert', 'CategoriaController@insert');
+    Route::get('categoria/editar/{categoria}', 'CategoriaController@editar');
+    Route::patch('categoria/update/{id}', 'CategoriaController@update');
+    Route::get('categoria/deletar/{categoria}', 'CategoriaController@deletar');
+    Route::get('categoria/visualizar/{categoria}', 'CategoriaController@view');
+    Route::get('categoria/search', 'CategoriaController@search');
+});
 /*
     Secretarias Routers
 */
- Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => 'web'], function () {
     Route::get('secretaria', 'SecretariaController@index');
-     Route::get('secretaria/cadastrar', 'SecretariaController@cadastrar');
-     Route::post('secretaria/insert', 'SecretariaController@insert');
-     Route::get('secretaria/editar/{secretaria}', 'SecretariaController@editar');
-     Route::patch('secretaria/update/{id}', 'SecretariaController@update');
-     Route::get('secretaria/deletar/{secretaria}', 'SecretariaController@deletar');
-     Route::get('secretaria/visualizar/{secretaria}', 'SecretariaController@view');
-     Route::get('secretaria/search', 'SecretariaController@search');
- });
+    Route::get('secretaria/cadastrar', 'SecretariaController@cadastrar');
+    Route::post('secretaria/insert', 'SecretariaController@insert');
+    Route::get('secretaria/editar/{secretaria}', 'SecretariaController@editar');
+    Route::patch('secretaria/update/{id}', 'SecretariaController@update');
+    Route::get('secretaria/deletar/{secretaria}', 'SecretariaController@deletar');
+    Route::get('secretaria/visualizar/{secretaria}', 'SecretariaController@view');
+    Route::get('secretaria/search', 'SecretariaController@search');
+});
 
 /*
     Setores Routers
 */
 Route::group(['middleware' => 'web'], function () {
     Route::get('setor', 'SetorController@index');
-     Route::get('setor/cadastrar', 'SetorController@cadastrar');
-     Route::post('setor/insert', 'SetorController@insert');
-     Route::get('setor/editar/{setor}', 'SetorController@editar');
-     Route::patch('setor/update/{id}', 'SetorController@update');
-     Route::get('setor/deletar/{setor}', 'SetorController@deletar');
-     Route::get('setor/visualizar/{setor}', 'SetorController@view');
-     Route::get('setor/search', 'SetorController@search');
- });
+    Route::get('setor/cadastrar', 'SetorController@cadastrar');
+    Route::post('setor/insert', 'SetorController@insert');
+    Route::get('setor/editar/{setor}', 'SetorController@editar');
+    Route::patch('setor/update/{id}', 'SetorController@update');
+    Route::get('setor/deletar/{setor}', 'SetorController@deletar');
+    Route::get('setor/visualizar/{setor}', 'SetorController@view');
+    Route::get('setor/search', 'SetorController@search');
+});
 
 /*
     Produtos Routers
 */
- Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => 'web'], function () {
     Route::get('produto', 'ProdutoController@index');
-     Route::get('produto/cadastrar', 'ProdutoController@cadastrar');
-     Route::post('produto/insert', 'ProdutoController@insert');
-     Route::get('produto/editar/{produto}', 'ProdutoController@editar');
-     Route::patch('produto/update/{id}', 'ProdutoController@update');
-     Route::get('produto/deletar/{produto}', 'ProdutoController@deletar');
-     Route::get('produto/visualizar/{produto}', 'ProdutoController@view');
-     Route::get('produto/search', 'ProdutoController@search');
- });
+    Route::get('produto/cadastrar', 'ProdutoController@cadastrar');
+    Route::post('produto/insert', 'ProdutoController@insert');
+    Route::get('produto/editar/{produto}', 'ProdutoController@editar');
+    Route::patch('produto/update/{id}', 'ProdutoController@update');
+    Route::get('produto/deletar/{produto}', 'ProdutoController@deletar');
+    Route::get('produto/visualizar/{produto}', 'ProdutoController@view');
+    Route::get('produto/search', 'ProdutoController@search');
+});
 /*
     Produtos Unidades
 */
- Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => 'web'], function () {
     Route::get('unidade', 'UnidadeController@index');
-     Route::get('unidade/cadastrar', 'UnidadeController@cadastrar');
-     Route::post('unidade/insert', 'UnidadeController@insert');
-     Route::get('unidade/editar/{unidade}', 'UnidadeController@editar');
-     Route::patch('unidade/update/{id}', 'UnidadeController@update');
-     Route::get('unidade/deletar/{unidade}', 'UnidadeController@deletar');
-     Route::get('unidade/visualizar/{unidade}', 'UnidadeController@view');
-     Route::get('unidade/search', 'UnidadeController@search');
- });
+    Route::get('unidade/cadastrar', 'UnidadeController@cadastrar');
+    Route::post('unidade/insert', 'UnidadeController@insert');
+    Route::get('unidade/editar/{unidade}', 'UnidadeController@editar');
+    Route::patch('unidade/update/{id}', 'UnidadeController@update');
+    Route::get('unidade/deletar/{unidade}', 'UnidadeController@deletar');
+    Route::get('unidade/visualizar/{unidade}', 'UnidadeController@view');
+    Route::get('unidade/search', 'UnidadeController@search');
+});
+/*
+    Relatorios
+*/
 
+Route::group(['middleware' => 'web'], function () {
+    Route::get('relatorio/requsicao/periodo', 'RelatorioController@periodo');
+    Route::get('relatorio/requsicao/periodo/buscar', 'RelatorioController@periodoBusca');
+    Route::get('relatorio/requisicao/unidade', 'RelatorioController@unidade');
+});

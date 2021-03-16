@@ -41,7 +41,7 @@ class CreateUnidadesTable extends Migration
             $table->foreign('secretaria_id')->references('id')->on('secretarias');
             $table->timestamps();
         });
-        Schema::create('pessoaunidade', function (Blueprint $table) {
+        Schema::create('pessoa_unidades', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('unidade_id')->unsigned();
             $table->integer('pessoa_id')->unsigned();
@@ -58,7 +58,7 @@ class CreateUnidadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pessoaunidade');
+        Schema::dropIfExists('pessoa_unidades');
         Schema::dropIfExists('unidades');
         Schema::dropIfExists('secretarias');
 

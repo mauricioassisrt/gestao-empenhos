@@ -95,11 +95,11 @@
                         <tr>
 
                             <td>
-                                @if(!$pessoa->foto_pessoa)
+                                @if (!$pessoa->foto_pessoa)
                                     Sem foto
                                 @else
-                                <img src="/{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
-                                width="40px" height="40px" />
+                                    <img src="/{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
+                                        width="40px" height="40px" />
                                 @endif
 
                             </td>
@@ -126,6 +126,18 @@
                                         </span>
                                         <i class="fas fa-edit"></i> Editar </a>
                                 @endcan
+                                @can('Edit_unidade')
+                                    <a href="{{ url('users/visualizar/' . $pessoa->users->id) }}" class="btn btn-primary">
+
+                                        <i class="fas fa-eye"></i>Permissões
+                                    </a>
+                                    <a href="{{ url('vincularUnidade/' . $pessoa->id) }}" class="btn btn-primary">
+
+                                        <i class="fas fa-plug"></i>Vincular Unidade
+                                    </a>
+
+                                @endcan
+
                                 @can('pessoa_delete')
 
 
@@ -209,6 +221,36 @@
                                         </div>
                                     </div>
                                 </form>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+
+                        <!--MODAL VINCULO UNIDADE -->
+                        <div class="modal fade" id="modal-unidade-{{ $pessoa->id }}" style="display: none;" tabindex='-1'
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- CABEÇALHO  -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Deseja excluir esse registro ?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <!-- CONTEUDO -->
+
+                                    <!-- RODA PE DIALOG -->
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                        <a href="{{ url('pessoas/deletar/' . $pessoa->id) }}" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i>
+                                            Sim
+                                        </a>
+
+
+                                    </div>
+                                </div>
                                 <!-- /.modal-content -->
                             </div>
                             <!-- /.modal-dialog -->

@@ -35,7 +35,7 @@ $empresa = Empresa::all();
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
-                <a class="nav-link" href="{{ asset('logout')}}">
+                <a class="nav-link" href="{{ asset('logout') }}">
                     Sair <i class="fas fa-sign-in-alt"></i>
 
                 </a>
@@ -87,15 +87,7 @@ $empresa = Empresa::all();
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item has-treeview menu-close">
-                            <a href="{{ url('pessoas/editar/' . Auth::user()->id) }}" class="nav-link active">
-                                <i class="nav-icon fas fa-info"></i>
-                                <p>
-                                    Meus dados
 
-                                </p>
-                            </a>
-                        </li>
                         <li class="nav-item has-treeview menu-close">
                             <a href="{{ route('requisicao') }}" class="nav-link active">
                                 <i class="nav-icon fas fa-file-invoice"></i>
@@ -123,12 +115,12 @@ $empresa = Empresa::all();
                                         </a>
                                     @endcan
                                     @can('View_unidade')
-                                    <a href="{{ url('unidade') }}" class="nav-link active">
-                                        <i class="fas fa-archway nav-icon"></i>
-                                        <p>Unidade</p>
+                                        <a href="{{ url('unidade') }}" class="nav-link active">
+                                            <i class="fas fa-archway nav-icon"></i>
+                                            <p>Unidade</p>
 
-                                    </a>
-                                @endcan
+                                        </a>
+                                    @endcan
 
                                     @can('View_categoria')
                                         <a href="{{ url('categoria') }}" class="nav-link active">
@@ -138,12 +130,12 @@ $empresa = Empresa::all();
                                         </a>
                                     @endcan
                                     @can('View_produto')
-                                    <a href="{{ url('produto') }}" class="nav-link active">
-                                        <i class="fas fa-box nav-icon"></i>
-                                        <p>Produto</p>
+                                        <a href="{{ url('produto') }}" class="nav-link active">
+                                            <i class="fas fa-box nav-icon"></i>
+                                            <p>Produto</p>
 
-                                    </a>
-                                @endcan
+                                        </a>
+                                    @endcan
 
                                     @can('View_fornecedor')
                                         <a href="{{ url('fornecedor') }}" class="nav-link active">
@@ -160,14 +152,7 @@ $empresa = Empresa::all();
 
                                         </a>
                                     @endcan
-                                    @can('empresa_view')
-                                        <a href="{{ url('/empresa') }}" class="nav-link active">
-                                            <i class="fas fa-gavel nav-icon"></i>
-                                            <p>Dados da Prefeitura </p>
-                                        </a>
 
-                                        </a>
-                                    @endcan
                                     {{-- @can('View_user')
                                         <a href="{{ url('/users') }}" class="nav-link active">
                                             <i class="fas fa-user nav-icon"></i>
@@ -195,7 +180,63 @@ $empresa = Empresa::all();
 
                             </ul>
                         </li>
+                        <li class="nav-item has-treeview menu-close">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                    Configurações
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    @can('empresa_view')
+                                        <a href="{{ url('/empresa') }}" class="nav-link active">
+                                            <i class="fas fa-gavel nav-icon"></i>
+                                            <p>Dados da Prefeitura </p>
+                                        </a>
 
+                                        </a>
+                                    @endcan
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('pessoas/editar/' . Auth::user()->id) }}"
+                                        class="nav-link active">
+                                        <i class="nav-icon fas fa-info"></i>
+                                        <p>
+                                            Meus dados
+
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview menu-close">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-file-pdf"></i>
+                                <p>
+                                    Relatórios
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('relatorio/requsicao/periodo') }}" class="nav-link active">
+                                        <i class="fas fa-calendar-alt nav-icon"></i>
+                                        <p>Requisições por data </p>
+                                    </a>
+
+
+
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('relatorio/requisicao/unidade') }}" class="nav-link active">
+                                        <i class="fas fa-archway nav-icon"></i>
+                                        <p>Quantitativo Requisições   </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
                     </ul>
                 </nav>
