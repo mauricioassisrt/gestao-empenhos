@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Fornecedor;
+use App\PessoaUnidade;
+use App\Produto;
 use App\Requisicao;
+use App\Unidade;
 use Illuminate\Http\Request;
 use Gate;
+
 class RequisicaoController extends Controller
 {
     public function __construct()
@@ -15,10 +20,10 @@ class RequisicaoController extends Controller
     public function index()
     {
         try {
-            if (Gate::allows('View_pessoa')) {
+            if (Gate::allows('View_requisicao')) {
                 $titulo = "Requisicao ";
                 $requisicao = Requisicao::paginate(20);
-                return view('requisicao.index', compact('Requisicao', 'titulo'));
+                return view('requisicao.index', compact('requisicao', 'titulo'));
             } else {
                 return view('errors.sem_permissao');
             }
@@ -28,11 +33,20 @@ class RequisicaoController extends Controller
     }
     public function cadastrar()
     {
-        if (Gate::allows('Insert_requisicao')) {
-            $titulo = "Novo cadastro de Requisicao ";
-            return view('requisicao.formulario', compact('titulo'));
-        } else {
-            return view('errors.sem_permissao');
+
+        try {
+            if (Gate::allows('Insert_requisicao')) {
+                $titulo = "Novo cadastro de Requisicao ";
+                $unidades = Unidade::all();
+                $fornecedors = Fornecedor::all();
+                $pessoa_unidades = PessoaUnidade::all();
+                $produtos = Produto::all();
+                return view('requisicao.formulario', compact('titulo', 'unidades', 'fornecedors', 'pessoa_unidades', 'produtos'));
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+
         }
     }
 

@@ -205,11 +205,31 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Delete_setor',
                 'label' => 'Apagar setor',
             ],
+            [
+                'name' => 'Insert_requisicao',
+                'label' => 'Adicionar requisicao',
+            ],
+            [
+                'name' => 'View_requisicao',
+                'label' => 'Visualizar requisicao',
+            ],
+            [
+                'name' => 'Edit_requisicao',
+                'label' => 'Editar requisicao',
+            ],
+            [
+                'name' => 'Delete_requisicao',
+                'label' => 'Apagar requisicao',
+            ],
+            [
+                'name' => 'pessoa_vincular_unidade',
+                'label' => 'Vincula um usuário a uma unidade ',
+            ],
 
 
         );
         foreach ($permissions as $key => $value) {
-          Permission::create($value);
+            Permission::create($value);
         }
 
         $permission_roles = array(
@@ -500,10 +520,50 @@ class PermissionTableSeeder extends Seeder
                 'permission_id' => '46',
                 'role_id' => '2'
             ],
+            [
+                'permission_id' => '47',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '50',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '47',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '50',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '51',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '51',
+                'role_id' => '2'
+            ],
 
         );
-          foreach ($permission_roles as $key => $value) {
+        foreach ($permission_roles as $key => $value) {
             Permission_role::create($value);
-          }
+        }
     }
 }

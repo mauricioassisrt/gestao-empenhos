@@ -11,8 +11,8 @@
                     {{ session('status') }}
                 </div>
             @endif
-            @can('insert_requisicao')
-                <a href="{{ url('requiscao/cadastrar') }}" class="btn btn-primary float-right">
+            @can('Insert_requisicao')
+                <a href="{{ url('requisicao/cadastrar') }}" class="btn btn-primary float-right">
                     <i class="fas fa-plus"></i> Novo </a>
 
 
@@ -65,7 +65,10 @@
                     <tr>
 
                         <td>
-                            UBS CENTRO
+                            6
+                        </td>
+                        <td>
+                            UBS central
                         </td>
                         <td>
                             10/02/2021
@@ -77,7 +80,12 @@
                             Deferido
                         </td>
                         <td>
-                            Botões
+                            <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                </span>
+                                <i class="fas fa-edit"></i> Editar </a>
+                            <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                </span>
+                                <i class="fas fa-next"></i> Realizar andamento </a>
                         </td>
 
                     </tr>

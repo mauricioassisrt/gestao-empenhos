@@ -131,15 +131,15 @@
 
                                         <i class="fas fa-eye"></i>Permissões
                                     </a>
+                                @endcan
+                                @can('pessoa_vincular_unidade')
                                     <a href="{{ url('vincularUnidade/' . $pessoa->id) }}" class="btn btn-primary">
 
                                         <i class="fas fa-plug"></i>Vincular Unidade
                                     </a>
-
                                 @endcan
 
                                 @can('pessoa_delete')
-
 
                                     <a href="" class="btn btn-primary" data-toggle="modal"
                                         data-target="#modal-default-{{ $pessoa->id }}"><span

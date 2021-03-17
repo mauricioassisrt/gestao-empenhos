@@ -269,7 +269,7 @@ class PessoaController extends Controller
 
         try {
             $titulo = 'Vincular uma Unidade a pessoa  ';
-            if (Gate::allows('pessoa_view')) {
+            if (Gate::allows('pessoa_vincular_unidade')) {
                 $unidades = Unidade::all();
                 $pessoa_unidades = PessoaUnidade::all();
                 $unidade_id = 0;

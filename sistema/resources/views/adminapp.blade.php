@@ -89,7 +89,7 @@ $empresa = Empresa::all();
                         </li>
 
                         <li class="nav-item has-treeview menu-close">
-                            <a href="{{ route('requisicao') }}" class="nav-link active">
+                            <a href="{{ url('requisicao') }}" class="nav-link active">
                                 <i class="nav-icon fas fa-file-invoice"></i>
                                 <p>
                                     Requisição
