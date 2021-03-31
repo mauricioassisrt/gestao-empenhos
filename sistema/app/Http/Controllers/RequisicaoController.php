@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use App\Fornecedor;
 use App\PessoaUnidade;
 use App\Produto;
@@ -40,19 +41,39 @@ class RequisicaoController extends Controller
                 $unidades = Unidade::all();
                 $fornecedors = Fornecedor::all();
                 $pessoa_unidades = PessoaUnidade::all();
+                $categorias = Categoria::all();
                 $produtos = Produto::all();
-                return view('requisicao.formulario', compact('titulo', 'unidades', 'fornecedors', 'pessoa_unidades', 'produtos'));
+
+                return view('requisicao.formulario', compact('titulo', 'categorias', 'unidades', 'fornecedors', 'pessoa_unidades', 'produtos'));
             } else {
                 return view('errors.sem_permissao');
             }
         } catch (\Throwable $th) {
+        }
+    }
 
+    /**
+     *
+     * Get Categoria API que busca a categoria selecionada e retorna uma lista de produtos
+     *
+     */
+    public function getCategoria(Request $request)
+    {
+
+        //pegar o email e comparar, e pegar a senha vinda e comparar
+        if ($request->categoria_id) {
+            $produtos = Produto::where('categoria_id', $request->categoria_id)->get();
+
+            return response()->json(['success' => 'success', 'produtos' => $produtos]);
+        } else {
+            return response()->json(['error' => 'error', 'data' => 'Este e-mail já está sendo utilizado por um usuário!']);
         }
     }
 
     public function insert(Request $request)
     {
         if (Gate::allows('Insert_requisicao')) {
+            dd($request);
             Requisicao::create($request->all());
             return redirect('requisicao');
         } else {

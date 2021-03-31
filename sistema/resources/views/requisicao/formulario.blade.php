@@ -30,7 +30,7 @@
             @endif
 
             <div class="col-sm-12">
-
+                @csrf
                 <div class="row">
                     <div class="col-sm-1 ">
                         <label>Código</label>
@@ -111,22 +111,22 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <label>Licitação/Ano </label>
-                        <input type="text" name="licitacao_ano" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->licitacao_ano }}" @endif >
+                        <input type="text" name="licitacao_ano" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->licitacao_ano }}" @endif>
 
                     </div>
                     <div class="col-sm-3">
                         <label>Pregão </label>
-                        <input type="text" name="numero_pregao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->numero_pregao }}" @endif >
+                        <input type="text" name="numero_pregao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->numero_pregao }}" @endif>
 
                     </div>
                     <div class="col-sm-3">
                         <label>Orgão/Unidade </label>
-                        <input type="text" name="orgao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif >
+                        <input type="text" name="orgao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>
 
                     </div>
                     <div class="col-sm-3">
                         <label>Reduzido </label>
-                        <input type="text" name="reduzido" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->reduzido }}" @endif >
+                        <input type="text" name="reduzido" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->reduzido }}" @endif>
 
                     </div>
                 </div>
@@ -139,36 +139,24 @@
 
                 <p> Basta informar a quantidade somente para montar a requisição </p>
             </div>
-            <div class="row">
+            <div class="row" id="divProdutos">
+                <div class="col-sm-12">
+                    <label>Selecione uma categoria para exibir os itens </label>
+                    <select name="categoria_id" class="form-control select2" style="width: 100%;" id="getCategoria">
+
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}">
+                                {{ $categoria->nome_categoria }}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
                 <div class="col-sm-12">
 
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-striped table-bordered table-hover" style='background:#fff'>
-                            <thead>
-                                <th> Lote</th>
-                                <th> Produto</th>
-                                <th>Valor Unitario </th>
-                                <th>Quantidade</th>
-                                <th>Valor Total</th>
+                        <table class="table " id="tabela_produtos">
 
-                            </thead>
-                            <tbody>
-                                @foreach ($produtos as $produto)
-                                    <tr>
-                                        <td>{!! $produto->lote !!}</td>
-                                        <td>{!! $produto->nome !!}</td>
-                                        <td>{{ $produto->valor_unitario }}</td>
-                                        <td>
-                                            <input type="number" name="quantidade_itens_requisicao"
-                                                class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->quantidade_itens_requisicao }}" @endif>
-                                        </td>
-                                        <td>
-                                            <input type="number" name="valor_itens_requisicao"
-                                                class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->valor_itens_requisicao }}" @endif disabled>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
 
@@ -176,35 +164,48 @@
                 </div>
 
             </div>
+            <div class="row" id="divItens" style="display:none">
+                <div class="col-sm-12">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table " id="tabela_itens">
+
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="card-footer clearfix">
+            @can('View_requisicao')
+                <a href="{{ url('/requisicao') }}" class="btn btn-primary">
 
+                    <i class="fas fa-arrow-left"></i> Voltar </a>
+            @endcan
+
+            @if (Request::is('*/editar/*'))
+
+                <button type="submit" class="btn btn-success" id="botaoSalvarUser" style="display:none"> <i
+                        class=" fas fa-pen-alt"></i> Alterar</button>
+
+            @else
+
+                <a href="javascript::" class="btn btn-primary" id="irParaLista">
+
+                    <i class="fas fa-arrow-right"></i> Ir para lista de itens </a>
+                    <button type="submit" class="btn btn-success" id="resumo" style="display:none"> <i
+                        class=" fas fa-pen-alt"></i> Resumo da requisição </button>
+            @endif
+
+        </div>
     </div>
 
-    <div class="card-footer clearfix">
-        @can('requisicao_view')
-            <a href="{{ url('/requisicao') }}" class="btn btn-primary">
 
-                <i class="fas fa-arrow-left"></i> Voltar </a>
-        @endcan
-
-        @if (Request::is('*/editar/*'))
-
-            <button type="submit" class="btn btn-success" id="botaoSalvarUser" style="display:none"> <i
-                    class=" fas fa-pen-alt"></i> Alterar</button>
-
-        @else
-            <button type="submit" class="btn btn-success" id="botaoSalvarUser" style="display:none"> <i
-                    class=" fas fa-save"></i> Salvar</button>
-        @endif
-
-    </div>
     {!! Form::close() !!}
     </div>
 
 
 @section('rodape')
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script> --}}
+
     <!-- CALENDARIo-->
     <script src=" {{ asset('js/moment.min.js') }}"></script>
     <script src=" {{ asset('js/tempusdominus-bootstrap-4.min.js') }}"></script>
@@ -215,66 +216,85 @@
     <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
     <script src=" {{ asset('js/toastr.min.js') }}"></script>
     <!-- FIM TOAST SWEETALERT  -->
-    <!-- Modulo usuarios-->
-    <script src=" {{ asset('js/modulos/requisicao-cadastro.js') }}"></script>
+
 
     <script>
-        //verifica o envio de senha
-        $('#enviarSenha').blur(function(e) {
-            //CSRF TOKEN
+        var listaRequisicao = [];
+        var lista = '';
+        var listaIdProdutos = [];
+        $('#getCategoria').blur(function(e) {
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-                //passo o endereco da API
-                url: "{{ url('requisicao/carregaSenha') }}",
-                //define-se o metodo do tipo post
+                url: "{{ url('requisicao/getCategoria') }}",
                 method: "POST",
-                //passa os parametros que serão enviados via API ID do usuario que está sendo editado, senha antiga digitada, e email
-                // o email e a senha será enviado e comparado com os inseridos no database
                 data: {
-                    user_id: $("#user_id").val(),
-                    senha_antiga: $(".senhaAntiga").val(),
-                    email: $("#email").val(),
+                    categoria_id: $("#getCategoria").val(),
+
                 },
-                //caso resulte sucesso, exibe os  input para digitar senha, caso contrario não libera o acesso
                 success: function(result) {
-                    if (result.success === 'success') {
-                        toastr.success(
-                            'Email validado, digite uma nova senha para acesso ao sistema !!!!');
-                        $(".senhas").show();
+
+                    if (result.success) {
+                        $("#tabela_produtos").empty()
+                        $.each(result.produtos, function(key, value) {
+
+                            lista += '<tr class="adicionar">';
+                            lista += '<td >' + value.id + '</td>';
+                            lista += '<td >' + value.lote + '</td>';
+                            lista += '<td >' + value.nome + '</td>';
+                            lista += '<td>' + value.valor_unitario + '</td>';
+                            lista += '<td> <a class="btn btn-success  " href="javascript:"  ><i   class=" fas fa-save"></i> Adicionara</a>  </td>';
+                            lista += '</tr>';
+                        });
+                        $('#tabela_produtos').append(lista);
+
+
+                        lista = '';
+
+                        $('.adicionar').click(function(e) {
+                            var idProduto = $(this).find('td:eq(0)').text();
+
+                            $.each(result.produtos, function(key, value) {
+
+                                if (idProduto == value.id) {
+                                    listaIdProdutos.push(value);
+                                }
+
+                            });
+                            idProduto = "";
+
+                            toastr.warning("Foram adicionados na lista o produto ");
+                        });
                     } else {
-                        $(".senhas").hide();
-                        toastr.error('Email inválido ou senha anterior incorreta !!!!');
+                        // toastr.error(result.data);
+                        //
                     }
                 }
             });
         });
-        //envio de email
-        $('#enviarEmail').blur(function(e) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+        $('#irParaLista').click(function(e) {
+
+            $("#divProdutos").hide();
+            $("#divItens").show();
+            $.each(listaIdProdutos, function(key, value) {
+
+                listaRequisicao += '<tr >';
+                listaRequisicao += '<td >' + value.lote + '</td>';
+                listaRequisicao += '<td >' + value.nome + '</td>';
+                listaRequisicao += '<td>' + value.valor_unitario + '</td>';
+                listaRequisicao += '<td> <input type="text" name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is("*/editar/*")) value="{{  }}" @endif>                </td>';
+                listaRequisicao += '</tr>';
             });
-            $.ajax({
-                url: "{{ url('requisicao/carregaSenha') }}",
-                method: "POST",
-                data: {
-                    email: $("#enviarEmail").val(),
-                },
-                success: function(result) {
-                    if (result.success) {
-                        toastr.success(result.data);
-                        $(".senhas").show();
-                    } else {
-                        toastr.error(result.data);
-                        $(".senhas").hide();
-                    }
-                }
-            });
+            $('#tabela_itens').append(listaRequisicao);
+
+            $("#irParaLista").hide();
+            $("#resumo").show();
+
+            listaRequisicao = '';
         });
 
     </script>

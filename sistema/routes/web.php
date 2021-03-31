@@ -90,6 +90,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('requisicao/deletar/{requisicao}', 'RequisicaoController@deletar');
     Route::get('requisicao/visualizar/{requisicao}', 'RequisicaoController@view');
     Route::get('requisicao/search', 'RequisicaoController@search');
+    Route::post('requisicao/getCategoria', 'RequisicaoController@getCategoria');
 });
 
 
