@@ -297,8 +297,8 @@
 
             $.each(listaProdutosNova, function(key, value) {
 
-                listaRequisicao += '<tr >';
-                listaRequisicao += '<td class="del" >' + value.id + '</td>';
+                listaRequisicao += '<tr class="del">';
+                listaRequisicao += '<td >' + value.id + '</td>';
                 listaRequisicao += '<td >' + value.lote + '</td>';
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao += '<td>' + value.valor_unitario + '</td>';
@@ -319,12 +319,12 @@
 
             listaRequisicao = '';
 
-            $('#tabela_itens').on('click', 'tr a .del', function(e) {
+            $('#tabela_itens').on('click', 'tr a', function(e) {
 
                 e.preventDefault();
                 $(this).parents('tr').remove();
 
-                var idProduto = $(this).find('td:eq(0)').text();
+                var idProduto = $(this).find('tr:eq(0)').text();
                 alert(idProduto)
                // const index = array.indexOf(5);
                 //if (index > -1) {
