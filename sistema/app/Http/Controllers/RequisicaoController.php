@@ -59,14 +59,13 @@ class RequisicaoController extends Controller
      */
     public function getCategoria(Request $request)
     {
+        $produtos = Produto::where('categoria_id', $request->categoria_id)->get();
 
         //pegar o email e comparar, e pegar a senha vinda e comparar
-        if ($request->categoria_id) {
-            $produtos = Produto::where('categoria_id', $request->categoria_id)->get();
-
+        if ($produtos != "[]") {
             return response()->json(['success' => 'success', 'produtos' => $produtos]);
         } else {
-            return response()->json(['error' => 'error', 'data' => 'Este e-mail já está sendo utilizado por um usuário!']);
+            return response()->json(['error' => 'error', 'produtos' => 'Sem dados']);
         }
     }
 

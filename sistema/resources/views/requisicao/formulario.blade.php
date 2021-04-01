@@ -175,11 +175,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            @can('View_requisicao')
-                <a href="{{ url('/requisicao') }}" class="btn btn-primary">
 
-                    <i class="fas fa-arrow-left"></i> Voltar </a>
-            @endcan
 
             @if (Request::is('*/editar/*'))
 
@@ -188,10 +184,14 @@
 
             @else
 
-                <a href="javascript::" class="btn btn-primary" id="irParaLista">
+                <a href="javascript:" class="btn btn-primary" id="voltarProdutos" style="display:none">
+
+                    <i class="fas fa-arrow-right"></i> Voltar escolher produtos </a>
+
+                <a href="javascript:" class="btn btn-primary" id="irParaLista">
 
                     <i class="fas fa-arrow-right"></i> Ir para lista de itens </a>
-                    <button type="submit" class="btn btn-success" id="resumo" style="display:none"> <i
+                <button type="submit" class="btn btn-success" id="resumo" style="display:none"> <i
                         class=" fas fa-pen-alt"></i> Resumo da requisição </button>
             @endif
 
@@ -222,6 +222,7 @@
         var listaRequisicao = [];
         var lista = '';
         var listaIdProdutos = [];
+        var listaProdutosNova = [];
         $('#getCategoria').blur(function(e) {
 
             $.ajaxSetup({
@@ -247,7 +248,8 @@
                             lista += '<td >' + value.lote + '</td>';
                             lista += '<td >' + value.nome + '</td>';
                             lista += '<td>' + value.valor_unitario + '</td>';
-                            lista += '<td> <a class="btn btn-success  " href="javascript:"  ><i   class=" fas fa-save"></i> Adicionara</a>  </td>';
+                            lista +=
+                                '<td> <a class="btn btn-success "  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
                             lista += '</tr>';
                         });
                         $('#tabela_produtos').append(lista);
@@ -259,18 +261,20 @@
                             var idProduto = $(this).find('td:eq(0)').text();
 
                             $.each(result.produtos, function(key, value) {
-
                                 if (idProduto == value.id) {
                                     listaIdProdutos.push(value);
+                                    toastr.error("NO IF!!!");
+
                                 }
 
-                            });
-                            idProduto = "";
 
-                            toastr.warning("Foram adicionados na lista o produto ");
+                            });
+
+                            idProduto = "";
                         });
+
                     } else {
-                        // toastr.error(result.data);
+                        toastr.error("Esta categoria não possui nenhum produto cadastrado!!!");
                         //
                     }
                 }
@@ -280,21 +284,67 @@
 
             $("#divProdutos").hide();
             $("#divItens").show();
-            $.each(listaIdProdutos, function(key, value) {
+            $("#tabela_itens").empty()
+
+            $.each(listaIdProdutos, function(i, e) {
+                var matchingItems = $.grep(listaProdutosNova, function(item) {
+                    return item.id === e.id;
+                });
+                if (matchingItems.length === 0) {
+                    listaProdutosNova.push(e);
+                }
+            });
+
+            $.each(listaProdutosNova, function(key, value) {
 
                 listaRequisicao += '<tr >';
+                listaRequisicao += '<td class="del" >' + value.id + '</td>';
                 listaRequisicao += '<td >' + value.lote + '</td>';
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao += '<td>' + value.valor_unitario + '</td>';
-                listaRequisicao += '<td> <input type="text" name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is("*/editar/*")) value="{{  }}" @endif>                </td>';
+                listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
+                    ' /> <input type="text" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
+                    /editar/ *
+                    ')) value="{{  }}" @endif> </td>';
+                listaRequisicao += '<td> <a href="#">del</a> </td>';
                 listaRequisicao += '</tr>';
+
             });
+
             $('#tabela_itens').append(listaRequisicao);
 
             $("#irParaLista").hide();
             $("#resumo").show();
+            $("#voltarProdutos").show();
 
             listaRequisicao = '';
+
+            $('#tabela_itens').on('click', 'tr a .del', function(e) {
+
+                e.preventDefault();
+                $(this).parents('tr').remove();
+
+                var idProduto = $(this).find('td:eq(0)').text();
+                alert(idProduto)
+               // const index = array.indexOf(5);
+                //if (index > -1) {
+               //     array.splice(index, 1);
+               // }
+                //  alert(listaProdutosNova[posicao].id);
+                //let removed = listaProdutosNova.splice(posicao, 1)
+
+
+            });
+
+        });
+
+        $('#voltarProdutos').click(function(e) {
+            $("#divProdutos").show();
+            $("#divItens").hide();
+            $("#resumo").hide();
+            $("#irParaLista").show();
+            $("#voltarProdutos").hide();
+
         });
 
     </script>
