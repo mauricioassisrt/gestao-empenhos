@@ -186,7 +186,7 @@
 
                 <a href="javascript:" class="btn btn-primary" id="voltarProdutos" style="display:none">
 
-                    <i class="fas fa-arrow-right"></i> Voltar escolher produtos </a>
+                    <i class="fas fa-arrow-left"></i> Voltar escolher produtos </a>
 
                 <a href="javascript:" class="btn btn-primary" id="irParaLista">
 
@@ -263,7 +263,7 @@
                             $.each(result.produtos, function(key, value) {
                                 if (idProduto == value.id) {
                                     listaIdProdutos.push(value);
-                                    toastr.error("NO IF!!!");
+                                    toastr.success("Produto adicionado na listagem");
 
                                 }
 
@@ -298,7 +298,7 @@
             $.each(listaProdutosNova, function(key, value) {
 
                 listaRequisicao += '<tr class="del">';
-                listaRequisicao += '<td >' + value.id + '</td>';
+                listaRequisicao += '<td >' + key + '</td>';
                 listaRequisicao += '<td >' + value.lote + '</td>';
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao += '<td>' + value.valor_unitario + '</td>';
@@ -306,7 +306,7 @@
                     ' /> <input type="text" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
                     /editar/ *
                     ')) value="{{  }}" @endif> </td>';
-                listaRequisicao += '<td> <a href="#">del</a> </td>';
+                listaRequisicao += '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
                 listaRequisicao += '</tr>';
 
             });
@@ -319,19 +319,16 @@
 
             listaRequisicao = '';
 
-            $('#tabela_itens').on('click', 'tr a', function(e) {
+            $('#tabela_itens').on('click', 'tr a ', function(e) {
 
                 e.preventDefault();
                 $(this).parents('tr').remove();
 
-                var idProduto = $(this).find('tr:eq(0)').text();
-                alert(idProduto)
-               // const index = array.indexOf(5);
-                //if (index > -1) {
-               //     array.splice(index, 1);
-               // }
-                //  alert(listaProdutosNova[posicao].id);
-                //let removed = listaProdutosNova.splice(posicao, 1)
+                var idProduto = $(this).find('td:eq(0)').text();
+                toastr.error("Apagado com sucesso !");
+                listaProdutosNova.splice($.inArray(idProduto, listaProdutosNova));
+                listaIdProdutos.splice($.inArray(idProduto, listaIdProdutos));
+                listaRequisicao.splice($.inArray(idProduto, listaRequisicao));
 
 
             });
