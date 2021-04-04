@@ -18,4 +18,5 @@ class Requisicao extends Model
     {
         return $this->belongsTo(PessoaUnidade::class, 'unidade_id' );
     }
+
 }

@@ -80,9 +80,13 @@
 
                             </td>
                             <td>
-                                <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                @can('Edit_requisicao')
+
+                                <a href="{{ url('requisicao/editar/' . $requisicao->id) }}" class="btn btn-primary"><span
+                                        class="glyphicon glyphicon-pencil">
                                     </span>
                                     <i class="fas fa-edit"></i> Editar </a>
+                            @endcan
                                 <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
                                     </span>
                                     <i class="fas fa-next"></i> Realizar andamento </a>

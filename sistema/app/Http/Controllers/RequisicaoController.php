@@ -119,12 +119,16 @@ class RequisicaoController extends Controller
 
     public function editar(Requisicao $requisicao)
     {
-        if (Gate::allows('Edit_requisicao')) {
-            $requisicao = Requisicao::findOrFail($requisicao->id);
+        try {
             $titulo = "Editar ";
-            return view('requisicao.formulario', compact('Requisicao', 'titulo'));
-        } else {
-            return view('errors.sem_permissao');
+            if (Gate::allows('Edit_requisicao')) {
+                $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
+                return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo'));
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404', $th);
         }
     }
 
