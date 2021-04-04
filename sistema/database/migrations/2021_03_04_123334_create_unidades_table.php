@@ -63,5 +63,6 @@ class CreateUnidadesTable extends Migration
         Schema::dropIfExists('secretarias');
 
 
+
     }
 }

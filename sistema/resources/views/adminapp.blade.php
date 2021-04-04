@@ -87,13 +87,32 @@ $empresa = Empresa::all();
                                 </p>
                             </a>
                         </li>
-
                         <li class="nav-item has-treeview menu-close">
-                            <a href="{{ url('requisicao') }}" class="nav-link active">
-                                <i class="nav-icon fas fa-file-invoice"></i>
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas  fa-file-invoice"></i>
                                 <p>
-                                    Requisição
+                                    Requisições
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('requisicao') }}" class="nav-link active">
+                                        <i class="nav-icon fas fa-file-prescription"></i>
+                                        <p>
+                                            Realizadas
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('requisicao') }}" class="nav-link active">
+                                        <i class="nav-icon fas fa-receipt"></i>
+                                        <p>
+                                            Minhas requisições
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
                             </a>
                         </li>
 
@@ -232,7 +251,7 @@ $empresa = Empresa::all();
                                 <li class="nav-item">
                                     <a href="{{ url('relatorio/requisicao/unidade') }}" class="nav-link active">
                                         <i class="fas fa-archway nav-icon"></i>
-                                        <p>Quantitativo Requisições   </p>
+                                        <p>Quantitativo Requisições </p>
                                     </a>
                                 </li>
                             </ul>

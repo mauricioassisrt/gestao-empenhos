@@ -7,6 +7,7 @@ use App\Fornecedor;
 use App\PessoaUnidade;
 use App\Produto;
 use App\Requisicao;
+use App\RequisicaoProduto;
 use App\Unidade;
 use Illuminate\Http\Request;
 use Gate;
@@ -23,8 +24,8 @@ class RequisicaoController extends Controller
         try {
             if (Gate::allows('View_requisicao')) {
                 $titulo = "Requisicao ";
-                $requisicao = Requisicao::paginate(20);
-                return view('requisicao.index', compact('requisicao', 'titulo'));
+                $requisicaos = Requisicao::paginate(20);
+                return view('requisicao.index', compact('requisicaos', 'titulo'));
             } else {
                 return view('errors.sem_permissao');
             }
@@ -72,8 +73,43 @@ class RequisicaoController extends Controller
     public function insert(Request $request)
     {
         if (Gate::allows('Insert_requisicao')) {
-            dd($request);
-            Requisicao::create($request->all());
+
+            $valor_final = 0;
+            $total_produtos = 0;
+
+            foreach ($request->produto_id as $key => $value) {
+                $produto = Produto::findOrfail($value);
+                $valor_final += $request->quantidadeItens[$key] * $produto->valor_unitario;
+                $total_produtos += $request->quantidadeItens[$key];
+            }
+
+            $request['valor_final'] = $valor_final;
+            $request['total_produtos'] =   $total_produtos;
+
+            $id = Requisicao::create($request->all())->id;
+            $requisicaoAno = $id . '/' . $request->licitacao_ano;
+            $requisicao = Requisicao::findOrFail($id);
+
+            $reqArray = array(
+                'requisicao_ano' => $requisicaoAno,
+
+            );
+            $requisicao->update($reqArray);
+            $requisicaoProduto = new RequisicaoProduto();
+            foreach ($request->produto_id as $key => $value) {
+                $produto = Produto::findOrfail($value);
+                $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+
+                $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
+                $requisicaoProduto->valor_total_iten = $valorIten;
+                $requisicaoProduto->requisicao_id = $id;
+                $requisicaoProduto->produto_id = $produto->id;
+
+                $requisicaoProduto->save();
+                $requisicaoProduto = new RequisicaoProduto();
+            }
+
+
             return redirect('requisicao');
         } else {
             return view('errors.sem_permissao');

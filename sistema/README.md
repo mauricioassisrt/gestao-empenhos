@@ -112,3 +112,68 @@ Route::resource('nome','Controller');
 //         dd($shellexec);
 //     }
 // ); -->
+
+/*
+* metodo finalizar requisicao
+*/
+
+ public function reparoRequest(Request $request)
+    {
+        //dd($request->all());
+        $contador = 0;
+        $totalPecas = 0;
+        $valorFinal = 0;
+        $servico =  new Servico();
+        //dd(count($servico));
+        for ($i = 0; $i < count($request->pecaid); $i++) {
+            $peca = Peca::findOrfail($request->pecaid[$i]);
+
+            if ($int = (int) $request->quantidade[$i] != 0) {
+                $total = $request->quantidade[$i] * $peca->preco;
+
+                $pecaServico[$contador += 1] = array(
+                    "valorTotalPorPeca" => $total,
+                    "quantidade" => (int) $request->quantidade[$i],
+                    "peca_id" => $peca->id,
+
+                );
+                $valorFinal += $total;
+                $totalPecas += (int) $request->quantidade[$i];
+            }
+        }
+        //var_dump($pecaServico);
+        //converter data para padrão banco 
+        $converterData = strtotime($request->dataOs);
+        $servico->data = date('Y-m-d', $converterData);
+
+        $servico->totalpecas = $totalPecas;
+        $servico->valorFinal = $valorFinal;
+        $servico->equipamento_id = $request->equipamento;
+
+        $servico->save();
+        ///dd($servico->id);
+        $pecaServico = new PecasServicos();
+        for ($i = 0; $i < count($request->pecaid); $i++) {
+            $peca = Peca::findOrfail($request->pecaid[$i]);
+
+            if ($int = (int) $request->quantidade[$i] != 0) {
+                $pecaServico->valorSomaIten = $request->quantidade[$i] * $peca->preco;
+                $pecaServico->quantidade =  (int) $request->quantidade[$i];
+                $pecaServico->servico_id = $servico->id;
+                $pecaServico->peca_id = $peca->id;
+                $pecaServico->save();
+
+                $pecaServico = new PecasServicos();
+            }
+        }
+
+        if ($servico->id != null) {
+            $salvo = true;
+        } else {
+            $salvo = false;
+        }
+
+        $objetoPecas = Peca::all();
+        $objetoEquipamentos = Equipamento::all();
+        return view('peca.reparo', compact('salvo', 'objetoPecas', 'objetoEquipamentos'));
+    }

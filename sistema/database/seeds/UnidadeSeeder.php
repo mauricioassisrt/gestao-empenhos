@@ -1,5 +1,6 @@
 <?php
 
+use App\PessoaUnidade;
 use App\Unidade;
 use Illuminate\Database\Seeder;
 
@@ -91,6 +92,20 @@ class UnidadeSeeder extends Seeder
 
         foreach ($unidade as $key => $value) {
             Unidade::create($value);
+        }
+
+        $pessoa_unidade = array(
+            [
+                'unidade_id'=> '1',
+                'pessoa_id'=> '1',
+            ],
+            [
+                'unidade_id'=> '2',
+                'pessoa_id'=> '2',
+            ]
+        );
+        foreach ($pessoa_unidade as $key => $value) {
+            PessoaUnidade::create($value);
         }
     }
 }

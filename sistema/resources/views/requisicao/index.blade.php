@@ -61,39 +61,41 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($requisicaos as $requisicao)
+                        <tr>
 
-                    <tr>
+                            <td>
+                                {{ $requisicao->id }}
+                            </td>
+                            <td>
+                                {{ $requisicao->unidades->nome }}
+                            </td>
+                            <td>
+                                {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
+                            </td>
+                            <td>
+                                {{ $requisicao->pessoaUnidade->pessoa->name }}
+                            </td>
+                            <td>
 
-                        <td>
-                            6
-                        </td>
-                        <td>
-                            UBS central
-                        </td>
-                        <td>
-                            10/02/2021
-                        </td>
-                        <td>
-                            Pessoa Responsável
-                        </td>
-                        <td>
-                            Deferido
-                        </td>
-                        <td>
-                            <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
-                                </span>
-                                <i class="fas fa-edit"></i> Editar </a>
-                            <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
-                                </span>
-                                <i class="fas fa-next"></i> Realizar andamento </a>
-                        </td>
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                    </span>
+                                    <i class="fas fa-edit"></i> Editar </a>
+                                <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                    </span>
+                                    <i class="fas fa-next"></i> Realizar andamento </a>
+                            </td>
 
-                    </tr>
+                        </tr>
+                    @endforeach
 
-
+                </tbody>
+            </table>
         </div>
         <div class="card-footer clearfix">
-            {{ $requisicao->links() }}
+            {{ $requisicaos->links() }}
         </div>
     </div>
 

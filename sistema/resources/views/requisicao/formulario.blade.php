@@ -45,11 +45,11 @@
                     <div class="col-sm-9">
 
                         <label>Pessoa e suas unidades </label>
-                        <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
+                        <select name="unidade_id" class="form-control select2" style="width: 100%;">
 
                             @foreach ($pessoa_unidades as $pessoa_unidade)
 
-                                <option value="{{ $pessoa_unidade->id }}">
+                                <option value="{{ $pessoa_unidade->unidade->id }}">
                                     Unidade {{ $pessoa_unidade->unidade->nome }} Pessoa
                                     {{ $pessoa_unidade->pessoa->nome }}
                                 </option>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label>Fornecedor </label>
-                        <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
+                        <select name="fornecedor_id" required class="form-control select2" style="width: 100%;">
 
                             @foreach ($fornecedors as $fornecedor)
                                 <option value="{{ $fornecedor->id }}">
@@ -81,47 +81,34 @@
 
                         </select>
                     </div>
-                    {{-- <div class="col-sm-3">
-                        <label>Pessoa e suas unidades </label>
-                        <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
 
-                            @foreach ($pessoa_unidades as $pessoa_unidade)
-
-                                <option value="{{ $pessoa_unidade->id }}">
-                                    Unidade {{ $pessoa_unidade->unidade->nome }} Pessoa
-                                    {{ $pessoa_unidade->pessoa->nome }}
-                                </option>
-
-                            @endforeach
-                        </select>
-                    </div> --}}
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <label>Justificativa </label>
-                        <textarea class="form-control" rows="3" name="justificativa"
+                        <textarea class="form-control" rows="3" required name="justificativa"
                             placeholder="Qual sua  justificativa para a requisição"></textarea>
                     </div>
                     <div class="col-sm-6">
                         <label>Justificativa </label>
-                        <textarea class="form-control" rows="3" name="observacao"
+                        <textarea class="form-control" rows="3" required name="observacao"
                             placeholder="Possui alguma observação para incluir ?"></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-3">
                         <label>Licitação/Ano </label>
-                        <input type="text" name="licitacao_ano" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->licitacao_ano }}" @endif>
+                        <input type="text" name="licitacao_ano" required class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->licitacao_ano }}" @endif>
 
                     </div>
                     <div class="col-sm-3">
                         <label>Pregão </label>
-                        <input type="text" name="numero_pregao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->numero_pregao }}" @endif>
+                        <input type="text" name="numero_pregao" required class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->numero_pregao }}" @endif>
 
                     </div>
                     <div class="col-sm-3">
                         <label>Orgão/Unidade </label>
-                        <input type="text" name="orgao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>
+                        <input type="text" name="orgao" class=" required form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>
 
                     </div>
                     <div class="col-sm-3">
@@ -130,7 +117,7 @@
 
                     </div>
                 </div>
-                {{-- <input type="hidden" name="user_id" value="" /> --}}
+
             </div>
 
             <hr>
@@ -298,7 +285,7 @@
             $.each(listaProdutosNova, function(key, value) {
 
                 listaRequisicao += '<tr class="del">';
-                listaRequisicao += '<td >' + key + '</td>';
+                listaRequisicao += '<td ><p style="display:none">' + key + '</p></td>';
                 listaRequisicao += '<td >' + value.lote + '</td>';
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao += '<td>' + value.valor_unitario + '</td>';

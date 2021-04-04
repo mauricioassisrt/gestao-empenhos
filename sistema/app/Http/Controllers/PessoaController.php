@@ -283,19 +283,43 @@ class PessoaController extends Controller
     public function insertUnidadePessoa(Request $request)
     {
         try {
-
-            $unidadePessoa = new  PessoaUnidade();
-
             if (Gate::allows('insert_unidade_pessoa')) {
+                $pessoaUnidade = PessoaUnidade::all();
 
-                foreach ($request->unidade_id as $unidadePessoa) {
-                    PessoaUnidade::update($unidadePessoa);
+                foreach ($pessoaUnidade as $key => $value) {
+                    // $unidade = Unidade::findOrfail($value);
+                    // $pessoaUnidade->findOrfail($value);
+                    if ($value->pessoa_id === $request->pessoa_id && $value->unidade_id === $request->unidade_id) {
+                        //update
+                        $updatePessoaUnidade = array([
+                            'unidade_id' => $request->unidade_id,
+                            'pessoa_id' => $request->pessoa_id,
+                        ]);
+
+                        $pessoaUnidade->update($updatePessoaUnidade);
+                    } else {
+                        //insert
+                        $savePessoaUnidade = new PessoaUnidade();
+                        $savePessoaUnidade->unidade_id =  $request->unidade_id[$key];
+                        $savePessoaUnidade->pessoa_id = $request->pessoa_id;
+
+                        $savePessoaUnidade->save();
+                    }
                 }
+                // if ($unidade->id != $pessoaUnidade->unidade_id) {
+                //     $pessoaUnidade->unidade_id = $unidade->id;
+                //     $pessoaUnidade->pessoa_id = $request->pessoa_id;
+
+                //     $pessoaUnidade->save();
+                // }else{
+                //     PessoaUnidade::find($pessoaUnidade->id)->delete();
+                // }
                 redirect('pessoas');
             } else {
                 return view('errors.404');
             }
         } catch (\Throwable $th) {
+
         }
     }
 }
