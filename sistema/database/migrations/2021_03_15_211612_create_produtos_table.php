@@ -20,7 +20,7 @@ class CreateProdutosTable extends Migration
             $table->string('descricao');
             $table->string('valor_unitario');
             $table->integer('fornecedor_id')->unsigned();
-            $table->integer('categoria_id')->unsigned();
+            $table->integer('categoria_id')->unsigned()->nullable();
             $table->foreign('fornecedor_id')->references('id')->on('fornecedors');
             $table->foreign('categoria_id')->references('id')->on('categorias');
 

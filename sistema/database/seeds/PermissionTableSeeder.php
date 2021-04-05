@@ -225,6 +225,11 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'pessoa_vincular_unidade',
                 'label' => 'Vincula um usuário a uma unidade ',
             ],
+            [
+                'name' => 'insert_unidade_pessoa',
+                'label' => 'Insere na unidad a pessao  ',
+            ],
+
 
 
         );

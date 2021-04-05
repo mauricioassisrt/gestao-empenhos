@@ -28,7 +28,7 @@ class ProdutoSeeder extends Seeder
                 'descricao' => 'Descrição do produto',
                 'valor_unitario' => '10.00',
                 'fornecedor_id' => '1',
-                'categoria_id' => '2',
+
 
             ],
         );
