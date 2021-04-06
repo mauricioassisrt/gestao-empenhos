@@ -300,7 +300,7 @@ class PessoaController extends Controller
                     foreach ($pessoaUnidade as $key => $value) {
                         foreach ($request->unidade_id as $chave => $unidades) {
 
-                            if ($value->unidade_id == (int) $unidades[$chave]) {
+                            if ($value->unidade_id === (int)$unidades[$chave]) {
                                 //update
                                 $updatePessoaUnidade = array([
                                     'unidade_id' => $request->unidade_id,
