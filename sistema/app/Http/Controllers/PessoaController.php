@@ -286,40 +286,49 @@ class PessoaController extends Controller
             if (Gate::allows('insert_unidade_pessoa')) {
                 $pessoaUnidade = PessoaUnidade::all();
 
-                foreach ($pessoaUnidade as $key => $value) {
-                    // $unidade = Unidade::findOrfail($value);
-                    // $pessoaUnidade->findOrfail($value);
-                    if ($value->pessoa_id === $request->pessoa_id && $value->unidade_id === $request->unidade_id) {
-                        //update
-                        $updatePessoaUnidade = array([
-                            'unidade_id' => $request->unidade_id,
-                            'pessoa_id' => $request->pessoa_id,
-                        ]);
+                if ($pessoaUnidade->isEmpty()) {
 
-                        $pessoaUnidade->update($updatePessoaUnidade);
-                    } else {
-                        //insert
+                    foreach ($request->unidade_id as $key => $unidades) {
                         $savePessoaUnidade = new PessoaUnidade();
                         $savePessoaUnidade->unidade_id =  $request->unidade_id[$key];
                         $savePessoaUnidade->pessoa_id = $request->pessoa_id;
 
                         $savePessoaUnidade->save();
                     }
-                }
-                // if ($unidade->id != $pessoaUnidade->unidade_id) {
-                //     $pessoaUnidade->unidade_id = $unidade->id;
-                //     $pessoaUnidade->pessoa_id = $request->pessoa_id;
+                    dd('no if 298');
+                } else {
+                    foreach ($pessoaUnidade as $key => $value) {
+                        foreach ($request->unidade_id as $chave => $unidades) {
 
-                //     $pessoaUnidade->save();
-                // }else{
-                //     PessoaUnidade::find($pessoaUnidade->id)->delete();
-                // }
-                redirect('pessoas');
+                            if ($value->unidade_id == (int) $unidades[$chave]) {
+                                //update
+                                $updatePessoaUnidade = array([
+                                    'unidade_id' => $request->unidade_id,
+                                    'pessoa_id' => $request->pessoa_id,
+                                ]);
+
+                                $pessoaUnidade[$key]->update($updatePessoaUnidade);
+                           } else {
+                            dd('else');
+                                $savePessoaUnidade = new PessoaUnidade();
+                                $savePessoaUnidade->unidade_id =  $request->unidade_id[$key];
+                                $savePessoaUnidade->pessoa_id = $request->pessoa_id;
+
+                                $savePessoaUnidade->save();
+
+                            }
+
+
+                        }
+                    }
+
+                }
+                return  redirect('pessoas');
             } else {
                 return view('errors.404');
             }
         } catch (\Throwable $th) {
-
+            dd($th);
         }
     }
 }
