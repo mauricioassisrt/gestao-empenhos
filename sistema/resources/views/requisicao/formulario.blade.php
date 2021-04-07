@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    {{-- <div class="col-sm-6">
                         <label>Fonte dos recursos </label>
                         <select name="fonte_recurso" class="form-control select2">
                             <option @if (Request::is('*/editar/*')) value="{{ $requisicao->fonte_recurso }}" >{{ $requisicao->fonte_recurso }} @endif </option>
@@ -68,8 +68,8 @@
                             <option value="Fonte Vinculada ">Fonte Vinculada </option>
                             <option value="Outra fonte "> Outra Fonte </option>
                         </select>
-                    </div>
-                    <div class="col-sm-6">
+                    </div> --}}
+                    {{-- <div class="col-sm-6">
                         <label>Fornecedor </label>
                         <select name="fornecedor_id" required class="form-control select2" style="width: 100%;">
 
@@ -80,7 +80,7 @@
                             @endforeach
 
                         </select>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div class="row">
@@ -90,12 +90,12 @@
                             placeholder="Qual sua  justificativa para a requisição"></textarea>
                     </div>
                     <div class="col-sm-6">
-                        <label>Justificativa </label>
+                        <label>observação </label>
                         <textarea class="form-control" rows="3" required name="observacao"
                             placeholder="Possui alguma observação para incluir ?"></textarea>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-sm-3">
                         <label>Licitação/Ano </label>
                         <input type="text" name="licitacao_ano" required class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->licitacao_ano }}" @endif>
@@ -116,7 +116,7 @@
                         <input type="text" name="reduzido" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->reduzido }}" @endif>
 
                     </div>
-                </div>
+                </div> --}}
 
             </div>
 

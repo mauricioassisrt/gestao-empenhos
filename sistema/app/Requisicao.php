@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Requisicao extends Model
 {
     protected $fillable = [
-        'fonte_recurso', 'justificativa','observacao', 'licitacao_ano',  'pregao','reduzido','requisicao_ano',
+        'justificativa','observacao' ,'requisicao_ano',
         'total_produtos', 'valor_final', 'unidade_id'
     ];
     public function unidades()

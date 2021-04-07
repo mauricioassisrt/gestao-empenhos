@@ -16,7 +16,7 @@ class RequisicaoProduto extends Model
     }
     public function produtos()
     {
-        return $this->belongsTo(Produtos::class, 'produto_id' );
+        return $this->belongsTo(Produto::class, 'produto_id' );
     }
 
 }

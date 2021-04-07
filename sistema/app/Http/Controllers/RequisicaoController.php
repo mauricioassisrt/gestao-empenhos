@@ -87,7 +87,7 @@ class RequisicaoController extends Controller
             $request['total_produtos'] =   $total_produtos;
 
             $id = Requisicao::create($request->all())->id;
-            $requisicaoAno = $id . '/' . $request->licitacao_ano;
+            $requisicaoAno = $id . '/' . $year = date('Y');
             $requisicao = Requisicao::findOrFail($id);
 
             $reqArray = array(
@@ -120,7 +120,7 @@ class RequisicaoController extends Controller
     public function editar(Requisicao $requisicao)
     {
         try {
-            $titulo = "Editar ";
+            $titulo = "Detalhes da requisição ";
             if (Gate::allows('Edit_requisicao')) {
                 $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
                 return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo'));

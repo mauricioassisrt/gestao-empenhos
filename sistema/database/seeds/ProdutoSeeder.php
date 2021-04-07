@@ -18,7 +18,7 @@ class ProdutoSeeder extends Seeder
                 'lote' => '20210301 12:00:15',
                 'descricao' => 'Descrição do produto',
                 'valor_unitario' => '50.00',
-                'fornecedor_id' => '1',
+
                 'categoria_id' => '2',
 
             ],
@@ -27,7 +27,8 @@ class ProdutoSeeder extends Seeder
                 'lote' => '20210301 12:00:15',
                 'descricao' => 'Descrição do produto',
                 'valor_unitario' => '10.00',
-                'fornecedor_id' => '1',
+                //'fornecedor_id' => '1',
+                'categoria_id' => '2',
 
 
             ],

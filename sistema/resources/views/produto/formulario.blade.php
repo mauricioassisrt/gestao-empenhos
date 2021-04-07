@@ -74,7 +74,7 @@
                     @endif
                 </select>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label>Fornecedor </label>
                 <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
                     @if (Request::is('*/editar/*'))
@@ -97,7 +97,7 @@
                         @endforeach
                     @endif
                 </select>
-            </div>
+            </div> --}}
 
         </div>
         <div class="card-footer clearfix">
