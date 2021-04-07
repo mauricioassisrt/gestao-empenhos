@@ -15,12 +15,9 @@ class CreateRequisicaoProdutosTable extends Migration
     {
         Schema::create('requisicaos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fonte_recurso');
+
             $table->string('justificativa')->nullable();
             $table->string('observacao')->nullable();
-            $table->string('licitacao_ano')->nullable();
-            $table->string('pregao')->nullable();
-            $table->string('reduzido')->nullable();
             $table->string('requisicao_ano')->nullable();
             $table->double('total_produtos', 8, 2);
             $table->double('valor_final', 8, 2);

@@ -100,7 +100,7 @@ $empresa = Empresa::all();
                                     <a href="{{ url('requisicao') }}" class="nav-link active">
                                         <i class="nav-icon fas fa-file-prescription"></i>
                                         <p>
-                                            Realizadas
+                                            Sem licitação Vinculada
                                         </p>
                                     </a>
                                 </li>

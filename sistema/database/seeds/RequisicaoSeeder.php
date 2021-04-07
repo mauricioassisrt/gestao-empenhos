@@ -17,24 +17,19 @@ class RequisicaoSeeder extends Seeder
 
         $requisicao = array(
             [
-                'fonte_recurso' => 'Recurso livre ',
+
                 'justificativa' => 'Justificativa ',
                 'observacao' => 'OBS ',
-                'licitacao_ano' => '2021',
-                'pregao' => '204012/2021',
-                'reduzido' => 'REDUZIDO',
+
                 'requisicao_ano' => '1020/2021',
                 'valor_final' => '80',
                 'total_produtos' => '8',
                 'unidade_id' => '1',
             ],
             [
-                'fonte_recurso' => 'Recurso livre ',
                 'justificativa' => 'Justificativa ',
                 'observacao' => 'OBS ',
-                'licitacao_ano' => '2021',
-                'pregao' => '204012/2021',
-                'reduzido' => 'REDUZIDO',
+
                 'requisicao_ano' => '1020/2021',
                 'valor_final' => '80',
                 'total_produtos' => '8',

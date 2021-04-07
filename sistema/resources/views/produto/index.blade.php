@@ -65,7 +65,7 @@
             <table class="table table-striped table-bordered table-hover" style='background:#fff'>
                 <thead>
                     <th> Produto</th>
-                    <th> Fornecedor</th>
+
                     <th>Categoria </th>
                     <th>Criado/Alterado </th>
                     <th>Ações </th>
@@ -74,7 +74,7 @@
                     @foreach ($produtos as $produto)
                         <tr>
                             <td>{!! $produto->nome !!}</td>
-                            <td>{!! $produto->fornecedor->nome_fornecedor  !!}</td>
+
 
                             <td>{!! $produto->categoria->nome_categoria  !!}</td>
                             <td>{!!  date('d/m/Y  H:m:s', strtotime($produto->created_at)) !!} -- {{ 	 date('d/m/Y H:m:s', strtotime($produto->updated_at))  }}</td>

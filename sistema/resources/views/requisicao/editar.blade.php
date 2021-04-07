@@ -29,123 +29,147 @@
 
             @endif
 
-            <div class="col-sm-12">
-                @csrf
-                <div class="row">
-                    <div class="col-sm-1 ">
-                        <label>Código</label>
-                        <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->id }}" @endif disabled>
 
-                    </div>
-                    <div class="col-sm-2">
-                        <label>Requisição</label>
-                        <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->requisicao_ano }}" @endif disabled>
+            <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill"
+                        href="#custom-content-above-home" role="tab" aria-controls="custom-content-above-home"
+                        aria-selected="true">Detalhes da requisição</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="custom-content-above-profile-tab" data-toggle="pill"
+                        href="#custom-content-above-profile" role="tab" aria-controls="custom-content-above-profile"
+                        aria-selected="false">Produtos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="custom-content-above-messages-tab" data-toggle="pill"
+                        href="#custom-content-above-messages" role="tab" aria-controls="custom-content-above-messages"
+                        aria-selected="false">Andamentos</a>
+                </li>
 
-                    </div>
-                    <div class="col-sm-9">
+            </ul>
 
-                        <label>Unidade na qual fez a requisição </label>
-                        <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->pessoaUnidade->pessoa->name }}" @endif disabled>
+            <div class="tab-content" id="custom-content-above-tabContent">
+                <div class="tab-pane fade active show" id="custom-content-above-home" role="tabpanel">
+                    @csrf
+                    <div class="row">
+                        <div class="col-sm-1 ">
+                            <label>Código</label>
+                            <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->id }}" @endif disabled>
 
-                    </div>
-                </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Requisição</label>
+                            <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->requisicao_ano }}" @endif
+                                disabled>
 
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label>Justificativa </label>
-                        <textarea class="form-control" rows="3" required name="justificativa"
-                            placeholder="Qual sua  justificativa para a requisição"></textarea>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Observação </label>
-                        <textarea class="form-control" rows="3" required name="observacao"
-                            placeholder="Possui alguma observação para incluir ?"></textarea>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Fonte dos recursos </label>
-                        <select name="fonte_recurso" class="form-control select2">
-                            <option @if (Request::is('*/editar/*')) value="{{ $requisicao->fonte_recurso }}" >{{ $requisicao->fonte_recurso }} @endif </option>
-                            <option value="Recurso Livre">Recurso Livre </option>
-                            <option value="Fonte Vinculada ">Fonte Vinculada </option>
-                            <option value="Outra fonte "> Outra Fonte </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label>Licitação/Ano </label>
-                        <input type="text" name="licitacao_ano" required class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->licitacao_ano }}" @endif>
+                        </div>
+                        <div class="col-sm-9">
 
-                    </div>
-                    <div class="col-sm-3">
-                        <label>Pregão </label>
-                        <input type="text" name="numero_pregao" required class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->numero_pregao }}" @endif>
+                            <label>Unidade na qual fez a requisição </label>
+                            <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->pessoaUnidade->pessoa->name }}" @endif disabled>
 
+                        </div>
                     </div>
-                    <div class="col-sm-3">
-                        <label>Orgão/Unidade </label>
-                        <input type="text" name="orgao" class=" required form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>
 
-                    </div>
-                    <div class="col-sm-3">
-                        <label>Reduzido </label>
-                        <input type="text" name="reduzido" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->reduzido }}" @endif>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Justificativa </label>
+                            <textarea class="form-control" rows="3" required
+                                name="justificativa">@if (Request::is('*/editar/*')) {{ $requisicao->justificativa }} @endif</textarea>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Observação </label>
+                            <textarea class="form-control" rows="3" required
+                                name="observacao"> @if (Request::is('*/editar/*')) {{ $requisicao->observacao }} @endif</textarea>
+
+                        </div>
 
                     </div>
                 </div>
+                <div class="tab-pane fade" id="custom-content-above-profile" role="tabpanel">
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>{{ $requisicao->total_produtos }}</h3>
 
-            </div>
+                                    <p> Total de produtos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
 
-            <hr>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>   R$  {{ $requisicao->valor_final }}</h3>
 
-                <div class="col-sm-12">
+                                    <p>Valor total da requisição</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="card-body table-responsive p-0">
-                        <table class="table " id="tabela_produtos">
+                        <table class="table table-striped" style='background:#fff'>
+                            <thead>
+                                <th> Produto</th>
+                                <th>Valor Unitário do produto/item </th>
+                                <th>Quantidade Solicitada </th>
+                                <th>Valor total </th>
 
+                            </thead>
+                            <tbody>
+                                @foreach ($requisicaoProdutos as $requisicaoProduto)
+                                    <tr>
+                                        <td>{!! $requisicaoProduto->produtos->nome !!}</td>
+                                        <td>R${!! $requisicaoProduto->produtos->valor_unitario !!}</td>
+
+                                        <td>{!! $requisicaoProduto->quantidade_produto !!}</td>
+                                        <td>R${!! $requisicaoProduto->valor_total_iten !!}</td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
 
+                </div>
+                <div class="tab-pane fade" id="custom-content-above-messages" role="tabpanel" cc </div>
 
                 </div>
-
             </div>
-
         </div>
         <div class="card-footer clearfix">
 
-
-            @if (Request::is('*/editar/*'))
-
-                <button type="submit" class="btn btn-success" id="botaoSalvarUser" style="display:none"> <i
-                        class=" fas fa-pen-alt"></i> Alterar</button>
-
-            @endif
-
         </div>
-    </div>
+        {!! Form::close() !!}
+
+    @section('rodape')
 
 
-    {!! Form::close() !!}
-    </div>
+        <!-- CALENDARIo-->
+        <script src=" {{ asset('js/moment.min.js') }}"></script>
+        <script src=" {{ asset('js/tempusdominus-bootstrap-4.min.js') }}"></script>
+        <!-- mask de telefone -->
+        <script src=" {{ asset('js/jquery.inputmask.min.js') }}"></script>
 
-
-@section('rodape')
-
-
-    <!-- CALENDARIo-->
-    <script src=" {{ asset('js/moment.min.js') }}"></script>
-    <script src=" {{ asset('js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <!-- mask de telefone -->
-    <script src=" {{ asset('js/jquery.inputmask.min.js') }}"></script>
-
-    <!-- TOAST SWEETALERT -->
-    <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
-    <script src=" {{ asset('js/toastr.min.js') }}"></script>
-    <!-- FIM TOAST SWEETALERT  -->
+        <!-- TOAST SWEETALERT -->
+        <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
+        <script src=" {{ asset('js/toastr.min.js') }}"></script>
+        <!-- FIM TOAST SWEETALERT  -->
 
 
 
-@endsection
+    @endsection
 
 @endsection
