@@ -16,8 +16,10 @@ class FornecedorSeeder extends Seeder
             [
                 'nome_fornecedor' => 'Fornecedor',
                 'cnpj' => '12312312312',
+
                 'endereco' => 'Rua teste',
-                'numero' => '12',
+                'numero' => '11',
+                'juridica'=> true,
                 'bairro' => 'São paulo',
                 'cep' => '54654545',
                 'cidade' => 'São Paulo',
@@ -28,8 +30,9 @@ class FornecedorSeeder extends Seeder
 
             [
                 'nome_fornecedor' => 'Fornecedor 1',
-                'cnpj' => '12312312312',
                 'endereco' => 'Rua teste',
+                'cpf' => '12312312312',
+                'juridica'=> false,
                 'numero' => '12',
                 'bairro' => 'São paulo',
                 'cep' => '54654545',
@@ -38,18 +41,7 @@ class FornecedorSeeder extends Seeder
                 'telefone' => '44 4444-4444',
                 'email' => '123'
             ],
-            [
-                'nome_fornecedor' => 'Fornecedor 2',
-                'cnpj' => '12312312312',
-                'endereco' => 'Rua teste',
-                'numero' => '12',
-                'bairro' => 'São paulo',
-                'cep' => '54654545',
-                'cidade' => 'São Paulo',
-                'estado' => 'São Paulo',
-                'telefone' => '44 4444-4444',
-                'email' => '123'
-            ],
+
         );
 
 

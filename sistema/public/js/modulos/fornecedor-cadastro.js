@@ -62,4 +62,13 @@ $(document).ready(function() {
             limpa_formulário_cep();
         }
     });
+    $("#radioCpf").click(function() {
+        $("#cpf").show();
+        $("#cnpj").hide();
+    });
+    $("#radioCnpj").click(function() {
+        $("#cnpj").show();
+        $("#cpf").hide();
+    });
+
 });

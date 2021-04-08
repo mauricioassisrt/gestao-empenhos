@@ -65,14 +65,29 @@
             <table class="table table-striped table-bordered table-hover" style='background:#fff'>
                 <thead>
                     <th>Nome do Fornecedor</th>
-                    <th>CNPJ</th>
+                    <th>Pessoa Fisíca ou Jurídica</th>
+                    <th>CNPJ/CPF</th>
                     <th>Ações </th>
                 </thead>
                 <tbody>
                     @foreach ($fornecedors as $fornecedor)
                         <tr>
                             <td>{!! $fornecedor->nome_fornecedor !!}</td>
-                            <td>{!! $fornecedor->cnpj !!}</td>
+                            <td>
+                                @if ($fornecedor->juridica != true)
+                                    Pessoa Fisíca
+                                @else
+                                    Pessoa Jurídica
+
+                                @endif
+                            </td>
+                            <td>
+                                @if ($fornecedor->cnpj != null)
+                                    {{ $fornecedor->cnpj }}
+                                @else
+                                    {{ $fornecedor->cpf }}
+                                @endif
+                            </td>
                             <td>
                                 @can('Edit_fornecedor')
 
