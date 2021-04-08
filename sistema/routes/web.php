@@ -202,4 +202,3 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('licitacao/pesquisar', 'LicitacaoController@search')->name('licitacao.search');
 });
 
-//falta criar o seed das permissões criar o link no menu e verificar as paginas e finalizar a pagina index testar as routes

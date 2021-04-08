@@ -22,8 +22,7 @@ class CreateLicitacaosTable extends Migration
             $table->string('pregao');
             $table->string('fonte_recurso')->nullable();
             $table->string('reduzido')->nullable();
-            // $table->integer('fornecedor_id')->unsigned()->nullable();
-            // $table->foreign('fornecedor_id')->references('id')->on('fornecedors');
+
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ class CreateLicitacaosTable extends Migration
     {
         Schema::dropIfExists('licitacaos');
 
-      ///  Schema::dropIfExists('fornecedors');
+
     }
 }
