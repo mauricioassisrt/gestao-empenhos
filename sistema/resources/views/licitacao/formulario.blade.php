@@ -24,18 +24,18 @@
             @if (Request::is('*/editar/*'))
                 {!! Form::model($licitacao, ['method' => 'PATCH', 'url' => 'licitacao/update/' . $licitacao->id]) !!}
             @else
-                {!! Form::open(['url' => 'rota/insert']) !!}
+                {!! Form::open(['route' => 'licitacao.insert']) !!}
             @endif
             <div class="row">
                 <div class="col-sm-2">
                     <label>Ano da licitação </label>
-                    <input type="numeric" class="form-control" id="ano" placeholder="Digite somente o ano " max="4" min="4"
+                    <input type="number" class="form-control" placeholder="Digite somente o ano " max="2099" min="2020"
                         name="ano" @if (Request::is('*/editar/*')) value="{{ $licitacao->ano }}" @endif required>
 
                 </div>
                 <div class="col-sm-2">
-                    <label>Número da licitação </label>
-                    <input type="numeric" class="form-control" id="numero_licitacao" placeholder="Exemplo 405 " max="10"
+                    <label>N° da licitação </label>
+                    <input type="number" class="form-control" id="numero_licitacao" placeholder="Exemplo 405 " max="9999"
                         min="1" name="numero_licitacao" @if (Request::is('*/editar/*')) value="{{ $licitacao->numero_licitacao }}" @endif required>
 
                 </div>
@@ -45,12 +45,26 @@
                         name="pregao" @if (Request::is('*/editar/*')) value="{{ $licitacao->pregao }}" @endif required>
 
                 </div>
+                <div class="col-sm-4">
+                    <label>Modalidade</label>
+                    <select class="form-control" name="modalidade" id="modalidade">
+                        <option  @if (Request::is('*/editar/*')) value="{{ $licitacao->modalidade }}" @endif selected="selected" >@if (Request::is('*/editar/*')){{ $licitacao->modalidade }}@endif</option>
+                        <option value="Concorrência">Concorrência</option>
+                        <option value="Tomada de preços">Tomada de preços</option>
+                        <option value="Convite" >Convite</option>
+                        <option value="Concurso">Concurso</option>
+                        <option value="Leilão">Leilão</option>
+                        <option value="Pregão Presencial ">Pregão Presencial</option>
+                        <option value="Pregão Eletrônico ">Pregão Eletrônico</option>
+                      </select>
+
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <label>Pregoeiro </label>
                     <input type="text" class="form-control" placeholder="Digite somente o ano " max="4" min="4"
-                        name="pregoeiro" @if (Request::is('*/editar/*')) value="{{ $licitacao->pregoeiro }}" @endif required>
+                        name="pregoeiro" @if (Request::is('*/editar/*')) value="{{ $licitacao->pregoeiro }}" @endif >
 
                 </div>
                 <div class="col-sm-4">
@@ -62,7 +76,7 @@
                 <div class="col-sm-4">
                     <label>Reduzido</label>
                     <input type="text" class="form-control"
-                        name="ano" @if (Request::is('*/editar/*')) value="{{ $licitacao->reduzido }}" @endif required>
+                        name="reduzido" @if (Request::is('*/editar/*')) value="{{ $licitacao->reduzido }}" @endif required>
 
                 </div>
             </div>
@@ -70,7 +84,7 @@
         </div>
         <div class="card-footer clearfix">
 
-            <a href="{{ url('/rota') }}" class="btn btn-primary">
+            <a href="{{ route('licitacao') }}" class="btn btn-primary">
 
                 <i class="fas fa-arrow-left"></i> Voltar </a>
 

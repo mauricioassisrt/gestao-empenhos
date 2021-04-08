@@ -4,16 +4,16 @@
     <div class="card">
 
         <div class="card-header">
-            @can('Insert_model')
-                <a href="{{ url('rota_definida/cadastrar') }}" class="btn btn-primary float-right">
+            @can('Insert_licitacao')
+                <a href="{{ route('licitacao.create') }}" class="btn btn-primary float-right">
                     <i class="fas fa-plus"></i> Novo </a>
 
             @endcan
-            <form action="{{ url('/rota/search') }}" method="get">
+            <form action="{{ route('licitacao.search') }}" method="get">
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
 
-                        <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar">
+                        <input type="text" name="table_search" class="form-control float-right " placeholder="Pesquise pelo número da licitação ">
 
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
@@ -29,32 +29,36 @@
         <div class="card-body table-responsive p-0">
             <table class="table table-striped table-bordered table-hover" style='background:#fff'>
                 <thead>
-                    <th>Nome do rota_definida</th>
-
+                    <th>Ano</th>
+                    <th>Número </th>
+                    <th>Modalidade </th>
+                    <th>Pregão </th>
                     <th>Ações </th>
                 </thead>
                 <tbody>
-                    @foreach ($model as $models)
+                    @foreach ($licitacaos as $licitacao)
                         <tr>
-                            <td>{!! $model->nome_atributoBanco !!}</td>
-
+                            <td>{!! $licitacao->ano !!}</td>
+                            <td>{!! $licitacao->numero_licitacao !!}</td>
+                            <td>{!! $licitacao->modalidade !!}</td>
+                            <td>{!! $licitacao->pregao !!}</td>
                             <td>
-                                @can('Edit_rota_definida')
+                                @can('Edit_licitacao')
 
-                                    <a href="{{ url('rota/editar/' . $model->id) }}" class="btn btn-primary"><span
+                                    <a href="{{route('licitacao.edit', ['licitacao' => $licitacao->id])}}" class="btn btn-primary"><span
                                             class="glyphicon glyphicon-pencil">
                                         </span>
                                         <i class="fas fa-edit"></i> Editar </a>
                                 @endcan
-                                @can('Delete_model')
+                                @can('Delete_licitacao')
 
 
                                     <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-default-{{ $model->id }}"><span
+                                        data-target="#modal-default-{{ $licitacao->id }}"><span
                                             class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
                                     </a>
                                     </a>
-                                    <div class="modal fade" id="modal-default-{{ $model->id }}" style="display: none;"
+                                    <div class="modal fade" id="modal-default-{{ $licitacao->id }}" style="display: none;"
                                         tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -66,12 +70,12 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Tem certeza que deseja excluir esta pessoa
-                                                        {{ $rota_definida->nome_rota_definida }}</p>
+                                                        {{ $licitacao->numero_licitacao }}    </p>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Fechar</button>
-                                                    <a href="{{ url('rota_definida/deletar/' . $rota_definida->id) }}"
+                                                    <a href="{{route('licitacao.delete', ['licitacao' => $licitacao->id])}}"
                                                         class="btn btn-danger">
                                                         <span class="glyphicon glyphicon-remove"></span> <i
                                                             class="fas fa-trash"></i>
@@ -93,7 +97,7 @@
             </table>
         </div>
         <div class="card-footer clearfix">
-            {{ $rota_definidas->links() }}
+            {{ $licitacaos->links() }}
         </div>
     </div>
 

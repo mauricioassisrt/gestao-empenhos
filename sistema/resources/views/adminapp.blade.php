@@ -172,12 +172,12 @@ $empresa = Empresa::all();
                                         </a>
                                     @endcan
 
-                                    {{-- @can('View_user')
-                                        <a href="{{ url('/users') }}" class="nav-link active">
-                                            <i class="fas fa-user nav-icon"></i>
-                                            <p>Usuários</p>
+                                    @can('View_licitacao')
+                                        <a href="{{ url('/licitacao') }}" class="nav-link active">
+                                            <i class="fas fa-gavel nav-icon"></i>
+                                            <p>Licitação</p>
                                         </a>
-                                    @endcan --}}
+                                    @endcan
                                     @can('View_role')
                                         <a href="{{ url('/acl/roles') }}" class="nav-link active">
                                             <i class="fas fa-file nav-icon"></i>
@@ -211,7 +211,7 @@ $empresa = Empresa::all();
                                 <li class="nav-item">
                                     @can('empresa_view')
                                         <a href="{{ url('/empresa') }}" class="nav-link active">
-                                            <i class="fas fa-gavel nav-icon"></i>
+                                            <i class="fas fa-sitemap nav-icon"></i>
                                             <p>Dados da Prefeitura </p>
                                         </a>
 

@@ -230,7 +230,22 @@ class PermissionTableSeeder extends Seeder
                 'label' => 'Insere na unidad a pessao  ',
             ],
 
-
+            [
+                'name' => 'Edit_licitacao',
+                'label' => 'Editar licitacao',
+            ],
+            [
+                'name' => 'View_licitacao',
+                'label' => 'Visualizar licitacao',
+            ],
+            [
+                'name' => 'Delete_licitacao',
+                'label' => 'Deletar licitacao',
+            ],
+            [
+                'name' => 'Insert_licitacao',
+                'label' => 'Adicionar licitacao',
+            ],
 
         );
         foreach ($permissions as $key => $value) {
@@ -424,7 +439,22 @@ class PermissionTableSeeder extends Seeder
                 'permission_id' => '46',
                 'role_id' => '1'
             ],
-
+            [
+                'permission_id' => '47',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '50',
+                'role_id' => '1'
+            ],
             [
                 'permission_id' => '22',
                 'role_id' => '2'
@@ -562,9 +592,38 @@ class PermissionTableSeeder extends Seeder
                 'role_id' => '1'
             ],
             [
-                'permission_id' => '51',
+                'permission_id' => '52',
                 'role_id' => '2'
             ],
+            [
+                'permission_id' => '53',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '54',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '55',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '52',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '53',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '54',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '55',
+                'role_id' => '1'
+            ],
+
 
         );
         foreach ($permission_roles as $key => $value) {

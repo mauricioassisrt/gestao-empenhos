@@ -24,7 +24,7 @@ class LicitacaoSeeder extends Seeder
                 'pregao' => '222',
                 'fonte_recurso' => 'recursos livres',
                 'reduzido' => '12312312312',
-                'fornecedor_id' => '1'
+              //  'fornecedor_id' => '1'
 
             ],
             [
@@ -36,7 +36,7 @@ class LicitacaoSeeder extends Seeder
                 'pregao' => '4555222',
                 'fonte_recurso' => 'recursos vinculado',
                 'reduzido' => '12312312312',
-                'fornecedor_id' => '1'
+             //   'fornecedor_id' => '1'
 
             ],
         );
