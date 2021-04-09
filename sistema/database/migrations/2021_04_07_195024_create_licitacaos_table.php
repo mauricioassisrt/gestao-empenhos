@@ -22,7 +22,8 @@ class CreateLicitacaosTable extends Migration
             $table->string('pregao');
             $table->string('fonte_recurso')->nullable();
             $table->string('reduzido')->nullable();
-
+            $table->double('total_produtos', 8, 2)->nullable();
+            $table->double('valor_final', 8, 2)->nullable();
             $table->timestamps();
         });
     }

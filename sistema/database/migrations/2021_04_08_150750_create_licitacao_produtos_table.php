@@ -15,7 +15,7 @@ class CreateLicitacaoProdutosTable extends Migration
     {
         Schema::create('licitacao_produtos', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('quantidade_produtos', 8, 2);
+            $table->double('quantidade_produto', 8, 2);
             $table->double('valor_total_iten', 8, 2);
             $table->integer('fornecedor_id')->unsigned()->nullable();
             $table->integer('produto_id')->unsigned()->nullable();

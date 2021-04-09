@@ -36,16 +36,16 @@
                     <th>Ações </th>
                 </thead>
                 <tbody>
-                    @foreach ($licitacaoProdutos as $licitacaoProduto)
+                    @foreach ($licitacaos as $licitacao)
                         <tr>
-                            <td>{!! $licitacaoProduto->licitacao->ano !!}</td>
-                            <td>{!! $licitacaoProduto->licitacao->numero_licitacao !!}</td>
-                            <td>{!! $licitacaoProduto->licitacao->modalidade !!}</td>
-                            <td>{!! $licitacaoProduto->licitacao->pregao !!}</td>
+                            <td>{!! $licitacao->ano !!}</td>
+                            <td>{!! $licitacao->numero_licitacao !!}</td>
+                            <td>{!! $licitacao->modalidade !!}</td>
+                            <td>{!! $licitacao->pregao !!}</td>
                             <td>
                                 @can('Edit_licitacao')
 
-                                    <a href="{{route('licitacao.vincular.edit', ['licitacao' => $licitacaoProduto->id])}}" class="btn btn-primary"><span
+                                    <a href="{{route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id])}}" class="btn btn-primary"><span
                                             class="glyphicon glyphicon-pencil">
                                         </span>
                                         <i class="fas fa-edit"></i> Editar </a>
@@ -54,11 +54,11 @@
 
 
                                     <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-default-{{ $licitacaoProduto->id }}"><span
+                                        data-target="#modal-default-{{ $licitacao->id }}"><span
                                             class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
                                     </a>
                                     </a>
-                                    <div class="modal fade" id="modal-default-{{ $licitacaoProduto->id }}" style="display: none;"
+                                    <div class="modal fade" id="modal-default-{{ $licitacao->id }}" style="display: none;"
                                         tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -70,12 +70,12 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Tem certeza que deseja excluir esta pessoa
-                                                        {{ $licitacaoProduto->licitacao->numero_licitacao }}    </p>
+                                                        {{ $licitacao->numero_licitacao }}    </p>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Fechar</button>
-                                                    <a href="{{route('licitacao.vincular.delete', ['licitacao' => $licitacaoProduto->id])}}"
+                                                    <a href="{{route('licitacao.delete', ['licitacao' => $licitacao->id])}}"
                                                         class="btn btn-danger">
                                                         <span class="glyphicon glyphicon-remove"></span> <i
                                                             class="fas fa-trash"></i>
@@ -97,7 +97,7 @@
             </table>
         </div>
         <div class="card-footer clearfix">
-            {{ $licitacaoProdutos->links() }}
+            {{ $licitacaos->links() }}
         </div>
     </div>
 

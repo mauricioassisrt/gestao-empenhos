@@ -15,7 +15,7 @@ class LicitacaoProduto extends Model
     {
         return $this->belongsTo(Fornecedor::class, 'fornecedor_id');
     }
-    public function produto()
+    public function produtos()
     {
         return $this->belongsTo(Produto::class, 'produto_id' );
     }

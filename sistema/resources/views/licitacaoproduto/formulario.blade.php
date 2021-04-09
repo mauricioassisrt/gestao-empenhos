@@ -24,7 +24,7 @@
 
             <!-- /.box-header -->
             @if (Request::is('*/editar/*'))
-                {!! Form::model($licitacaoProduto, ['method' => 'PATCH', 'route' => 'licitacao.vincular.update' . $licitacaoProduto->id]) !!}
+                {!! Form::model($licitacaoProduto, ['method' => 'PATCH', 'url' => 'licitacao.vincular.update' . $licitacaoProduto->id]) !!}
             @else
                 {!! Form::open(['route' => 'licitacao.vincular.insert']) !!}
             @endif

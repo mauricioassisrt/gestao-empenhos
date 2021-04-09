@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Licitacao extends Model
 {
     protected $fillable = [
-        'ano','numero_licitacao', 'modalidade','pregoeiro', 'pregao',  'fonte_recurso', 'reduzido',
+        'ano','numero_licitacao', 'modalidade','pregoeiro', 'pregao',  'fonte_recurso', 'reduzido', 'total_produtos', 'valor_final'
     ];
 
-    //'fornecedor_id'
-    // public function fornecedor()
-    // {
-    //     return $this->belongsTo(Fornecedor::class, 'fornecedor_id' );
-    // }
 }
