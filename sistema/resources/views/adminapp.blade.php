@@ -125,7 +125,7 @@ $empresa = Empresa::all();
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('licitacao/produtos/vincular') }}" class="nav-link active">
+                                    <a href="{{ route('licitacao.vincular') }}" class="nav-link active">
                                         <i class="nav-icon fas fa-folder-plus"></i>
                                         <p>
                                           Vincular produtos

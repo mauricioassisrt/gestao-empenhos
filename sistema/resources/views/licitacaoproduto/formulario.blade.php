@@ -2,10 +2,12 @@
 @section('topo')
     <!-- DATA TIME PICKER Style -->
 
-    <link rel="stylesheet" href=" {{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="/css/tempusdominus-bootstrap-4.min.css">
     <!-- toast CSS-->
-    <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href="/css/toastr.min.css">
+    <link rel="stylesheet" href=" {{ asset('css/select2.min.css') }}" />
 
+    <link rel="stylesheet" href=" {{ asset('css/select2-bootstrap4.min.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -19,89 +21,75 @@
         </div>
         <div class="card-body">
 
+
             <!-- /.box-header -->
             @if (Request::is('*/editar/*'))
-
-                {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id, 'enctype' => 'multipart/form-data']) !!}
-
+                {!! Form::model($licitacaoProduto, ['method' => 'PATCH', 'route' => 'licitacao.vincular.update' . $licitacaoProduto->id]) !!}
             @else
-                <form action="{{ url('requisicao/insert') }}" method="post" enctype="multipart/form-data">
-
+                {!! Form::open(['route' => 'licitacao.vincular.insert']) !!}
             @endif
-
-            <div class="col-sm-12">
-                @csrf
-                <div class="row">
-                    <div class="col-sm-1 ">
-                        <label>Código</label>
-                        <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->id }}" @endif disabled>
-
-                    </div>
-                    <div class="col-sm-2">
-                        <label>Requisição</label>
-                        <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->numero_requisicao }}" @endif disabled>
-
-                    </div>
-                    <div class="col-sm-9">
-
-                        <label>Pessoa e suas unidades </label>
-                        <select name="unidade_id" class="form-control select2" style="width: 100%;">
-
-                            @foreach ($pessoa_unidades as $pessoa_unidade)
-
-                                <option value="{{ $pessoa_unidade->unidade->id }}">
-                                    Unidade {{ $pessoa_unidade->unidade->nome }} Pessoa
-                                    {{ $pessoa_unidade->pessoa->nome }}
-                                </option>
-
-                            @endforeach
-                        </select>
-
-                    </div>
-                </div>
-                <div class="row">
-                    {{-- <div class="col-sm-6">
-                        <label>Fonte dos recursos </label>
-                        <select name="fonte_recurso" class="form-control select2">
-                            <option @if (Request::is('*/editar/*')) value="{{ $requisicao->fonte_recurso }}" >{{ $requisicao->fonte_recurso }} @endif </option>
-                            <option value="Recurso Livre">Recurso Livre </option>
-                            <option value="Fonte Vinculada ">Fonte Vinculada </option>
-                            <option value="Outra fonte "> Outra Fonte </option>
-                        </select>
-                    </div> --}}
-                    {{-- <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
                         <label>Fornecedor </label>
-                        <select name="fornecedor_id" required class="form-control select2" style="width: 100%;">
-
-                            @foreach ($fornecedors as $fornecedor)
-                                <option value="{{ $fornecedor->id }}">
-                                    {{ $fornecedor->nome_fornecedor }}
+                        <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
+                            @if (Request::is('*/editar/*'))
+                                <option value="{{ $licitacaoProduto->fornecedor->id }}">
+                                    {{ $licitacaoProduto->fornecedor->nome_fornecedor }}
                                 </option>
-                            @endforeach
+                                @foreach ($fornecedors as $fornecedor)
+                                    @if ($licitacaoProduto->fornecedor->id != $fornecedor->id)
+                                        <option value="{{ $fornecedor->id }}">
+                                            {{ $fornecedor->nome_fornecedor }}
+                                        </option>
+                                    @endif
 
+                                @endforeach
+                            @else
+                                @foreach ($fornecedors as $fornecedor)
+                                    <option value="{{ $fornecedor->id }}">
+                                        {{ $fornecedor->nome_fornecedor }}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
-                    </div> --}}
+                    </div>
 
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Justificativa </label>
-                        <textarea class="form-control" rows="3" required name="justificativa"
-                            placeholder="Qual sua  justificativa para a requisição"></textarea>
-                    </div>
-                    <div class="col-sm-6">
-                        <label>observação </label>
-                        <textarea class="form-control" rows="3" required name="observacao"
-                            placeholder="Possui alguma observação para incluir ?"></textarea>
-                    </div>
-                </div>
 
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Licitações </label>
+                        <select name="licitacao_id" class="form-control select2" style="width: 100%;">
+                            @if (Request::is('*/editar/*'))
+                                <option value="{{ $licitacaoProduto->licitacao->id }}">
+                                    {{ $licitacaoProduto->licitacao->numero_licitacao }}
+                                </option>
+                                @foreach ($licitacaos as $licitacao)
+                                    @if ($licitacaoProduto->licitacao->id != $licitacao->id)
+                                        <option value="{{ $licitacao->id }}">
+                                            {{ $licitacao->numero_licitacao }}
+                                        </option>
+                                    @endif
+
+                                @endforeach
+                            @else
+                                @foreach ($licitacaos as $licitacao)
+                                    <option value="{{ $licitacao->id }}">
+                                        {{ $licitacao->numero_licitacao }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+
+
+                </div>
 
             </div>
-
             <hr>
             <div class="  callout callout-success ">
-                <h5><b>Vamos escolher os produtos da requisição ? !!!</b> </h5>
+                <h5><b>Vamos escolher os produtos da licitação ? !!!</b> </h5>
 
                 <p> Basta informar a quantidade somente para montar a requisição </p>
             </div>
@@ -183,6 +171,8 @@
     <script src=" {{ asset('js/toastr.min.js') }}"></script>
     <!-- FIM TOAST SWEETALERT  -->
 
+    <script src="{{ asset('js/select2.full.min.js') }}"></script>
+
 
     <script>
         var listaRequisicao = [];
@@ -263,17 +253,18 @@
 
             $.each(listaProdutosNova, function(key, value) {
 
-                listaRequisicao += '<tr class="del">';
-                listaRequisicao += '<td ><p style="display:none">' + key + '</p></td>';
-                listaRequisicao += '<td >' + value.lote + '</td>';
-                listaRequisicao += '<td >' + value.nome + '</td>';
-                listaRequisicao += '<td>' + value.valor_unitario + '</td>';
-                listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
-                    ' /> <input type="text" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
-                    /editar/ *
-                    ')) value="{{  }}" @endif> </td>';
-                listaRequisicao += '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
-                listaRequisicao += '</tr>';
+                    listaRequisicao += '<tr class="del">';
+                    listaRequisicao += '<td ><p style="display:none">' + key + '</p></td>';
+                    listaRequisicao += '<td >' + value.lote + '</td>';
+                    listaRequisicao += '<td >' + value.nome + '</td>';
+                    listaRequisicao += '<td>' + value.valor_unitario + '</td>';
+                    listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
+                        ' /> <input type="text" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
+                        /editar/ *
+                        ')) value="{{  }}" @endif> </td>';
+                    listaRequisicao += '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
+                    listaRequisicao += '</tr>';
+
 
             });
 
@@ -310,7 +301,7 @@
 
         });
 
+
     </script>
 @endsection
-
 @endsection

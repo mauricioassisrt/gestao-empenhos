@@ -74,30 +74,7 @@
                     @endif
                 </select>
             </div>
-            {{-- <div class="form-group">
-                <label>Fornecedor </label>
-                <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
-                    @if (Request::is('*/editar/*'))
-                        <option value="{{ $produto->fornecedor->id }}">
-                            {{ $produto->fornecedor->nome_fornecedor }}
-                        </option>
-                        @foreach ($fornecedors as $fornecedor)
-                            @if ($produto->fornecedor->id != $fornecedor->id)
-                                <option value="{{ $fornecedor->id }}">
-                                    {{ $fornecedor->nome_fornecedor }}
-                                </option>
-                            @endif
 
-                        @endforeach
-                    @else
-                        @foreach ($fornecedors as $fornecedor)
-                            <option value="{{ $fornecedor->id }}">
-                                {{ $fornecedor->nome_fornecedor }}
-                            </option>
-                        @endforeach
-                    @endif
-                </select>
-            </div> --}}
 
         </div>
         <div class="card-footer clearfix">

@@ -1,13 +1,13 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('licitacao', 'LicitacaoController@index')->name('licitacao');
-     Route::get('licitacao/cadastrar', 'LicitacaoController@cadastrar')->name('licitacao.create');
-     Route::post('licitacao/novo', 'LicitacaoController@insert')->name('licitacao.insert');
-     Route::get('licitacao/editar/{licitacao}', 'LicitacaoController@editar')->name('licitacao.edit');
-     Route::patch('licitacao/update/{id}', 'LicitacaoController@update')->name('licitacao.update');
-     Route::get('licitacao/deletar/{licitacao}', 'LicitacaoController@deletar')->name('licitacao.delete');
-     Route::get('licitacao/visualizar/{licitacao}', 'LicitacaoController@view')->name('licitacao.view');
-     Route::get('licitacao/pesquisar', 'LicitacaoController@search')->name('licitacao.search');
+    Route::get('licitacao/vincular', 'LicitacaoProdutoController@index')->name('licitacao.vincular');
+     Route::get('licitacao/vincular/cadastrar', 'LicitacaoProdutoController@cadastrar')->name('licitacao.vincular.create');
+     Route::post('licitacao/vincular/novo', 'LicitacaoProdutoController@insert')->name('licitacao.vincular.insert');
+     Route::get('licitacao/vincular/editar/{licitacao/vincular}', 'LicitacaoProdutoController@editar')->name('licitacao.vincular.edit');
+     Route::patch('licitacao/vincular/update/{id}', 'LicitacaoProdutoController@update')->name('licitacao.vincular.update');
+     Route::get('licitacao/vincular/deletar/{licitacao/vincular}', 'LicitacaoProdutoController@deletar')->name('licitacao.vincular.delete');
+     Route::get('licitacao/vincular/visualizar/{licitacao/vincular}', 'LicitacaoProdutoController@view')->name('licitacao.vincular.view');
+     Route::get('licitacao/vincular/pesquisar', 'LicitacaoProdutoController@search')->name('licitacao.vincular.search');
  });
 

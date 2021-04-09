@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
+use App\Fornecedor;
+use App\Licitacao;
 use App\LicitacaoProduto;
 use App\LicitacaoProdutoProduto;
 use Illuminate\Http\Request;
 use Gate;
-class LicitacaoProdutoProdutoController extends Controller
+class LicitacaoProdutoController extends Controller
 {
     public function __construct()
     {
@@ -19,7 +22,7 @@ class LicitacaoProdutoProdutoController extends Controller
             if (Gate::allows('View_LicitacaoProduto')) {
                 $titulo = "Licitações";
                 $licitacaoProdutos = LicitacaoProduto::paginate(20);
-                return view('LicitacaoProduto.index', compact('LicitacaoProdutos', 'titulo'));
+                return view('licitacaoproduto.index', compact('licitacaoProdutos', 'titulo'));
             } else {
                 return view('errors.sem_permissao');
             }
@@ -30,8 +33,11 @@ class LicitacaoProdutoProdutoController extends Controller
     public function cadastrar()
     {
         if (Gate::allows('Insert_LicitacaoProduto')) {
-            $titulo = "Novo cadastro de LicitacaoProduto ";
-            return view('LicitacaoProduto.formulario', compact('titulo'));
+            $titulo = "Cadastro de produtos em uma licitação  ";
+            $fornecedors = Fornecedor::all();
+            $licitacaos = Licitacao::all();
+            $categorias = Categoria::all();
+            return view('licitacaoproduto.formulario', compact('titulo', 'licitacaos', 'fornecedors', 'categorias'));
         } else {
             return view('errors.sem_permissao');
         }
@@ -42,20 +48,54 @@ class LicitacaoProdutoProdutoController extends Controller
 
         if (Gate::allows('Insert_LicitacaoProduto')) {
 
-            LicitacaoProduto::create($request->all());
-            return redirect('LicitacaoProduto');
+            $valor_final = 0;
+            $total_produtos = 0;
+
+            foreach ($request->produto_id as $key => $value) {
+                $produto = Produto::findOrfail($value);
+                $valor_final += $request->quantidadeItens[$key] * $produto->valor_unitario;
+                $total_produtos += $request->quantidadeItens[$key];
+            }
+
+            $request['valor_final'] = $valor_final;
+            $request['total_produtos'] =   $total_produtos;
+
+            $id = licitacaoProduto::create($request->all())->id;
+            $licitacaoProdutoAno = $id . '/' . $year = date('Y');
+            $licitacaoProduto = licitacaoProduto::findOrFail($id);
+
+            $reqArray = array(
+                'licitacaoProduto_ano' => $licitacaoProdutoAno,
+
+            );
+            $licitacaoProduto->update($reqArray);
+            $licitacaoProdutoProduto = new licitacaoProdutoProduto();
+            foreach ($request->produto_id as $key => $value) {
+                $produto = Produto::findOrfail($value);
+                $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+
+                $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
+                $licitacaoProdutoProduto->valor_total_iten = $valorIten;
+                $licitacaoProdutoProduto->licitacaoProduto_id = $id;
+                $licitacaoProdutoProduto->produto_id = $produto->id;
+
+                $licitacaoProdutoProduto->save();
+                $licitacaoProdutoProduto = new licitacaoProdutoProduto();
+            }
+
+
         } else {
             return view('errors.sem_permissao');
         }
     }
 
 
-    public function editar(LicitacaoProduto $LicitacaoProduto)
+    public function editar(LicitacaoProduto $licitacaoProduto)
     {
         if (Gate::allows('Edit_LicitacaoProduto')) {
-            $LicitacaoProduto = LicitacaoProduto::findOrFail($LicitacaoProduto->id);
+            $licitacaoProduto = LicitacaoProduto::findOrFail($licitacaoProduto->id);
             $titulo = "Editar ";
-            return view('LicitacaoProduto.formulario', compact('LicitacaoProduto', 'titulo'));
+            return view('licitacaoproduto.formulario', compact('licitacaoProduto', 'titulo'));
         } else {
             return view('errors.sem_permissao');
         }
@@ -67,7 +107,7 @@ class LicitacaoProdutoProdutoController extends Controller
         if (Gate::allows('Edit_LicitacaoProduto')) {
             $LicitacaoProduto = LicitacaoProduto::findOrFail($id);
             $update =  $LicitacaoProduto->update($request->all());
-            return redirect('LicitacaoProduto');
+            return redirect('licitacaoproduto');
         } else {
             return view('errors.sem_permissao');
         }
@@ -79,7 +119,7 @@ class LicitacaoProdutoProdutoController extends Controller
         if (Gate::allows('Delete_LicitacaoProduto')) {
             $LicitacaoProduto = LicitacaoProduto::findOrFail($id);
             $LicitacaoProduto->delete();
-            return redirect('LicitacaoProduto');
+            return redirect('licitacaoproduto');
         } else {
             return view('errors.sem_permissao');
         }
@@ -90,11 +130,11 @@ class LicitacaoProdutoProdutoController extends Controller
         try {
             $titulo = 'Pesquisa de LicitacaoProdutoes com o número  ' . $request->get('table_search');
             if (Gate::allows('View_LicitacaoProduto')) {
-                $LicitacaoProduto = new LicitacaoProduto();
+                $licitacaoProduto = new LicitacaoProduto();
                 $search = $request->get('table_search');
                 $licitacaoProdutos = LicitacaoProduto::where('numero_LicitacaoProduto', 'like', '%' . $search . '%')->paginate(10);
 
-                return view('LicitacaoProduto.index', compact('titulo', 'LicitacaoProdutos'));
+                return view('licitacaoproduto.index', compact('titulo', 'licitacaoProdutos'));
             } else {
                 return view('errors.404');
             }

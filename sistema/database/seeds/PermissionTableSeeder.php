@@ -246,6 +246,22 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Insert_licitacao',
                 'label' => 'Adicionar licitacao',
             ],
+            [
+                'name' => 'Edit_LicitacaoProduto',
+                'label' => 'Editar secretaria do produto',
+            ],
+            [
+                'name' => 'View_LicitacaoProduto',
+                'label' => 'Visualizar secretaria',
+            ],
+            [
+                'name' => 'Delete_LicitacaoProduto',
+                'label' => 'Deletar secretaria ',
+            ],
+            [
+                'name' => 'Insert_LicitacaoProduto',
+                'label' => 'Adicionar secretaria',
+            ],
 
         );
         foreach ($permissions as $key => $value) {
@@ -621,6 +637,46 @@ class PermissionTableSeeder extends Seeder
             ],
             [
                 'permission_id' => '55',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '56',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '57',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '58',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '59',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '56',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '57',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '58',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '59',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '60',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '60',
                 'role_id' => '1'
             ],
 
