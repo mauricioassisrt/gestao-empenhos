@@ -29,6 +29,7 @@
                 {!! Form::open(['route' => 'licitacao.vincular.insert']) !!}
             @endif
             <div class="row">
+
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Fornecedor </label>
@@ -59,28 +60,8 @@
 
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Licitações </label>
-                        <select name="licitacao_id" class="form-control select2" style="width: 100%;">
-                            @if (Request::is('*/editar/*'))
-                                <option value="{{ $licitacaoProduto->licitacao->id }}">
-                                    {{ $licitacaoProduto->licitacao->numero_licitacao }}
-                                </option>
-                                @foreach ($licitacaos as $licitacao)
-                                    @if ($licitacaoProduto->licitacao->id != $licitacao->id)
-                                        <option value="{{ $licitacao->id }}">
-                                            {{ $licitacao->numero_licitacao }}
-                                        </option>
-                                    @endif
-
-                                @endforeach
-                            @else
-                                @foreach ($licitacaos as $licitacao)
-                                    <option value="{{ $licitacao->id }}">
-                                        {{ $licitacao->numero_licitacao }}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
+                        <label>Licitação </label>
+                       <input type="text" disabled class="form-control" name="licitacao_id" value=" {{ $licitacao->numero_licitacao}}"/>
                     </div>
 
 
@@ -130,7 +111,9 @@
         </div>
         <div class="card-footer clearfix">
 
+            <a href="{{ url('licitacao/vincular') }}" class="btn btn-primary">
 
+                <i class="fas fa-arrow-left"></i> Voltar  </a>
             @if (Request::is('*/editar/*'))
 
                 <button type="submit" class="btn btn-success" id="botaoSalvarUser" style="display:none"> <i
@@ -140,11 +123,11 @@
 
                 <a href="javascript:" class="btn btn-primary" id="voltarProdutos" style="display:none">
 
-                    <i class="fas fa-arrow-left"></i> Voltar escolher produtos </a>
+                    <i class="fas fa-arrow-left"></i> Produtos </a>
 
                 <a href="javascript:" class="btn btn-primary" id="irParaLista">
 
-                    <i class="fas fa-arrow-right"></i> Ir para lista de itens </a>
+                   Ir para lista de itens   <i class="fas fa-arrow-right"></i></a>
                 <button type="submit" class="btn btn-success" id="resumo" style="display:none"> <i
                         class=" fas fa-pen-alt"></i> Resumo da requisição </button>
             @endif
@@ -175,6 +158,10 @@
 
 
     <script>
+        @if(session('status'))
+        toastr.success(  "{{ session()->get('status') }}" );
+
+        @endif
         var listaRequisicao = [];
         var lista = '';
         var listaIdProdutos = [];
@@ -231,7 +218,7 @@
 
                     } else {
                         toastr.error("Esta categoria não possui nenhum produto cadastrado!!!");
-                        //
+
                     }
                 }
             });

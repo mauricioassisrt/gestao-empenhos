@@ -4,16 +4,13 @@
     <div class="card">
 
         <div class="card-header">
-            @can('Insert_licitacao')
-                <a href="{{ route('licitacao.vincular.create') }}" class="btn btn-primary float-right">
-                    <i class="fas fa-plus"></i> Novo </a>
 
-            @endcan
             <form action="{{ route('licitacao.vincular.search') }}" method="get">
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
 
-                        <input type="text" name="table_search" class="form-control float-right " placeholder="Pesquise pelo número da licitação ">
+                        <input type="text" name="table_search" class="form-control float-right "
+                            placeholder="Pesquise pelo número da licitação ">
 
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
@@ -44,11 +41,17 @@
                             <td>{!! $licitacao->pregao !!}</td>
                             <td>
                                 @can('Edit_licitacao')
+                                    @if (empty($licitacao->valor_final))
+                                        <a href="{{ route('licitacao.vincular.create',  ['licitacao' => $licitacao->id]) }}"
+                                            class="btn btn-primary float-right">
+                                            <i class="fas fa-plus"></i> Vincular produtos </a>
+                                    @else
+                                        <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
+                                            class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                            </span>
+                                            <i class="fas fa-edit"></i> Visualizar licitação </a>
+                                    @endif
 
-                                    <a href="{{route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id])}}" class="btn btn-primary"><span
-                                            class="glyphicon glyphicon-pencil">
-                                        </span>
-                                        <i class="fas fa-edit"></i> Editar </a>
                                 @endcan
                                 @can('Delete_licitacao')
 
@@ -69,13 +72,15 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Tem certeza que deseja excluir esta pessoa
-                                                        {{ $licitacao->numero_licitacao }}    </p>
+                                                    <p>Tem certeza que deseja excluir esta licitação ? </br>
+                                                        {{ $licitacao->numero_licitacao }} </p>
+
+
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Fechar</button>
-                                                    <a href="{{route('licitacao.delete', ['licitacao' => $licitacao->id])}}"
+                                                    <a href="{{ route('licitacao.vincular.delete', ['licitacao' => $licitacao->id]) }}"
                                                         class="btn btn-danger">
                                                         <span class="glyphicon glyphicon-remove"></span> <i
                                                             class="fas fa-trash"></i>

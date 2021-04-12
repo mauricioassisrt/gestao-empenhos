@@ -32,14 +32,15 @@ class LicitacaoProdutoController extends Controller
             dd($th);
         }
     }
-    public function cadastrar()
+    public function cadastrar(Licitacao $licitacao)
     {
+
         if (Gate::allows('Insert_LicitacaoProduto')) {
             $titulo = "Cadastro de produtos em uma licitação  ";
             $fornecedors = Fornecedor::all();
-            $licitacaos = Licitacao::all();
             $categorias = Categoria::all();
-            return view('licitacaoproduto.formulario', compact('titulo', 'licitacaos', 'fornecedors', 'categorias'));
+
+            return view('licitacaoproduto.formulario', compact('titulo', 'licitacao', 'fornecedors', 'categorias'));
         } else {
             return view('errors.sem_permissao');
         }
@@ -60,51 +61,59 @@ class LicitacaoProdutoController extends Controller
                     $total_produtos += $request->quantidadeItens[$key];
                 }
                 $licitacaoProduto = Licitacao::findOrFail($request->licitacao_id);
-                $request['valor_final'] = $valor_final;
-                $request['total_produtos'] =   $total_produtos;
+                $request['valor_final'] = $valor_final + $licitacaoProduto->valor_final;
+                $request['total_produtos'] =   $total_produtos + $licitacaoProduto->total_produtos;
 
-
+                //verificar o produto inserido se já existe e inserir ou atualizar a quantidade
                 $licitacaoProduto->update($request->all());
                 $licitacaoProdutoProduto = new LicitacaoProduto();
                 foreach ($request->produto_id as $key => $value) {
                     $produto = Produto::findOrfail($value);
-                    $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+                    $produtoLicitacao = LicitacaoProduto::findOrfail($produto->id);
+                    $valorIten = 0;
+                    if (empty($produtoLicitacao) && $produtoLicitacao->fornecedor_id != $request->fornecedor_id) {
+                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
 
-                    $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
-                    $licitacaoProdutoProduto->valor_total_iten = $valorIten;
-                    $licitacaoProdutoProduto->licitacao_id = $request->licitacao_id;
-                    $licitacaoProdutoProduto->produto_id = $produto->id;
-                    $licitacaoProdutoProduto->fornecedor_id = $request->fornecedor_id;
-                    $licitacaoProdutoProduto->save();
-                    $licitacaoProdutoProduto = new LicitacaoProduto();
+                        $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
+                        $licitacaoProdutoProduto->valor_total_iten = $valorIten;
+                        $licitacaoProdutoProduto->licitacao_id = $request->licitacao_id;
+                        $licitacaoProdutoProduto->produto_id = $produto->id;
+                        $licitacaoProdutoProduto->fornecedor_id = $request->fornecedor_id;
+                        $licitacaoProdutoProduto->save();
+                        $licitacaoProdutoProduto = new LicitacaoProduto();
+                    } else {
+
+                        $licitacaoProdutoAtualizar['quantidade_produto'] = $request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto;
+                        $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten + $produtoLicitacao->valor_total_iten;
+                        $produtoLicitacao->update($licitacaoProdutoAtualizar);
+                    }
                 }
 
-                return redirect('licitacao/vincular');
-
+                return redirect('licitacao/vincular/cadastrar')->with('status', 'Fornecedor e produtos vinculado a licitação!');
             } else {
                 return view('errors.sem_permissao');
             }
-           } catch (\Throwable $th) {
-               dd($th);
-           }
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
 
     public function editar(Licitacao $licitacaoProduto)
     {
 
-      try {
-        if (Gate::allows('Edit_LicitacaoProduto')) {
+        try {
+            if (Gate::allows('Edit_LicitacaoProduto')) {
 
-            $titulo = "Total de produtos nesta licitação  ";
-            $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->get();
-            return view('licitacaoproduto.editar', compact('licitacaoProdutos','titulo', 'licitacaoProduto'));
-        } else {
+                $titulo = "Total de produtos nesta licitação  ";
+                $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->get();
+                return view('licitacaoproduto.editar', compact('licitacaoProdutos', 'titulo', 'licitacaoProduto'));
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
             return view('errors.sem_permissao');
         }
-      } catch (\Throwable $th) {
-         return view('errors.sem_permissao');
-      }
     }
 
 
@@ -120,14 +129,28 @@ class LicitacaoProdutoController extends Controller
     }
 
 
-    public function deletar($id)
+    public function deletar(Licitacao $licitacao)
     {
-        if (Gate::allows('Delete_LicitacaoProduto')) {
-            $LicitacaoProduto = LicitacaoProduto::findOrFail($id);
-            $LicitacaoProduto->delete();
-            return redirect('licitacaoproduto');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+
+            if (Gate::allows('Delete_LicitacaoProduto')) {
+                $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacao->id)->get();
+
+                $licitacaoEdit['valor_final'] = null;
+                $licitacaoEdit['total_produtos'] = null;
+
+                $licitacao->update($licitacaoEdit);
+
+                foreach ($licitacaoProdutos as $licitacaoProduto) {
+                    $licitacaoProduto->delete();
+                }
+
+                return redirect('licitacaoproduto');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
 
