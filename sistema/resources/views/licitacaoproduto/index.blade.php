@@ -40,27 +40,30 @@
                             <td>{!! $licitacao->modalidade !!}</td>
                             <td>{!! $licitacao->pregao !!}</td>
                             <td>
+
                                 @can('Edit_licitacao')
-                                    @if (empty($licitacao->valor_final))
-                                        <a href="{{ route('licitacao.vincular.create',  ['licitacao' => $licitacao->id]) }}"
-                                            class="btn btn-primary float-right">
-                                            <i class="fas fa-plus"></i> Vincular produtos </a>
-                                    @else
-                                        <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
-                                            class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
-                                            </span>
-                                            <i class="fas fa-edit"></i> Visualizar licitação </a>
-                                    @endif
 
+                                    <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
+                                        class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-pencil"> </span>
+                                        <i class="fas fa-edit"></i>
+                                        Visualizar licitação
+                                    </a>
+
+                                    <a href="{{ route('licitacao.vincular.create', ['licitacao' => $licitacao->id]) }}"
+                                        class="btn btn-primary ">
+                                        <i class="fas fa-plus"></i>
+                                        Vincular produtos
+                                    </a>
                                 @endcan
-                                @can('Delete_licitacao')
+                                {{-- @can('Delete_licitacao')
 
 
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
+                                    <a href="" class="btn btn-danger" data-toggle="modal"
                                         data-target="#modal-default-{{ $licitacao->id }}"><span
                                             class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
                                     </a>
-                                    </a>
+
                                     <div class="modal fade" id="modal-default-{{ $licitacao->id }}" style="display: none;"
                                         tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">
@@ -94,7 +97,7 @@
                                         </div>
                                         <!-- /.modal-dialog -->
                                     </div>
-                                @endcan
+                                @endcan --}}
                             </td>
                         </tr>
                     @endforeach

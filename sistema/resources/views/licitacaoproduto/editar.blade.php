@@ -28,7 +28,7 @@
                 <li class="nav-item">
                     <a class="nav-link " id="custom-content-above-home-tab" data-toggle="pill"
                         href="#custom-content-above-home" role="tab" aria-controls="custom-content-above-home"
-                        aria-selected="true">Detalhes da requisição</a>
+                        aria-selected="true">Detalhes da licitação</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" id="custom-content-above-profile-tab" data-toggle="pill"
@@ -132,6 +132,7 @@
                         <table class="table table-striped" style='background:#fff'>
                             <thead>
                                 <th> Produto</th>
+                                <th> Fornecedor</th>
                                 <th> Categoria</th>
                                 <th>Valor Unitário do produto/item </th>
                                 <th>Quantidade Solicitada </th>
@@ -142,6 +143,7 @@
                                 @foreach ($licitacaoProdutos as $licitacaoProduto)
                                     <tr>
                                         <td>{!! $licitacaoProduto->produtos->nome !!}</td>
+                                        <td>{!! $licitacaoProduto->fornecedor->nome_fornecedor !!}</td>
                                         <td>{!! $licitacaoProduto->produtos->categoria->nome_categoria !!}</td>
                                         <td>R${!! $licitacaoProduto->produtos->valor_unitario !!}</td>
 
@@ -160,7 +162,9 @@
             </div>
         </div>
         <div class="card-footer clearfix">
+            <a href="{{ url('licitacao/vincular') }}" class="btn btn-primary">
 
+                <i class="fas fa-arrow-left"></i> Voltar  </a>
         </div>
         {!! Form::close() !!}
 

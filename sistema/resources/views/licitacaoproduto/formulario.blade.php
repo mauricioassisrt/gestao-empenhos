@@ -30,51 +30,82 @@
             @endif
             <div class="row">
 
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Fornecedor </label>
-                        <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
-                            @if (Request::is('*/editar/*'))
-                                <option value="{{ $licitacaoProduto->fornecedor->id }}">
-                                    {{ $licitacaoProduto->fornecedor->nome_fornecedor }}
-                                </option>
-                                @foreach ($fornecedors as $fornecedor)
-                                    @if ($licitacaoProduto->fornecedor->id != $fornecedor->id)
-                                        <option value="{{ $fornecedor->id }}">
-                                            {{ $fornecedor->nome_fornecedor }}
-                                        </option>
-                                    @endif
+                <div class="col-sm-12">
 
-                                @endforeach
-                            @else
-                                @foreach ($fornecedors as $fornecedor)
-                                    <option value="{{ $fornecedor->id }}">
-                                        {{ $fornecedor->nome_fornecedor }}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-
+                <div class="alert alert-info alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fas fa-info"></i><b>Atenção!</b> </h4>
+                            1° Escolha o fornecedor que ganhou determinados itens da licitação <br>
+                            2° Escolha a categoria desejada, após isso selecione os produtos e suas quantidades <br>
+                            3º Depois é só finalizar e após isso continuar montando a licitação com outro fornecedor
+                        </div>
                 </div>
 
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Licitação </label>
-                       <input type="text" disabled class="form-control" name="licitacao_id" value=" {{ $licitacao->numero_licitacao}}"/>
-                    </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input type="hidden" name="licitacao_id" value="{{ $licitacao->id }}" />
+                            <label>Ano da licitação </label>
+                            <input type="number" class="form-control" placeholder="Digite somente o ano " max="2099" disabled
+                                min="2020" name="ano"  value="{{ $licitacao->ano }}"  required>
 
+                        </div>
+                        <div class="col-sm-2">
+                            <label>N° da licitação </label>
+                            <input type="number" class="form-control" id="numero_licitacao" placeholder="Exemplo 405 " disabled
+                                max="9999" min="1" name="numero_licitacao" value="{{ $licitacao->numero_licitacao }}"  required>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Pregão</label>
+                            <input type="text" class="form-control" id="pregao" placeholder="Exmplo 406/2021 " max="10" disabled
+                                min="2" name="pregao" value="{{ $licitacao->pregao }}"  required>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Modalidade</label>
+                            <select class="form-control" name="modalidade" id="modalidade" disabled>
+                                <option value="{{ $licitacao->modalidade }}"
+                                    selected="selected">
+
+                                        {{ $licitacao->modalidade }}
+                                </option>
+
+                            </select>
+
+                        </div>
+                    </div>
 
                 </div>
 
             </div>
             <hr>
-            <div class="  callout callout-success ">
-                <h5><b>Vamos escolher os produtos da licitação ? !!!</b> </h5>
 
-                <p> Basta informar a quantidade somente para montar a requisição </p>
-            </div>
             <div class="row" id="divProdutos">
+                <div class="col-sm-12">
+                    <label>Fornecedor </label>
+                    <select name="fornecedor_id" class="form-control select2" style="width: 100%;">
+                        @if (Request::is('*/editar/*'))
+                            <option value="{{ $licitacaoProduto->fornecedor->id }}">
+                                {{ $licitacaoProduto->fornecedor->nome_fornecedor }}
+                            </option>
+                            @foreach ($fornecedors as $fornecedor)
+                                @if ($licitacaoProduto->fornecedor->id != $fornecedor->id)
+                                    <option value="{{ $fornecedor->id }}">
+                                        {{ $fornecedor->nome_fornecedor }}
+                                    </option>
+                                @endif
+
+                            @endforeach
+                        @else
+                            @foreach ($fornecedors as $fornecedor)
+                                <option value="{{ $fornecedor->id }}">
+                                    {{ $fornecedor->nome_fornecedor }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>
                     <select name="categoria_id" class="form-control select2" style="width: 100%;" id="getCategoria">

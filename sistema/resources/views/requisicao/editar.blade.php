@@ -132,6 +132,7 @@
                                 @foreach ($requisicaoProdutos as $requisicaoProduto)
                                     <tr>
                                         <td>{!! $requisicaoProduto->produtos->nome !!}</td>
+
                                         <td>R${!! $requisicaoProduto->produtos->valor_unitario !!}</td>
 
                                         <td>{!! $requisicaoProduto->quantidade_produto !!}</td>

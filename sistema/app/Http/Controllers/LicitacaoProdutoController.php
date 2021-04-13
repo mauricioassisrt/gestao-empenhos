@@ -60,20 +60,44 @@ class LicitacaoProdutoController extends Controller
                     $valor_final += $request->quantidadeItens[$key] * $produto->valor_unitario;
                     $total_produtos += $request->quantidadeItens[$key];
                 }
+
                 $licitacaoProduto = Licitacao::findOrFail($request->licitacao_id);
+
                 $request['valor_final'] = $valor_final + $licitacaoProduto->valor_final;
                 $request['total_produtos'] =   $total_produtos + $licitacaoProduto->total_produtos;
 
                 //verificar o produto inserido se já existe e inserir ou atualizar a quantidade
+                // dd($request->all());
                 $licitacaoProduto->update($request->all());
+
                 $licitacaoProdutoProduto = new LicitacaoProduto();
+
                 foreach ($request->produto_id as $key => $value) {
                     $produto = Produto::findOrfail($value);
-                    $produtoLicitacao = LicitacaoProduto::findOrfail($produto->id);
-                    $valorIten = 0;
-                    if (empty($produtoLicitacao) && $produtoLicitacao->fornecedor_id != $request->fornecedor_id) {
-                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+                    $produtoLicitacao = LicitacaoProduto::where('produto_id', $produto->id)->first();
 
+                    $valorIten = 0;
+
+                    /**
+                     *  IF VERIFICA SE A TABELA ESTA VAZIA sE NÃO HÁ LICITACAO COM PRODUTO VINCULADO
+                     **/
+                    if ($produtoLicitacao == null) {
+
+                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+                        $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
+                        $licitacaoProdutoProduto->valor_total_iten = $valorIten;
+                        $licitacaoProdutoProduto->licitacao_id = $request->licitacao_id;
+                        $licitacaoProdutoProduto->produto_id = $produto->id;
+                        $licitacaoProdutoProduto->fornecedor_id = $request->fornecedor_id;
+                        $licitacaoProdutoProduto->save();
+
+                        $licitacaoProdutoProduto = new LicitacaoProduto();
+                        /*
+                        *   caso o fornecedor escolhido seja diferente de algúm retornado
+                        */
+                    } else if ($produtoLicitacao->fornecedor_id != $request->fornecedor_id) {
+
+                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
                         $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
                         $licitacaoProdutoProduto->valor_total_iten = $valorIten;
                         $licitacaoProdutoProduto->licitacao_id = $request->licitacao_id;
@@ -81,15 +105,18 @@ class LicitacaoProdutoController extends Controller
                         $licitacaoProdutoProduto->fornecedor_id = $request->fornecedor_id;
                         $licitacaoProdutoProduto->save();
                         $licitacaoProdutoProduto = new LicitacaoProduto();
+                        /*
+                         * Caso a consulta produtoLicitacao não seja null e o fornecedor vindo da view seja igual o do banco, dai faz update
+                        */
                     } else {
-
+                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
                         $licitacaoProdutoAtualizar['quantidade_produto'] = $request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto;
                         $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten + $produtoLicitacao->valor_total_iten;
                         $produtoLicitacao->update($licitacaoProdutoAtualizar);
                     }
                 }
 
-                return redirect('licitacao/vincular/cadastrar')->with('status', 'Fornecedor e produtos vinculado a licitação!');
+                return redirect('licitacao/vincular/cadastrar/' . $request->licitacao_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
             } else {
                 return view('errors.sem_permissao');
             }
@@ -153,19 +180,25 @@ class LicitacaoProdutoController extends Controller
             return view('errors.404');
         }
     }
-
+    /*
+     METODO DE PESQUISAR
+    */
     public function search(Request $request)
     {
         try {
-            $titulo = 'Pesquisa de LicitacaoProdutoes com o número  ' . $request->get('table_search');
-            if (Gate::allows('View_LicitacaoProduto')) {
-                $licitacaoProduto = new LicitacaoProduto();
-                $search = $request->get('table_search');
-                $licitacaoProdutos = LicitacaoProduto::where('numero_LicitacaoProduto', 'like', '%' . $search . '%')->paginate(10);
 
-                return view('licitacaoproduto.index', compact('titulo', 'licitacaoProdutos'));
+            if (Gate::allows('pessoa_view')) {
+                $licitacaos = new Licitacao();
+                $search = $request->get('table_search');
+                $licitacaos = Licitacao::where('numero_licitacao', 'like', '%' . $search . '%')->paginate(10);
+                if ($licitacaos->isEmpty()) {
+                    $titulo = 'Sua pesquisa não retornou nenhum resultado!';
+                } else {
+                    $titulo = 'Sua pesquisa retornou os seguintes resultados ';
+                }
+                return view('licitacaoproduto.index', compact('titulo', 'licitacaos'));
             } else {
-                return view('errors.404');
+                return view('errors.404', compact('titulo'));
             }
         } catch (\Throwable $th) {
             return view('errors.404', $th);
