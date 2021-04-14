@@ -105,6 +105,14 @@ $empresa = Empresa::all();
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ url('requisicaoComLicitacao') }}" class="nav-link active">
+                                        <i class="nav-icon fas fa-gavel"></i>
+                                        <p>
+                                           Com licitação vinculada
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ url('requisicao') }}" class="nav-link active">
                                         <i class="nav-icon fas fa-receipt"></i>
                                         <p>

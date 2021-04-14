@@ -32,6 +32,7 @@ class CreateRequisicaoProdutosTable extends Migration
             $table->integer('valor_total_iten');
             $table->integer('requisicao_id')->unsigned();
             $table->integer('produto_id')->unsigned();
+
             $table->foreign('requisicao_id')->references('id')->on('requisicaos');
             $table->foreign('produto_id')->references('id')->on('produtos');
             $table->timestamps();

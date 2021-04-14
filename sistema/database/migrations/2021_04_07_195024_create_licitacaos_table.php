@@ -35,8 +35,6 @@ class CreateLicitacaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('licitacaos');
-
 
     }
 }

@@ -8,7 +8,7 @@ class RequisicaoProduto extends Model
 {
 
     protected $fillable = [
-        'quantidade_produto', 'valor_total_iten','requisicao_id', 'produto_id',
+        'quantidade_produto', 'valor_total_iten','requisicao_id', 'produto_id', 'licitacao_produto_id'
     ];
     public function requisicaos()
     {
@@ -18,5 +18,8 @@ class RequisicaoProduto extends Model
     {
         return $this->belongsTo(Produto::class, 'produto_id' );
     }
-
+    public function licitacaoProdutos()
+    {
+        return $this->belongsTo(LicitacaoProduto::class, 'licitacao_produto_id' );
+    }
 }
