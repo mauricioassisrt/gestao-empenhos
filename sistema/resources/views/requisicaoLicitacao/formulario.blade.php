@@ -85,11 +85,11 @@
             <div class="row" id="divProdutos">
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>
-                    <select name="categoria_id" class="form-control select2" style="width: 100%;" id="getCategoria">
-                       nome_categoria
-                        @foreach ($categorias as $categoria)
-                            <option value="{{ $categoria->licitacao_id}}">
-                              Número da Licitacação  {{  $categoria->licitacao->id }} Cat {{  $categoria->produtos->categoria->nome_categoria }}
+                    <select name="licitacao_id" class="form-control select2" style="width: 100%;" id="licitacao_id">
+
+                        @foreach ($licitacaos as $licitacao)
+                            <option value="{{ $licitacao->id}}">
+                              Número da Licitacação  {{  $licitacao->ano }}/{{  $licitacao->numero_licitacao }}
                             </option>
                         @endforeach
 
@@ -166,18 +166,18 @@
         var lista = '';
         var listaIdProdutos = [];
         var listaProdutosNova = [];
-        $('#getCategoria').blur(function(e) {
-
+        $('#licitacao_id').blur(function(e) {
+            alert($("#licitacao_id").val());
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-                url: "{{ url('requisicaoComLicitacao/getCategoria') }}",
+                url: "{{ url('requisicaoComLicitacao/getLicitacao') }}",
                 method: "POST",
                 data: {
-                    categoria_id: $("#getCategoria").val(),
+                    licitacao_id: $("#licitacao_id").val(),
 
                 },
                 success: function(result) {
@@ -190,7 +190,7 @@
                             lista += '<td >' + value.id + '</td>';
                             lista += '<td >' + value.lote + '</td>';
                             lista += '<td >' + value.nome + '</td>';
-                            lista += '<td>' + value.valor_unitario + '</td>';
+                            lista += '<td>' + value.nome_categoria + '</td>';
                             lista +=
                                 '<td> <a class="btn btn-success "  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
                             lista += '</tr>';

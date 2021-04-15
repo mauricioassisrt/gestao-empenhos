@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Fornecedor;
+use App\Licitacao;
 use App\LicitacaoProduto;
 use App\PessoaUnidade;
 use App\Produto;
@@ -42,19 +43,19 @@ class RequisicaoComLicitacaoController extends Controller
         try {
             if (Gate::allows('Insert_requisicao')) {
                 $produtos = Produto::all();
-                $collection = collect(LicitacaoProduto::all());
+                // $collection = collect(LicitacaoProduto::all());
 
-                $categorias = $collection->unique('licitacao_id');
+                // $licitacaos = $collection->unique('licitacao_id');
 
-                $categorias->values()->all();
-
+                // $licitacaos->values()->all();
+                $licitacaos = Licitacao::all();
                 $titulo = "Novo cadastro de Requisicao ";
                 $unidades = Unidade::all();
                 $fornecedors = Fornecedor::all();
                 $pessoa_unidades = PessoaUnidade::all();
 
 
-                return view('requisicaoLicitacao.formulario', compact('titulo', 'categorias', 'unidades', 'fornecedors', 'pessoa_unidades',));
+                return view('requisicaoLicitacao.formulario', compact('titulo', 'licitacaos', 'unidades', 'fornecedors', 'pessoa_unidades',));
             } else {
                 return view('errors.sem_permissao');
             }
@@ -68,15 +69,17 @@ class RequisicaoComLicitacaoController extends Controller
      * Get Categoria API que busca a categoria selecionada e retorna uma lista de produtos
      *
      */
-    public function getCategoria(Request $request)
+    public function getLicitacao(Request $request)
     {
         //consulta inner join categoria licitacao_produtos
-        $produto = LicitacaoProduto::where('licitacao_id', $request->categoria_id)
-        ->join('produtos' , 'produtos.id' , '=','produto_id')->get();
+        $produto = LicitacaoProduto::where('licitacao_id', $request->licitacao_id)
+        ->join('produtos' , 'produtos.id' , '=','produto_id')
+        ->join('categorias' , 'produtos.categoria_id' , '=','categorias.id')->get();
+        $collection = collect($produto);
 
+        $produto = $collection->unique('produto_id');
 
-
-
+        $produto->values()->all();
         //pegar o email e comparar, e pegar a senha vinda e comparar
         if ($produto != "[]") {
             return response()->json(['success' => 'success', 'produtos' => $produto]);

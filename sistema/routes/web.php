@@ -232,6 +232,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('requisicaoComLicitacao/deletar/{requisicao}', 'RequisicaoComLicitacaoController@deletar');
     Route::get('requisicaoComLicitacao/visualizar/{requisicao}', 'RequisicaoComLicitacaoController@view');
     Route::get('requisicaoComLicitacao/search', 'RequisicaoComLicitacaoController@search');
-    Route::post('requisicaoComLicitacao/getCategoria', 'RequisicaoComLicitacaoController@getCategoria');
+    Route::post('requisicaoComLicitacao/getLicitacao', 'RequisicaoComLicitacaoController@getLicitacao');
 });
 

@@ -147,19 +147,22 @@
                 <i class="fas fa-arrow-left"></i> Voltar  </a>
             @if (Request::is('*/editar/*'))
 
-                <button type="submit" class="btn btn-success" id="botaoSalvarUser" style="display:none"> <i
+                <button type="submit" class="btn btn-success float-right" id="botaoSalvarUser" style="display:none"> <i
                         class=" fas fa-pen-alt"></i> Alterar</button>
 
             @else
 
-                <a href="javascript:" class="btn btn-primary" id="voltarProdutos" style="display:none">
 
-                    <i class="fas fa-arrow-left"></i> Produtos </a>
+                <a href="javascript:" class="btn btn-primary float-right" id="irParaLista">
 
-                <a href="javascript:" class="btn btn-primary" id="irParaLista">
+                   Ir para lista de itens   <i class="fas fa-arrow-right"></i>
+                </a>
+                   <a href="javascript:" class="btn btn-primary float-right" id="voltarProdutos" style="display:none">
 
-                   Ir para lista de itens   <i class="fas fa-arrow-right"></i></a>
-                <button type="submit" class="btn btn-success" id="resumo" style="display:none"> <i
+                    <i class="fas fa-arrow-left"></i> Produtos
+                    </a>
+
+                <button type="submit" class="btn btn-success float-right" id="resumo" style="display:none"> <i
                         class=" fas fa-pen-alt"></i> Resumo da requisição </button>
             @endif
 
