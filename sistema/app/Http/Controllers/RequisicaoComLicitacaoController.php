@@ -21,22 +21,6 @@ class RequisicaoComLicitacaoController extends Controller
     {
         $this->middleware('auth');
     }
-
-    public function index()
-    {
-        try {
-            if (Gate::allows('View_requisicao')) {
-
-                $titulo = "Requisicao ";
-                $requisicaos = Requisicao::paginate(20);
-                return view('requisicaoLicitacao.index', compact('requisicaos', 'titulo'));
-            } else {
-                return view('errors.sem_permissao');
-            }
-        } catch (\Throwable $th) {
-            dd($th);
-        }
-    }
     public function cadastrar()
     {
 
@@ -127,52 +111,13 @@ class RequisicaoComLicitacaoController extends Controller
             }
 
 
-            return redirect('requisicaoComLicitacao');
+            return redirect('requisicao');
         } else {
             return view('errors.sem_permissao');
         }
     }
 
 
-    public function editar(Requisicao $requisicao)
-    {
-        try {
-            $titulo = "Detalhes da requisição ";
-            if (Gate::allows('Edit_requisicao')) {
-                $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
-                return view('requisicaoLicitacao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo'));
-            } else {
-                return view('errors.sem_permissao');
-            }
-        } catch (\Throwable $th) {
-            return view('errors.404', $th);
-        }
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        if (Gate::allows('Edit_requisicao')) {
-            $requisicao = Requisicao::findOrFail($id);
-            $formRequest = $request->all();
-            $update =  $requisicao->update($formRequest);
-            return redirect('requisicaoComLicitacao');
-        } else {
-            return view('errors.sem_permissao');
-        }
-    }
-
-
-    public function deletar($id)
-    {
-        if (Gate::allows('Delete_requisicao')) {
-            $requisicao = Requisicao::findOrFail($id);
-            $requisicao->delete();
-            return redirect('requisicaoComLicitacao');
-        } else {
-            return view('errors.sem_permissao');
-        }
-    }
 
     public function search(Request $request)
     {

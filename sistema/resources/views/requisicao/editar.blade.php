@@ -162,7 +162,9 @@
             </div>
         </div>
         <div class="card-footer clearfix">
+            <a href="{{ url('/requisicao') }}" class="btn btn-primary">
 
+                <i class="fas fa-arrow-left"></i> Voltar </a>
         </div>
         {!! Form::close() !!}
 

@@ -12,8 +12,8 @@
                 </div>
             @endif
             @can('Insert_requisicao')
-                <a href="{{ url('requisicaoComLicitacao/cadastrar') }}" class="btn btn-primary float-right">
-                    <i class="fas fa-plus"></i> Novo </a>
+                {{-- <a href="{{ url('requisicaoComLicitacao/cadastrar') }}" class="btn btn-primary float-right">
+                    <i class="fas fa-plus"></i> Novo </a> --}}
 
 
                 <form action="{{ url('/requisicaoComLicitacao/search') }}" method="get">

@@ -1,4 +1,4 @@
-@extends('adminapp')
+{{-- @extends('adminapp')
 @section('topo')
     <!-- DATA TIME PICKER Style -->
 
@@ -173,4 +173,4 @@
 
     @endsection
 
-@endsection
+@endsection --}}

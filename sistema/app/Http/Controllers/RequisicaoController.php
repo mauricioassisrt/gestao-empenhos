@@ -11,6 +11,7 @@ use App\RequisicaoProduto;
 use App\Unidade;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Support\Facades\Auth;
 
 class RequisicaoController extends Controller
 {
@@ -22,7 +23,13 @@ class RequisicaoController extends Controller
     public function index()
     {
         try {
-            if (Gate::allows('View_requisicao')) {
+            if (Gate::allows('View_requisicao') && Gate::allows('minhas_requisicoes')) {
+
+                $titulo = "Requisicao ";
+                $requisicaos = Requisicao::paginate(20);
+                return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo'));
+            } else if (Gate::allows('View_requisicao')) {
+
                 $titulo = "Requisicao ";
                 $requisicaos = Requisicao::paginate(20);
                 return view('requisicao.index', compact('requisicaos', 'titulo'));
@@ -121,18 +128,33 @@ class RequisicaoController extends Controller
     {
         try {
             $titulo = "Detalhes da requisição ";
-            if (Gate::allows('Edit_requisicao')) {
+            if ($requisicao->pessoaUnidade->pessoa->users->id === Auth::user()->id && Gate::allows('minhas_requisicoes')) {
 
-                $requisicaoProdutosA = RequisicaoProduto::where('requisicao_id', $requisicao->id)
-                    ->join('licitacao_produtos', 'licitacao_produtos.licitacao_id', '=', 'licitacao_produto_id')
-                    ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produtos.licitacao_id')->get();
+                $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
+                    ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
+                if ($requisicaoProdutos->isEmpty()) {
+                    $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
+                }
 
-                $collection = collect($requisicaoProdutosA);
+                return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo'));
+            }
+            else if (Gate::allows('Edit_requisicao')) {
 
-                $requisicaoProdutos = $collection->unique('licitacao_id');
+                $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
+                    ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
 
-                $requisicaoProdutos->values()->all();
+                // ->join('licitacao_produtos', 'licitacao_produtos.licitacao_id', '=', 'licitacao_produto_id')
+                // ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
+                if ($requisicaoProdutos->isEmpty()) {
+                    $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
+                }
+                //   dd($requisicaoProdutos);
+                // $collection = collect($requisicaoProdutosA);
 
+                // $requisicaoProdutos = $collection->unique('licitacao_id');
+
+                // $requisicaoProdutos->values()->all();
+                // dd('asdas');
                 return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo'));
             } else {
                 return view('errors.sem_permissao');

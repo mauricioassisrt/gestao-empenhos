@@ -262,6 +262,11 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Insert_LicitacaoProduto',
                 'label' => 'Adicionar secretaria',
             ],
+            [
+                'name' => 'minhas_requisicoes',
+                'label' => 'Visualização de requisições realizadas pelo usuário',
+            ],
+
 
         );
         foreach ($permissions as $key => $value) {

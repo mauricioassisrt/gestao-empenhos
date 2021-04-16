@@ -210,6 +210,7 @@ Route::group(['middleware' => 'web'], function () {
  */
 Route::group(['middleware' => 'web'], function () {
     Route::get('requisicao', 'RequisicaoController@index');
+
     Route::get('requisicao/cadastrar', 'RequisicaoController@cadastrar');
     Route::post('requisicao/insert', 'RequisicaoController@insert');
     Route::get('requisicao/editar/{requisicao}', 'RequisicaoController@editar');
@@ -221,7 +222,7 @@ Route::group(['middleware' => 'web'], function () {
  *REQUISICAOLICITACAO ROUTES
  */
 Route::group(['middleware' => 'web'], function () {
-    Route::get('requisicaoComLicitacao', 'RequisicaoComLicitacaoController@index');
+    // Route::get('requisicaoComLicitacao', 'RequisicaoComLicitacaoController@index');
     Route::get('requisicaoComLicitacao/cadastrar', 'RequisicaoComLicitacaoController@cadastrar');
     Route::post('requisicaoComLicitacao/insert', 'RequisicaoComLicitacaoController@insert');
     Route::get('requisicaoComLicitacao/editar/{requisicao}', 'RequisicaoComLicitacaoController@editar');
