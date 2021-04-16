@@ -106,7 +106,7 @@
                         <div class="col-sm-6">
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3>   R$  {{ $requisicao->valor_final }}</h3>
+                                    <h3> R$ {{ $requisicao->valor_final }}</h3>
 
                                     <p>Valor total da requisição</p>
                                 </div>
@@ -122,6 +122,7 @@
                     <div class="card-body table-responsive p-0">
                         <table class="table table-striped" style='background:#fff'>
                             <thead>
+                                <th> Licitação </th>
                                 <th> Produto</th>
                                 <th>Valor Unitário do produto/item </th>
                                 <th>Quantidade Solicitada </th>
@@ -131,11 +132,21 @@
                             <tbody>
                                 @foreach ($requisicaoProdutos as $requisicaoProduto)
                                     <tr>
+                                        <td>
+                                            @if ($requisicaoProduto->licitacao_produto_id ===null)
+                                            Sem licitação vinculada
+                                            @else
+
+                                            {!! $requisicaoProduto->numero_licitacao !!}
+                                            @endif
+
+                                        </td>
                                         <td>{!! $requisicaoProduto->produtos->nome !!}</td>
 
                                         <td>R${!! $requisicaoProduto->produtos->valor_unitario !!}</td>
 
                                         <td>{!! $requisicaoProduto->quantidade_produto !!}</td>
+
                                         <td>R${!! $requisicaoProduto->valor_total_iten !!}</td>
 
                                     </tr>

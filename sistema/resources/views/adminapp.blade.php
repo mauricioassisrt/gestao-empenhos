@@ -97,7 +97,7 @@ $empresa = Empresa::all();
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('requisicao') }}" class="nav-link active">
+                                    <a href="{{ url('requisicao/cadastrar') }}" class="nav-link active">
                                         <i class="nav-icon fas fa-file-prescription"></i>
                                         <p>
                                             Sem licitação Vinculada
@@ -105,7 +105,7 @@ $empresa = Empresa::all();
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('requisicaoComLicitacao') }}" class="nav-link active">
+                                    <a href="{{ url('requisicaoComLicitacao/cadastrar') }}" class="nav-link active">
                                         <i class="nav-icon fas fa-gavel"></i>
                                         <p>
                                            Com licitação vinculada
@@ -120,6 +120,15 @@ $empresa = Empresa::all();
                                         </p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('requisicao') }}" class="nav-link active">
+                                        <i class="nav-icon fas fa-file-invoice"></i>
+                                        <p>
+                                        Todas as Requisições
+                                        </p>
+                                    </a>
+                                </li>
+
                             </ul>
                             </a>
                         </li>

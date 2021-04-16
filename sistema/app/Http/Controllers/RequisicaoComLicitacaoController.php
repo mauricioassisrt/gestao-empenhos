@@ -117,12 +117,11 @@ class RequisicaoComLicitacaoController extends Controller
             foreach ($request->produto_id as $key => $value) {
                 $produto = Produto::findOrfail($value);
                 $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
-
                 $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
                 $requisicaoProduto->valor_total_iten = $valorIten;
                 $requisicaoProduto->requisicao_id = $id;
                 $requisicaoProduto->produto_id = $produto->id;
-
+                $requisicaoProduto->licitacao_produto_id = $request->licitacao_id[$key];
                 $requisicaoProduto->save();
                 $requisicaoProduto = new RequisicaoProduto();
             }

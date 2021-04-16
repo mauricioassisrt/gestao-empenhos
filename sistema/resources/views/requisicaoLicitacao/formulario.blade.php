@@ -25,7 +25,7 @@
                 {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id, 'enctype' => 'multipart/form-data']) !!}
 
             @else
-                <form action="{{ url('requisicao/insert') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ url('requisicaoComLicitacao/insert') }}" method="post" enctype="multipart/form-data">
 
             @endif
 
@@ -166,14 +166,16 @@
         var lista = '';
         var listaIdProdutos = [];
         var listaProdutosNova = [];
+
         $('#licitacao_id').blur(function(e) {
-            alert($("#licitacao_id").val());
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
+                {{--  API  --}}
                 url: "{{ url('requisicaoComLicitacao/getLicitacao') }}",
                 method: "POST",
                 data: {
@@ -184,32 +186,33 @@
 
                     if (result.success) {
                         $("#tabela_produtos").empty()
+                        {{--  Monta a tabela com base no resultado  --}}
                         $.each(result.produtos, function(key, value) {
-
+                            {{--  add no TR um class para pegar o atributo do id do produto  --}}
                             lista += '<tr class="adicionar">';
-                            lista += '<td >' + value.id + '</td>';
+                            lista += '<td >' + value.produto_id + '</td>';
                             lista += '<td >' + value.lote + '</td>';
                             lista += '<td >' + value.nome + '</td>';
-                            lista += '<td>' + value.nome_categoria + '</td>';
+                            lista += '<td> R$' + value.valor_unitario + '</td>';
                             lista +=
                                 '<td> <a class="btn btn-success "  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
                             lista += '</tr>';
                         });
+                        {{--  add na tabela   --}}
                         $('#tabela_produtos').append(lista);
-
-
+                        {{--  limpo a lista   --}}
                         lista = '';
-
+                        {{--  ao clicar na row   --}}
                         $('.adicionar').click(function(e) {
+                            {{--  pega o id do produto ao clicar na linha atraves do td:eq, 0 é a posição   --}}
                             var idProduto = $(this).find('td:eq(0)').text();
 
                             $.each(result.produtos, function(key, value) {
-                                if (idProduto == value.id) {
+                                {{--  faz uma comparação do id do produto pegado no click do mouse com o do resultado do get da api caso sejam igual ele add  --}}
+                                if (idProduto == value.produto_id ) {
                                     listaIdProdutos.push(value);
-                                    toastr.success("Produto adicionado na listagem");
-
+                                    toastr.success("Produto adicionado na requisição");
                                 }
-
 
                             });
 
@@ -217,6 +220,7 @@
                         });
 
                     } else {
+                        {{--  se a busca retornar como vazia retorna essa msg  --}}
                         toastr.error("Esta categoria não possui nenhum produto cadastrado!!!");
                         //
                     }
@@ -228,40 +232,44 @@
             $("#divProdutos").hide();
             $("#divItens").show();
             $("#tabela_itens").empty()
-
+            {{--  percorre a lista que foi add com os click do usuario   --}}
             $.each(listaIdProdutos, function(i, e) {
-                var matchingItems = $.grep(listaProdutosNova, function(item) {
-                    return item.id === e.id;
+                {{--  verifica se não tem itens repetidos  --}}
+               var matchingItems = $.grep(listaProdutosNova, function(item) {
+                    return item.produto_id === e.produto_id;
                 });
                 if (matchingItems.length === 0) {
                     listaProdutosNova.push(e);
                 }
             });
-
+            {{--  preenche na view a nova table com os produtos escolhidos   --}}
             $.each(listaProdutosNova, function(key, value) {
 
                 listaRequisicao += '<tr class="del">';
                 listaRequisicao += '<td ><p style="display:none">' + key + '</p></td>';
                 listaRequisicao += '<td >' + value.lote + '</td>';
                 listaRequisicao += '<td >' + value.nome + '</td>';
-                listaRequisicao += '<td>' + value.valor_unitario + '</td>';
-                listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
-                    ' /> <input type="text" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
+                listaRequisicao += '<td >' + value.nome_categoria + '</td>';
+                listaRequisicao += '<td>R$' + value.valor_unitario + '</td>';
+                listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.produto_id  +
+                    ' /> <input type="hidden" name="licitacao_id[]" value=' + value.licitacao_id  +
+                    ' /><input type="number" placeholder="Quantidade desejada" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
                     /editar/ *
                     ')) value="{{  }}" @endif> </td>';
                 listaRequisicao += '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
                 listaRequisicao += '</tr>';
 
             });
-
+            {{--  add na view  --}}
             $('#tabela_itens').append(listaRequisicao);
-
+            {{--  fecha a div e a tabela anterior para abria  nova  --}}
             $("#irParaLista").hide();
             $("#resumo").show();
             $("#voltarProdutos").show();
 
             listaRequisicao = '';
 
+            {{--  função para remoção de itens da lista   --}}
             $('#tabela_itens').on('click', 'tr a ', function(e) {
 
                 e.preventDefault();
@@ -278,6 +286,7 @@
 
         });
 
+        {{--  função voltar produtos   --}}
         $('#voltarProdutos').click(function(e) {
             $("#divProdutos").show();
             $("#divItens").hide();

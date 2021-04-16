@@ -122,7 +122,17 @@ class RequisicaoController extends Controller
         try {
             $titulo = "Detalhes da requisição ";
             if (Gate::allows('Edit_requisicao')) {
-                $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
+
+                $requisicaoProdutosA = RequisicaoProduto::where('requisicao_id', $requisicao->id)
+                    ->join('licitacao_produtos', 'licitacao_produtos.licitacao_id', '=', 'licitacao_produto_id')
+                    ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produtos.licitacao_id')->get();
+
+                $collection = collect($requisicaoProdutosA);
+
+                $requisicaoProdutos = $collection->unique('licitacao_id');
+
+                $requisicaoProdutos->values()->all();
+
                 return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo'));
             } else {
                 return view('errors.sem_permissao');

@@ -213,9 +213,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('requisicao/cadastrar', 'RequisicaoController@cadastrar');
     Route::post('requisicao/insert', 'RequisicaoController@insert');
     Route::get('requisicao/editar/{requisicao}', 'RequisicaoController@editar');
-    Route::patch('requisicao/update/{id}', 'RequisicaoController@update');
-    Route::get('requisicao/deletar/{requisicao}', 'RequisicaoController@deletar');
-    Route::get('requisicao/visualizar/{requisicao}', 'RequisicaoController@view');
     Route::get('requisicao/search', 'RequisicaoController@search');
     Route::post('requisicao/getCategoria', 'RequisicaoController@getCategoria');
 });
@@ -228,10 +225,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('requisicaoComLicitacao/cadastrar', 'RequisicaoComLicitacaoController@cadastrar');
     Route::post('requisicaoComLicitacao/insert', 'RequisicaoComLicitacaoController@insert');
     Route::get('requisicaoComLicitacao/editar/{requisicao}', 'RequisicaoComLicitacaoController@editar');
-    Route::patch('requisicaoComLicitacao/update/{id}', 'RequisicaoComLicitacaoController@update');
-    Route::get('requisicaoComLicitacao/deletar/{requisicao}', 'RequisicaoComLicitacaoController@deletar');
-    Route::get('requisicaoComLicitacao/visualizar/{requisicao}', 'RequisicaoComLicitacaoController@view');
-    Route::get('requisicaoComLicitacao/search', 'RequisicaoComLicitacaoController@search');
     Route::post('requisicaoComLicitacao/getLicitacao', 'RequisicaoComLicitacaoController@getLicitacao');
 });
-
