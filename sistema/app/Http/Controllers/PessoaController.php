@@ -283,46 +283,11 @@ class PessoaController extends Controller
     public function insertUnidadePessoa(Request $request)
     {
         try {
+
             if (Gate::allows('insert_unidade_pessoa')) {
-                $pessoaUnidade = PessoaUnidade::all();
 
-                if ($pessoaUnidade->isEmpty()) {
+                dd($request->all());
 
-                    foreach ($request->unidade_id as $key => $unidades) {
-                        $savePessoaUnidade = new PessoaUnidade();
-                        $savePessoaUnidade->unidade_id =  $request->unidade_id[$key];
-                        $savePessoaUnidade->pessoa_id = $request->pessoa_id;
-
-                        $savePessoaUnidade->save();
-                    }
-                    dd('no if 298');
-                } else {
-                    foreach ($pessoaUnidade as $key => $value) {
-                        foreach ($request->unidade_id as $chave => $unidades) {
-
-                            if ($value->unidade_id === (int)$unidades[$chave]) {
-                                //update
-                                $updatePessoaUnidade = array([
-                                    'unidade_id' => $request->unidade_id,
-                                    'pessoa_id' => $request->pessoa_id,
-                                ]);
-
-                                $pessoaUnidade[$key]->update($updatePessoaUnidade);
-                           } else {
-                            dd('else');
-                                $savePessoaUnidade = new PessoaUnidade();
-                                $savePessoaUnidade->unidade_id =  $request->unidade_id[$key];
-                                $savePessoaUnidade->pessoa_id = $request->pessoa_id;
-
-                                $savePessoaUnidade->save();
-
-                            }
-
-
-                        }
-                    }
-
-                }
                 return  redirect('pessoas');
             } else {
                 return view('errors.404');

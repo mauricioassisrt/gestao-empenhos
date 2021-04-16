@@ -21,16 +21,6 @@
             {!! Form::open(['url' => 'vincularUnidade/insert']) !!}
             <div class="row">
                 <div class="col-sm-12 ">
-                    <label>Nome completo</label>
-                    <input type="text" name="name" class=" form-control form-control-border" disabled
-                        value="{{ $pessoa->name }}">
-
-                </div>
-                <input id="pessoa_id" type="hidden" name="pessoa_id" value="{{ $pessoa->id }}">
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-12 ">
                     <div class="alert alert-info alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <h5><i class="icon fas fa-info"></i> Selecione as unidades nas quais estão pertencentes e vinculadas
@@ -39,88 +29,60 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-hover text-nowrap">
-                <thead>
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Selecione
-                        </th>
-                        <th>
-                            Unidade
-                        </th>
-                        <th>
-                            Localização
-                        </th>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Servidor/Pessoa </label>
+                    <input type="text" name="name" class=" form-control form-control-border" disabled
+                        value="{{ $pessoa->name }}">
+                    <input id="pessoa_id" type="hidden" name="pessoa_id" value="{{ $pessoa->id }}">
+                </div>
 
+                <div class="col-sm-6">
+                    <label>Unidade a ser vinculado</label>
+                    <select name="unidade_id" id="" class="form-control">
+                        @foreach ($unidades as $unidade)
 
-                    </tr>
-                </thead>
-                <tbody>
-
-
-                    @foreach ($unidades as $unidade)
-                        @foreach ($pessoa_unidades as $pessoa_unidade)
-
-                            @if ($pessoa_unidade->unidade->id === $unidade->id && $pessoa->id === $pessoa_unidade->pessoa->id)
-                                <tr>
-                                    <th>
-                                        {{ $pessoa_unidade->unidade->id }}
-                                    </th>
-                                    <td>
-
-                                        <input type="checkbox" name="unidade_id[]" checked value="{{ $unidade->id }}">
-
-                                    </td>
-                                    <td>
-                                        {{ $pessoa_unidade->unidade->nome }}
-
-                                    </td>
-                                    <td>
-                                        {{ $pessoa_unidade->unidade->endereco }}
-
-                                    </td>
-
-
-                                </tr>
-                                @php
-                                    $unidade_id = $unidade->id;
-                                    break;
-                                @endphp
-                            @endif
+                            <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
 
                         @endforeach
-                        @if ($unidade->id != $unidade_id)
-                            <tr>
-                                <th>
-                                    {{ $unidade->id }}
-                                </th>
-                                <td>
-
-                                    <input type="checkbox" name="unidade_id[]"  value="{{ $unidade->id }}">
-
-                                </td>
-                                <td>
-                                    {{ $unidade->nome }}
-
-                                </td>
-                                <td>
-                                    {{ $unidade->endereco }}
-
-                                </td>
+                    </select>
 
 
-                            </tr>
+                </div>
+                <div class="col-sm-12">
+                    <hr>
+                    <button class='btn btn-primary'><i class=" fas fa-plus"></i> Vincular Unidade selecionada </button>
 
-                        @endif
-                    @endforeach
+                </div>
+            </div>
+            <br>
+
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3> Permissão</h3>
+                </div>
+                <div class="box-body">
 
 
+                    <table class='table'>
+                        <thead>
+                            <th>Permissão</th>
+                            <th>Ação</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($pessoa_unidades as $unidadesVinculadas)
+                                <tr>
+                                    @if ($pessoa->id === $unidadesVinculadas->pessoa_id)
+                                        <td>{{ $unidadesVinculadas->unidade->nome }}</td>
+                                        <td><a href="" class="btn btn-danger btn-sm"><i class=" fas fa-trash"></i></a></td>
+                                    @endif
 
-                </tbody>
-            </table>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="card-footer clearfix">
             @can('vincular_unidade')

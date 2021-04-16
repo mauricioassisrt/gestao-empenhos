@@ -117,10 +117,7 @@
                             </td>
                             <td>
                                 @can('pessoa_edit')
-                                    <a href="{{ url('users/visualizar/' . $pessoa->users->id) }}" class="btn btn-primary">
 
-                                        <i class="fas fa-eye"></i>Permissões
-                                    </a>
                                     <a href="{{ url('pessoas/editar/' . $pessoa->users->id) }}" class="btn btn-primary"><span
                                             class="glyphicon glyphicon-pencil">
                                         </span>
