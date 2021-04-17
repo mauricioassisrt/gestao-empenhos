@@ -14,6 +14,8 @@
             @can('Insert_requisicao')
                 <a href="{{ url('requisicao/cadastrar') }}" class="btn btn-primary float-right">
                     <i class="fas fa-plus"></i> Novo </a>
+            @endcan
+            @can('search_requisicao')
 
 
                 <form action="{{ url('/requisicao/search') }}" method="get">
@@ -29,8 +31,9 @@
 
                         </div>
                     </div>
-                @endcan
-            </form>
+
+                </form>
+            @endcan
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">

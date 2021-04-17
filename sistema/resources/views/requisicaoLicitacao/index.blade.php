@@ -14,6 +14,9 @@
             @can('Insert_requisicao')
                 {{-- <a href="{{ url('requisicaoComLicitacao/cadastrar') }}" class="btn btn-primary float-right">
                     <i class="fas fa-plus"></i> Novo </a> --}}
+            @endcan
+
+            @can('search_requisicao')
 
 
                 <form action="{{ url('/requisicaoComLicitacao/search') }}" method="get">
@@ -29,8 +32,9 @@
 
                         </div>
                     </div>
-                @endcan
+
             </form>
+            @endcan
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -82,11 +86,11 @@
                             <td>
                                 @can('Edit_requisicao')
 
-                                <a href="{{ url('requisicaoComLicitacao/editar/' . $requisicao->id) }}" class="btn btn-primary"><span
-                                        class="glyphicon glyphicon-pencil">
-                                    </span>
-                                    <i class="fas fa-edit"></i> Editar </a>
-                            @endcan
+                                    <a href="{{ url('requisicaoComLicitacao/editar/' . $requisicao->id) }}"
+                                        class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                        </span>
+                                        <i class="fas fa-edit"></i> Editar </a>
+                                @endcan
                                 <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
                                     </span>
                                     <i class="fas fa-next"></i> Realizar andamento </a>

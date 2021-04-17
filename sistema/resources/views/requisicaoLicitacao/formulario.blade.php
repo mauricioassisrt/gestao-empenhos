@@ -43,7 +43,23 @@
 
                     </div>
                     <div class="col-sm-9">
+                        @if (Gate::allows('minhas_requisicoes'))
+                        <label>Pessoa e suas unidades </label>
+                        <select name="unidade_id" class="form-control select2" style="width: 100%;" required>
 
+                                @foreach ($pessoa_unidades as $pessoa_unidade)
+                                @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
+                                    <option value="{{ $pessoa_unidade->unidade->id }}">
+                                        Unidade {{ $pessoa_unidade->unidade->nome }} Pessoa
+                                        {{ $pessoa_unidade->pessoa->nome }}
+                                    </option>
+                                @endif
+
+
+                            @endforeach
+
+                        </select>
+                        @else
                         <label>Pessoa e suas unidades </label>
                         <select name="unidade_id" class="form-control select2" style="width: 100%;">
 
@@ -56,6 +72,8 @@
 
                             @endforeach
                         </select>
+                        @endif
+
 
                     </div>
                 </div>
@@ -221,7 +239,7 @@
 
                     } else {
                         {{--  se a busca retornar como vazia retorna essa msg  --}}
-                        toastr.error("Esta categoria não possui nenhum produto cadastrado!!!");
+                        toastr.error("Está licitação ainda não contém produtos vinculados, vá até o menu ->licitação->vincular produtos e faça o vinculo !");
                         //
                     }
                 }

@@ -11,10 +11,10 @@
                     {{ session('status') }}
                 </div>
             @endif
-            @can('Insert_requisicao')
 
 
 
+            @can('search_requisicao')
                 <form action="{{ url('/requisicao/search') }}" method="get">
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -61,38 +61,38 @@
                 </thead>
                 <tbody>
                     @foreach ($requisicaos as $requisicao)
-                    @if ($requisicao->pessoaUnidade->pessoa->users->id === Auth::user()->id)
-                    <tr>
+                        @if ($requisicao->pessoaUnidade->pessoa->users->id === Auth::user()->id)
+                            <tr>
 
-                        <td>
-                            {{ $requisicao->id }}
-                        </td>
-                        <td>
-                            {{ $requisicao->unidades->nome }}
-                        </td>
-                        <td>
-                            {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
-                        </td>
-                        <td>
-                            {{ $requisicao->pessoaUnidade->pessoa->name }}
-                        </td>
-                        <td>
+                                <td>
+                                    {{ $requisicao->id }}
+                                </td>
+                                <td>
+                                    {{ $requisicao->unidades->nome }}
+                                </td>
+                                <td>
+                                    {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
+                                </td>
+                                <td>
+                                    {{ $requisicao->pessoaUnidade->pessoa->name }}
+                                </td>
+                                <td>
 
-                        </td>
-                        <td>
+                                </td>
+                                <td>
 
-                            <a href="{{ url('requisicao/editar/' . $requisicao->id) }}" class="btn btn-primary"><span
-                                    class="glyphicon glyphicon-pencil">
-                                </span>
-                                <i class="fas fa-edit"></i> Editar </a>
+                                    <a href="{{ url('requisicao/editar/' . $requisicao->id) }}"
+                                        class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                        </span>
+                                        <i class="fas fa-edit"></i> Editar </a>
 
-                            <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
-                                </span>
-                                <i class="fas fa-next"></i> Realizar andamento </a>
-                        </td>
+                                    <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                        </span>
+                                        <i class="fas fa-next"></i> Realizar andamento </a>
+                                </td>
 
-                    </tr>
-                    @endif
+                            </tr>
+                        @endif
 
                     @endforeach
 

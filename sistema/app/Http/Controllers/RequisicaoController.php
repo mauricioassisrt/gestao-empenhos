@@ -37,7 +37,7 @@ class RequisicaoController extends Controller
                 return view('errors.sem_permissao');
             }
         } catch (\Throwable $th) {
-            dd($th);
+            return view('errors.sem_permissao');
         }
     }
     public function cadastrar()
@@ -193,12 +193,13 @@ class RequisicaoController extends Controller
     {
         try {
             $titulo = 'Pesquisa de Requisicaoes com o nome de  ' . $request->get('table_search');
-            if (Gate::allows('View_requisicao')) {
+            if (Gate::allows('View_requisicao') &&  Gate::allows('search_requisicao') ) {
                 $requisicao = new Requisicao();
                 $search = $request->get('table_search');
-                $requisicao = Requisicao::where('nome_do_campo_da_consulta', 'like', '%' . $search . '%')->paginate(10);
 
-                return view('requisicao.index', compact('titulo', 'Requisicao'));
+                $requisicaos = Requisicao::where('justificativa', 'like', '%' . $search . '%')->paginate(10);
+
+                return view('requisicao.index', compact('titulo', 'requisicaos'));
             } else {
                 return view('errors.404');
             }
