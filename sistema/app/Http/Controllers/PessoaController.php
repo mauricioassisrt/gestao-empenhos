@@ -271,7 +271,9 @@ class PessoaController extends Controller
             $titulo = 'Vincular uma Unidade a pessoa  ';
             if (Gate::allows('pessoa_vincular_unidade')) {
                 $unidades = Unidade::all();
-                $pessoa_unidades = PessoaUnidade::all();
+                $pessoa_unidades = PessoaUnidade::where('pessoa_id', $pessoa->id)->get();
+
+
                 $unidade_id = 0;
                 return view('pessoa.formulario-vincular-unidade', compact('titulo', 'unidades', 'pessoa', 'pessoa_unidades', 'unidade_id'));
             } else {
@@ -283,12 +285,21 @@ class PessoaController extends Controller
     public function insertUnidadePessoa(Request $request)
     {
         try {
+            $pessoaUnidade = PessoaUnidade::all();
 
             if (Gate::allows('insert_unidade_pessoa')) {
+                foreach ($pessoaUnidade as $unidadeP){
 
-                dd($request->all());
-
-                return  redirect('pessoas');
+                    if ($unidadeP->pessoa_id === $request->pessoa_id && $unidadeP->unidade_id != $request->unidade_id) {
+                        PessoaUnidade::create($request->all());
+                    }
+                }
+                if ($pessoaUnidade->isEmpty()) {
+                    PessoaUnidade::create($request->all());
+                    return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
+                } else {
+                    return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
+                }
             } else {
                 return view('errors.404');
             }

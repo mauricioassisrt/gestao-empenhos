@@ -14,16 +14,16 @@ class CategoriaSeeder extends Seeder
     {
         $categorias = array(
             [
-                'nome_categoria' => 'Categoria ',
+                'nome_categoria' => 'Limpeza ',
 
             ],
             [
-                'nome_categoria' => 'Categoria 2',
+                'nome_categoria' => 'Higiene',
 
             ],
 
             [
-                'nome_categoria' => 'Categoria 3',
+                'nome_categoria' => 'Alimentos',
 
             ],
 

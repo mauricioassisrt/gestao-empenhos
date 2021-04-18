@@ -18,7 +18,7 @@ class EmpresaSeeder extends Seeder
         $obj->cnpj = "CNPJ";
         $obj->contato = "contato";
         $obj->email = "email";
-        $obj->foto_caminho = "/img/empresa/empresa.png";
+        $obj->foto_caminho = "/img/empresa/empresa.jpg";
         $obj->numero = "SN";
         $obj->endereco = "Nome da rua";
         $obj->bairro = "Nome bairro";

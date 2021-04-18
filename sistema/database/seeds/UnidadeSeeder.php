@@ -102,6 +102,10 @@ class UnidadeSeeder extends Seeder
             [
                 'unidade_id'=> '2',
                 'pessoa_id'=> '2',
+            ],
+            [
+                'unidade_id'=> '3',
+                'pessoa_id'=> '3',
             ]
         );
         foreach ($pessoa_unidade as $key => $value) {

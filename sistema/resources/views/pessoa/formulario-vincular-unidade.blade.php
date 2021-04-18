@@ -19,6 +19,7 @@
         </div>
         <div class="card-body">
             {!! Form::open(['url' => 'vincularUnidade/insert']) !!}
+            @csrf
             <div class="row">
                 <div class="col-sm-12 ">
                     <div class="alert alert-info alert-dismissible">
@@ -43,6 +44,8 @@
                         @foreach ($unidades as $unidade)
 
                             <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
+
+
 
                         @endforeach
                     </select>
