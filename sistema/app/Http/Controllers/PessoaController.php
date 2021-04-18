@@ -290,7 +290,8 @@ class PessoaController extends Controller
             if (Gate::allows('insert_unidade_pessoa')) {
                 foreach ($pessoaUnidade as $unidadeP){
 
-                    
+
+
                     if ($unidadeP->pessoa_id === $request->pessoa_id && $unidadeP->unidade_id != $request->unidade_id) {
                         PessoaUnidade::create($request->all());
                     }
