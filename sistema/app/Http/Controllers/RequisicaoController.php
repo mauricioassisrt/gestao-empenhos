@@ -27,11 +27,14 @@ class RequisicaoController extends Controller
 
                 $titulo = "Requisicao ";
                 $requisicaos = Requisicao::paginate(20);
+
                 return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo'));
             } else if (Gate::allows('View_requisicao')) {
 
                 $titulo = "Requisicao ";
                 $requisicaos = Requisicao::paginate(20);
+
+
                 return view('requisicao.index', compact('requisicaos', 'titulo'));
             } else {
                 return view('errors.sem_permissao');

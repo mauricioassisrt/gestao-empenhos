@@ -50,8 +50,8 @@
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
                                 @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
                                     <option value="{{ $pessoa_unidade->unidade->id }}">
-                                        Unidade {{ $pessoa_unidade->unidade->nome }} Pessoa
-                                        {{ $pessoa_unidade->pessoa->nome }}
+                                        UNIDADE: {{ $pessoa_unidade->unidade->nome }} - PESSOA:
+                                        {{ $pessoa_unidade->pessoa->name }}
                                     </option>
                                 @endif
 
@@ -66,8 +66,8 @@
                             @foreach ($pessoa_unidades as $pessoa_unidade)
 
                                 <option value="{{ $pessoa_unidade->unidade->id }}">
-                                    Unidade {{ $pessoa_unidade->unidade->nome }} Pessoa
-                                    {{ $pessoa_unidade->pessoa->nome }}
+                                    UNIDADE: {{ $pessoa_unidade->unidade->nome }} - PESSOA:
+                                    {{ $pessoa_unidade->pessoa->name }}
                                 </option>
 
                             @endforeach

@@ -266,6 +266,10 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'minhas_requisicoes',
                 'label' => 'Visualização de requisições realizadas pelo usuário',
             ],
+            [
+                'name' => 'pessoa_delete_unidade',
+                'label' => 'Permite o prórprio usuário remover a sua permissão ',
+            ],
 
 
         );
@@ -683,6 +687,14 @@ class PermissionTableSeeder extends Seeder
             [
                 'permission_id' => '60',
                 'role_id' => '1'
+            ],
+            [
+                'permission_id' => '61',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '61',
+                'role_id' => '2'
             ],
 
 

@@ -50,7 +50,7 @@ $empresa = Empresa::all();
         <aside class="main-sidebar elevation-4 sidebar-dark-red">
             <!-- Brand Logo -->
             <a href="" class="brand-link navba-dark-white">
-                <img src="/..{{ $empresa[0]->foto_caminho }}" class="brand-image img-circle elevation-3"
+                <img src="/../{{ $empresa[0]->foto_caminho }}" class="brand-image img-circle elevation-3"
                     style="width: 30px; height: 30px;">
                 <span class="brand-text font-weight-light">
                     <h6>{{ $empresa[0]->nome_fantasia }}</h6>

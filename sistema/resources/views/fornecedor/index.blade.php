@@ -103,7 +103,7 @@
                                         data-target="#modal-default-{{ $fornecedor->id }}"><span
                                             class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
                                     </a>
-                                    </a>
+
                                     <div class="modal fade" id="modal-default-{{ $fornecedor->id }}" style="display: none;"
                                         tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">

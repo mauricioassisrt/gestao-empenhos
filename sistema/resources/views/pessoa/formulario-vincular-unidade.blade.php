@@ -52,11 +52,7 @@
 
 
                 </div>
-                <div class="col-sm-12">
-                    <hr>
-                    <button class='btn btn-primary'><i class=" fas fa-plus"></i> Vincular Unidade selecionada </button>
 
-                </div>
             </div>
             <br>
 
@@ -77,7 +73,48 @@
                                 <tr>
                                     @if ($pessoa->id === $unidadesVinculadas->pessoa_id)
                                         <td>{{ $unidadesVinculadas->unidade->nome }}</td>
-                                        <td><a href="" class="btn btn-danger btn-sm"><i class=" fas fa-trash"></i></a></td>
+                                        <td>
+
+                                            @can('Delete_fornecedor')
+
+                                                <a href="" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#modal-default-{{ $unidadesVinculadas->id }}"><i
+                                                        class=" fas fa-trash"></i></a>
+
+                                                <div class="modal fade" id="modal-default-{{ $unidadesVinculadas->id }}"
+                                                    style="display: none;" tabindex='-1' aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Deseja excluir esse registro ?</h4>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Tem certeza que deseja excluir esta pessoa
+                                                                    {{ $unidadesVinculadas->unidade->nome }}</p>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">Fechar</button>
+                                                                <a href="{{ url('vincularUnidade/deletar/' . $unidadesVinculadas->id . '/' . $pessoa->id) }}"
+                                                                    class="btn btn-danger">
+                                                                    <span class="glyphicon glyphicon-remove"></span> <i
+                                                                        class="fas fa-trash"></i>
+                                                                    Sim
+                                                                </a>
+
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                            @endcan
+                                        </td>
                                     @endif
 
                                 </tr>
@@ -94,7 +131,7 @@
                     <i class="fas fa-arrow-left"></i> Voltar </a>
             @endcan
 
-            <button type="submit" class="btn btn-success"> <i class=" fas fa-save"></i> Salvar</button>
+            <button class='btn btn-primary'><i class=" fas fa-plus"></i> Vincular Unidade selecionada </button>
 
         </div>
         {!! Form::close() !!}
@@ -118,7 +155,13 @@
     <!-- FIM TOAST SWEETALERT  -->
     <!-- Modulo categoria-->
     <script src="{{ asset('js/modulos/categoria-cadastro.js') }}"></script>
+    <script>
+        @if (session('status'))
+            toastr.success( "{{ session()->get('status') }}" );
 
+        @endif
+
+    </script>
 @endsection
 
 @endsection

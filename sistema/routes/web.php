@@ -78,6 +78,8 @@ Route::get('pessoas/search', 'PessoaController@search');
 Route::post('pessoas/carregaSenha', 'PessoaController@retorna_senhas');
 Route::get('vincularUnidade/{pessoa}', 'PessoaController@vincularUnidade');
 Route::post('vincularUnidade/insert', 'PessoaController@insertUnidadePessoa');
+Route::get('vincularUnidade/deletar/{id}/{pessoa}', 'PessoaController@destroyUnidadePessoa');
+
 /*
 
 

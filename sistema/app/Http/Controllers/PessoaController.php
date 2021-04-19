@@ -130,8 +130,8 @@ class PessoaController extends Controller
                     );
                     $new_user->update($user);
                     $objetoPessoa = Pessoa::findOrFail($pessoa->id);
-                    $objetoPessoa = $request->all();
-                    $objetoPessoa['user_id'] = $new_user->id;
+
+
                     /* fim do insere usuario */
                     /* UPLOAD de imagem  */
                     $image = $request->file('foto_pessoa');
@@ -140,15 +140,18 @@ class PessoaController extends Controller
                     $nomeImagem = "pessoa-perfil-" . $request->email . "." . $extencao;
                     $image->move($dir, $nomeImagem);
                     $imageSalvar = $dir . "/" . $nomeImagem;
-                    $objetoPessoa['foto_pessoa'] = $imageSalvar;
-                    //convert data nascimento
-
-
-                    $var =  date('Y-m-d', strtotime($objetoPessoa['data_nascimento']));
-
-                    dd($var);
                     /* fim do upload  */
-                    //   $objetoPessoa->update($request->all());
+                    $atualizarPessoa = $request->all();
+                    $dataConvertida = date('Y-m-d', strtotime($objetoPessoa['data_nascimento']));
+
+
+                    $atualizarPessoa['user_id'] = $new_user->id;
+                    $atualizarPessoa['foto_pessoa'] = $imageSalvar;
+                    $atualizarPessoa['data_nascimento'] = $dataConvertida;
+
+
+
+                    $objetoPessoa->update($atualizarPessoa);
                     return redirect()->to("users/visualizar/" . $new_user->id);
                 } else {
                     dd('no else');
@@ -266,11 +269,11 @@ class PessoaController extends Controller
 
     public function vincularUnidade(Pessoa $pessoa)
     {
-
         try {
             $titulo = 'Vincular uma Unidade a pessoa  ';
             if (Gate::allows('pessoa_vincular_unidade')) {
                 $unidades = Unidade::all();
+
                 $pessoa_unidades = PessoaUnidade::where('pessoa_id', $pessoa->id)->get();
 
 
@@ -284,27 +287,53 @@ class PessoaController extends Controller
     }
     public function insertUnidadePessoa(Request $request)
     {
+
         try {
-            $pessoaUnidade = PessoaUnidade::all();
+
+            $pessoaUnidade = PessoaUnidade::where('pessoa_id', $request->pessoa_id)->get();
+
 
             if (Gate::allows('insert_unidade_pessoa')) {
-                foreach ($pessoaUnidade as $unidadeP){
 
-                    if ($unidadeP->pessoa_id === $request->pessoa_id && $unidadeP->unidade_id != $request->unidade_id) {
-                        PessoaUnidade::create($request->all());
-                    }
-                }
                 if ($pessoaUnidade->isEmpty()) {
+
                     PessoaUnidade::create($request->all());
                     return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
                 } else {
-                    return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
+                    $contador = 0;
+                    foreach ($pessoaUnidade as $unidadeP) {
+
+                        if ($unidadeP->unidade_id == $request->unidade_id) {
+                            $contador += 1;
+                        }
+                    }
+
+                    if ($contador == 0) {
+                        PessoaUnidade::create($request->all());
+                        return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Vinculado com sucesso !!!');
+                    } else {
+                        return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Unidade já está vinculada a um Colaborador/pessoa!');
+                    }
                 }
             } else {
                 return view('errors.404');
             }
         } catch (\Throwable $th) {
             dd($th);
+        }
+    }
+    public function destroyUnidadePessoa($id, $pessoa)
+    {
+
+        try {
+
+            if (Gate::allows('pessoa_delete_unidade')) {
+
+                PessoaUnidade::find($id)->delete();
+                return redirect('vincularUnidade/' . $pessoa)->with('status', 'Removido com sucesso!');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
 }
