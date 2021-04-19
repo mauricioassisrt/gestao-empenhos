@@ -12,8 +12,8 @@
                 </div>
             @endif
             @can('Insert_requisicao')
-                <a href="{{ url('requisicao/cadastrar') }}" class="btn btn-primary float-right">
-                    <i class="fas fa-plus"></i> Novo </a>
+                {{--  <a href="{{ url('requisicao/cadastrar') }}" class="btn btn-primary float-right">
+                    <i class="fas fa-plus"></i> Novo </a>  --}}
             @endcan
             @can('search_requisicao')
 

@@ -159,9 +159,7 @@ class PessoaController extends Controller
                 $titulo = 't';
             }
         } catch (\Throwable $th) {
-            dd($th);
-            //  return $e->getMessage();
-            //return view('errors.404rs.404rs.404');
+            return view('errors.404');
         }
     }
 
@@ -282,7 +280,7 @@ class PessoaController extends Controller
             } else {
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            return view('errors.404');
         }
     }
     public function insertUnidadePessoa(Request $request)
@@ -298,7 +296,7 @@ class PessoaController extends Controller
                 if ($pessoaUnidade->isEmpty()) {
 
                     PessoaUnidade::create($request->all());
-                    return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
+                    return redirect('vincularUnidade/' . $request->pessoa_id)->with('status', 'Vinculado com sucesso !!!');
                 } else {
                     $contador = 0;
                     foreach ($pessoaUnidade as $unidadeP) {
@@ -319,7 +317,7 @@ class PessoaController extends Controller
                 return view('errors.404');
             }
         } catch (\Throwable $th) {
-            dd($th);
+            return view('errors.404');
         }
     }
     public function destroyUnidadePessoa($id, $pessoa)

@@ -61,7 +61,7 @@
                 </thead>
                 <tbody>
                     @foreach ($requisicaos as $requisicao)
-                        @if ($requisicao->pessoaUnidade->pessoa->users->id === Auth::user()->id)
+                        @if ($requisicao->pessoaUnidade->pessoa->users->id == Auth::user()->id)
                             <tr>
 
                                 <td>

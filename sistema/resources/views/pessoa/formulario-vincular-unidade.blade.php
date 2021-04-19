@@ -71,7 +71,7 @@
                         <tbody>
                             @foreach ($pessoa_unidades as $unidadesVinculadas)
                                 <tr>
-                                    @if ($pessoa->id === $unidadesVinculadas->pessoa_id)
+                                    @if ($pessoa->id == $unidadesVinculadas->pessoa_id)
                                         <td>{{ $unidadesVinculadas->unidade->nome }}</td>
                                         <td>
 
@@ -154,7 +154,7 @@
     <script src="{{ asset('js/toastr.min.js') }}"></script>
     <!-- FIM TOAST SWEETALERT  -->
     <!-- Modulo categoria-->
-    <script src="{{ asset('js/modulos/categoria-cadastro.js') }}"></script>
+
     <script>
         @if (session('status'))
             toastr.success( "{{ session()->get('status') }}" );

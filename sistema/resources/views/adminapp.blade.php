@@ -112,6 +112,7 @@ $empresa = Empresa::all();
                                         </p>
                                     </a>
                                 </li>
+                                @can('minhas_requisicoes')
                                 <li class="nav-item">
                                     <a href="{{ url('requisicao') }}" class="nav-link active">
                                         <i class="nav-icon fas fa-receipt"></i>
@@ -120,18 +121,20 @@ $empresa = Empresa::all();
                                         </p>
                                     </a>
                                 </li>
+                                @endcan
+                                @can('Edit_requisicao')
                                 <li class="nav-item">
-                                    @can('Edit_requisicao')
+
                                         <a href="{{ url('requisicao') }}" class="nav-link active">
                                             <i class="nav-icon fas fa-file-invoice"></i>
                                             <p>
                                                 Todas as Requisições
                                             </p>
                                         </a>
-                                    @endcan
+
 
                                 </li>
-
+                                @endcan
                             </ul>
                             </a>
                         </li>
