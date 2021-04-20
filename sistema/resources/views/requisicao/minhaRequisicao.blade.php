@@ -47,9 +47,9 @@
                         <th>
                             Data da Requisicao
                         </th>
-                        <th>
+                        {{--  <th>
                             Responsável
-                        </th>
+                        </th>  --}}
                         <th>
                             Status
                         </th>
@@ -73,9 +73,9 @@
                                 <td>
                                     {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
                                 </td>
-                                <td>
+                                {{--  <td>
                                     {{ $requisicao->pessoaUnidade->pessoa->name }}
-                                </td>
+                                </td>  --}}
                                 <td>
 
                                 </td>

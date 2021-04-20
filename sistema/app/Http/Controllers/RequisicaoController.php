@@ -25,13 +25,13 @@ class RequisicaoController extends Controller
         try {
             if (Gate::allows('View_requisicao') && Gate::allows('minhas_requisicoes')) {
 
-                $titulo = "Requisicao ";
+                $titulo = "Minhas Requisições ";
                 $requisicaos = Requisicao::paginate(20);
 
                 return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo'));
             } else if (Gate::allows('View_requisicao')) {
 
-                $titulo = "Requisicao ";
+                $titulo = "Todas as requisições  ";
                 $requisicaos = Requisicao::paginate(20);
 
 
