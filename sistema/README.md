@@ -1,38 +1,4 @@
 
-## Sistema de gestão de empenhos
-
-## Install Project 
- Copie o arquivo env.example
-NAO```shell php -r "copy('.env.example', '.env'); ```
- ## Caso haja necessidade 
- exculte o comando para gerar uma nova key 
-```shell php artisan key:generate ```
-
-
- Suba o arquivo do banco de dados e crie o database com o nome nomedobanco 
-
-
-Comentar o foreach no arquivo app/Providers/AuthServiceProvider.php, caso ele não estiver comentado o php artisan não funciona.
-Instalação das tabelas no banco de dados, entre no terminal até a pasta do sistema, em seguida digite a linha de código php artisan migrate
-# php artisan migrate
-# refresh no migrate  php artisan migrate:fresh
-Após a instalação das migrations instale as seeds
-
-instale os permissions php artisan db:seed --class=EmpresaSeeder
-instale os usuários php artisan db:seed --class=UserTableSeeder
-instale o arquivo da tabela pessoa  php artisan db:seed --class=PessoaSeeder
-instale os roles php artisan db:seed --class=RoleTableSeeder
-instale os permissions php artisan db:seed --class=PermissionTableSeeder
-
-
-
- após isso exculte o comando 
-```shell php artisan serve ```
-
- acesse o browser com a URL localhost:8000
-=
-
-Após a instalação sistema pronto acesse a tela de login Usuário: admin@laravel.com e Senha: admin1234.
 
 #### Caso ocorra as mensagens de envio de email estar em outro idioma utilize na pasta vendor no caminho altere o metodo \vendor\laravel\framework\src\Illuminate\Auth\Notifications\ResetPassword.php
 

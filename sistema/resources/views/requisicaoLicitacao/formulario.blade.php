@@ -81,12 +81,12 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label>Justificativa </label>
-                        <textarea class="form-control" rows="3" required name="justificativa"
+                        <textarea class="form-control" rows="3"  name="justificativa"
                             placeholder="Qual sua  justificativa para a requisição"></textarea>
                     </div>
                     <div class="col-sm-6">
                         <label>observação </label>
-                        <textarea class="form-control" rows="3" required name="observacao"
+                        <textarea class="form-control" rows="3"  name="observacao"
                             placeholder="Possui alguma observação para incluir ?"></textarea>
                     </div>
                 </div>

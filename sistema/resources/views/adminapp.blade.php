@@ -50,7 +50,7 @@ $empresa = Empresa::all();
         <aside class="main-sidebar elevation-4 sidebar-dark-red">
             <!-- Brand Logo -->
             <a href="" class="brand-link navba-dark-white">
-                <img src="{{ $empresa[0]->foto_caminho }}" class="brand-image img-circle elevation-3"
+                <img src="/{{ $empresa[0]->foto_caminho }}" class="brand-image img-circle elevation-3"
                     style="width: 30px; height: 30px;">
                 <span class="brand-text font-weight-light">
                     <h6>{{ $empresa[0]->nome_fantasia }}</h6>
@@ -63,7 +63,7 @@ $empresa = Empresa::all();
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
 
-                        <img src="{{ Auth::user()->find(Auth::user()->id)->pessoas()->first()->foto_pessoa }}"
+                        <img src="/{{ Auth::user()->find(Auth::user()->id)->pessoas()->first()->foto_pessoa }}"
                             class="img-circle elevation-2" style="width: 30px; height: 30px;">
                     </div>
                     <div class="info">
@@ -113,16 +113,16 @@ $empresa = Empresa::all();
                                     </a>
                                 </li>
                                 @can('minhas_requisicoes')
-                                <li class="nav-item">
-                                    <a href="{{ url('requisicao') }}" class="nav-link active">
-                                        <i class="nav-icon fas fa-receipt"></i>
-                                        <p>
-                                           Requisições da unidade
-                                        </p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('requisicao') }}" class="nav-link active">
+                                            <i class="nav-icon fas fa-receipt"></i>
+                                            <p>
+                                                Requisições da unidade
+                                            </p>
+                                        </a>
+                                    </li>
                                 @endcan
-                                @can('Edit_requisicao')
+                                {{-- @can('Edit_requisicao')
                                 <li class="nav-item">
 
                                         <a href="{{ url('requisicao') }}" class="nav-link active">
@@ -134,7 +134,7 @@ $empresa = Empresa::all();
 
 
                                 </li>
-                                @endcan
+                                @endcan --}}
                             </ul>
                             </a>
                         </li>
@@ -156,98 +156,107 @@ $empresa = Empresa::all();
                                             </p>
                                         </a>
                                     </li>
-
+                                    <li class="nav-item">
+                                        @can('View_licitacao')
+                                            <a href="{{ url('/licitacao') }}" class="nav-link active">
+                                                <i class="fas fa-gavel nav-icon"></i>
+                                                <p>Cadastro de Licitação</p>
+                                            </a>
+                                        @endcan
+                                    </li>
                                 </ul>
+
                                 </a>
                             </li>
 
                         @endcan
+
                         @can('View_categoria')
-                        <li class="nav-item has-treeview menu-close">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Cadastros
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
+                            <li class="nav-item has-treeview menu-close">
+                                <a href="#" class="nav-link active">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Cadastros
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
 
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    @can('View_secretaria')
-                                        <a href="{{ url('secretaria') }}" class="nav-link active">
-                                            <i class="fas fa-university nav-icon"></i>
-                                            <p>Secretaria</p>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        @can('View_secretaria')
+                                            <a href="{{ url('secretaria') }}" class="nav-link active">
+                                                <i class="fas fa-university nav-icon"></i>
+                                                <p>Secretaria</p>
 
-                                        </a>
-                                    @endcan
-                                    @can('View_unidade')
-                                        <a href="{{ url('unidade') }}" class="nav-link active">
-                                            <i class="fas fa-archway nav-icon"></i>
-                                            <p>Unidade</p>
+                                            </a>
+                                        @endcan
+                                        @can('View_unidade')
+                                            <a href="{{ url('unidade') }}" class="nav-link active">
+                                                <i class="fas fa-archway nav-icon"></i>
+                                                <p>Unidade</p>
 
-                                        </a>
-                                    @endcan
+                                            </a>
+                                        @endcan
 
-                                    @can('View_categoria')
-                                        <a href="{{ url('categoria') }}" class="nav-link active">
-                                            <i class="fas fa-boxes nav-icon"></i>
-                                            <p>Categoria</p>
+                                        @can('View_categoria')
+                                            <a href="{{ url('categoria') }}" class="nav-link active">
+                                                <i class="fas fa-boxes nav-icon"></i>
+                                                <p>Categoria</p>
 
-                                        </a>
-                                    @endcan
-                                    @can('View_produto')
-                                        <a href="{{ url('produto') }}" class="nav-link active">
-                                            <i class="fas fa-box nav-icon"></i>
-                                            <p>Produto</p>
+                                            </a>
+                                        @endcan
+                                        @can('View_produto')
+                                            <a href="{{ url('produto') }}" class="nav-link active">
+                                                <i class="fas fa-box nav-icon"></i>
+                                                <p>Produto</p>
 
-                                        </a>
-                                    @endcan
+                                            </a>
+                                        @endcan
 
-                                    @can('View_fornecedor')
-                                        <a href="{{ url('fornecedor') }}" class="nav-link active">
-                                            <i class="fas fa-building nav-icon"></i>
-                                            <p>Fornecedores</p>
+                                        @can('View_fornecedor')
+                                            <a href="{{ url('fornecedor') }}" class="nav-link active">
+                                                <i class="fas fa-building nav-icon"></i>
+                                                <p>Fornecedores</p>
 
-                                        </a>
-                                    @endcan
-                                    @can('pessoa_view')
-                                        <a href="{{ route('pessoa') }}" class="nav-link active">
-                                            <i class="fas fa-user-friends nav-icon"></i>
-                                            <p>Pessoas </p>
-                                        </a>
+                                            </a>
+                                        @endcan
+                                        @can('pessoa_view')
+                                            <a href="{{ route('pessoa') }}" class="nav-link active">
+                                                <i class="fas fa-user-friends nav-icon"></i>
+                                                <p>Pessoas </p>
+                                            </a>
 
-                                        </a>
-                                    @endcan
+                                            </a>
+                                        @endcan
 
-                                    @can('View_licitacao')
-                                        <a href="{{ url('/licitacao') }}" class="nav-link active">
-                                            <i class="fas fa-gavel nav-icon"></i>
-                                            <p>Licitação</p>
-                                        </a>
-                                    @endcan
-                                    @can('View_role')
-                                        <a href="{{ url('/acl/roles') }}" class="nav-link active">
-                                            <i class="fas fa-file nav-icon"></i>
-                                            <p>Funções</p>
+                                        @can('View_licitacao')
+                                            <a href="{{ url('/licitacao') }}" class="nav-link active">
+                                                <i class="fas fa-gavel nav-icon"></i>
+                                                <p>Licitação</p>
+                                            </a>
+                                        @endcan
+                                        @can('View_role')
+                                            <a href="{{ url('/acl/roles') }}" class="nav-link active">
+                                                <i class="fas fa-file nav-icon"></i>
+                                                <p>Funções</p>
 
-                                        </a>
-                                    @endcan
-                                    @can('View_permission')
-                                        <a href="{{ url('/acl/permissions') }}" class="nav-link active">
-                                            <i class="fas fa-check-square nav-icon"></i>
-                                            <p>Permissões</p>
-                                        </a>
+                                            </a>
+                                        @endcan
+                                        @can('View_permission')
+                                            <a href="{{ url('/acl/permissions') }}" class="nav-link active">
+                                                <i class="fas fa-check-square nav-icon"></i>
+                                                <p>Permissões</p>
+                                            </a>
 
-                                        </a>
-                                    @endcan
+                                            </a>
+                                        @endcan
 
 
-                                </li>
+                                    </li>
 
-                            </ul>
+                                </ul>
 
-                        </li>
+                            </li>
                         @endcan
                         <li class="nav-item has-treeview menu-close">
                             <a href="#" class="nav-link active">
@@ -304,6 +313,19 @@ $empresa = Empresa::all();
                                         <p>Quantitativo Requisições </p>
                                     </a>
                                 </li>
+                                @can('Edit_requisicao')
+                                    <li class="nav-item">
+
+                                        <a href="{{ url('requisicao') }}" class="nav-link active">
+                                            <i class="nav-icon fas fa-file-invoice"></i>
+                                            <p>
+                                                Todas as Requisições
+                                            </p>
+                                        </a>
+
+
+                                    </li>
+                                @endcan
                             </ul>
                         </li>
 
