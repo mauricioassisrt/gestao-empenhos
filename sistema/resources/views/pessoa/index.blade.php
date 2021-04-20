@@ -98,7 +98,7 @@
                                 @if (!$pessoa->foto_pessoa)
                                     Sem foto
                                 @else
-                                    <img src="/{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
+                                    <img src="{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
                                         width="40px" height="40px" />
                                 @endif
 
