@@ -63,7 +63,7 @@ $empresa = Empresa::all();
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
 
-                        <img src="/../{{ Auth::user()->find(Auth::user()->id)->pessoas()->first()->foto_pessoa }}"
+                        <img src="{{ Auth::user()->find(Auth::user()->id)->pessoas()->first()->foto_pessoa }}"
                             class="img-circle elevation-2" style="width: 30px; height: 30px;">
                     </div>
                     <div class="info">
