@@ -18,7 +18,7 @@ class CreateProdutosTable extends Migration
             $table->string('nome');
             $table->string('lote');
             $table->string('descricao');
-            $table->string('valor_unitario');
+
             $table->integer('categoria_id')->unsigned()->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias');
 

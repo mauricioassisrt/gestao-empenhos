@@ -1,5 +1,8 @@
 @extends('adminapp')
-
+@section('topo')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.css') }}">
+@endsection
 @section('content')
     <div class="card">
 
@@ -24,39 +27,44 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-            <table class="table table-striped table-bordered table-hover" style='background:#fff'>
-                <thead>
-                    <th>Ano</th>
-                    <th>Número </th>
-                    <th>Modalidade </th>
-                    <th>Pregão </th>
-                    <th>Ações </th>
-                </thead>
-                <tbody>
-                    @foreach ($licitacaos as $licitacao)
-                        <tr>
-                            <td>{!! $licitacao->ano !!}</td>
-                            <td>{!! $licitacao->numero_licitacao !!}</td>
-                            <td>{!! $licitacao->modalidade !!}</td>
-                            <td>{!! $licitacao->pregao !!}</td>
-                            <td>
 
-                                @can('Edit_licitacao')
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                            aria-describedby="example1_info">
 
-                                    <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
-                                        class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-pencil"> </span>
-                                        <i class="fas fa-edit"></i>
-                                        Visualizar licitação
-                                    </a>
+                            <thead>
+                                <th>Ano</th>
+                                <th>Número </th>
+                                <th>Modalidade </th>
+                                <th>Pregão </th>
+                                <th>Ações </th>
+                            </thead>
+                            <tbody>
+                                @foreach ($licitacaos as $licitacao)
+                                    <tr>
+                                        <td>{!! $licitacao->ano !!}</td>
+                                        <td>{!! $licitacao->numero_licitacao !!}</td>
+                                        <td>{!! $licitacao->modalidade !!}</td>
+                                        <td>{!! $licitacao->pregao !!}</td>
+                                        <td>
 
-                                    <a href="{{ route('licitacao.vincular.create', ['licitacao' => $licitacao->id]) }}"
-                                        class="btn btn-primary ">
-                                        <i class="fas fa-plus"></i>
-                                        Vincular produtos
-                                    </a>
-                                @endcan
-                                {{-- @can('Delete_licitacao')
+                                            @can('Edit_licitacao')
+
+                                                <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
+                                                    class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-pencil"> </span>
+                                                    <i class="fas fa-edit"></i>
+                                                    Visualizar licitação
+                                                </a>
+
+                                                <a href="{{ route('licitacao.vincular.create', ['licitacao' => $licitacao->id]) }}"
+                                                    class="btn btn-primary ">
+                                                    <i class="fas fa-plus"></i>
+                                                    Vincular produtos
+                                                </a>
+                                            @endcan
+                                            {{-- @can('Delete_licitacao')
 
 
                                     <a href="" class="btn btn-danger" data-toggle="modal"
@@ -98,16 +106,37 @@
                                         <!-- /.modal-dialog -->
                                     </div>
                                 @endcan --}}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer clearfix">
-            {{ $licitacaos->links() }}
-        </div>
-    </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer clearfix">
+                    {{ $licitacaos->links() }}
+                </div>
+            </div>
 
 
-@endsection
+        @section('rodape')
+            <!-- DataTables -->
+            <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
+            <script src="{{ asset('js/dataTables.bootstrap4.js') }} "></script>
+
+            <script>
+                $(function() {
+                    $("#example1").DataTable();
+                    $('#example2').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                    });
+                });
+
+            </script>
+        @endsection
+    @endsection

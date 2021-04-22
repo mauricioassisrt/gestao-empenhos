@@ -177,6 +177,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
+            {{ $licitacaoProdutos->links() }}
             <a href="{{ url('licitacao/vincular') }}" class="btn btn-primary">
 
                 <i class="fas fa-arrow-left"></i> Voltar </a>

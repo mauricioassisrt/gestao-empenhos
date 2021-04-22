@@ -43,12 +43,7 @@
                 <input type="text" class="form-control" placeholder="Arroz de 5 kg pacote , etc" name="descricao" @if (Request::is('*/editar/*')) value="{{ $produto->descricao }}" @endif required>
 
             </div>
-            <div class="form-group">
 
-                <label>Valor unidade </label>
-                <input type="number" class="form-control" placeholder="50.00" name="valor_unitario" @if (Request::is('*/editar/*')) value="{{ $produto->valor_unitario }}" @endif required>
-
-            </div>
 
             <div class="form-group">
                 <label>Categoria</label>
@@ -73,6 +68,7 @@
                         @endforeach
                     @endif
                 </select>
+                <input type="text" id="test">
             </div>
 
 
@@ -106,7 +102,17 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         })
+        $(function(){
+            // turn the element to select2 select style
+            $('.select2').select2({
+              placeholder: "Select a state"
+            });
 
+            $('.select2').on('change', function() {
+              var data = $(".select2 option:selected").text();
+              $("#test").val(data);
+            })
+          });
     </script>
 @endsection
 
