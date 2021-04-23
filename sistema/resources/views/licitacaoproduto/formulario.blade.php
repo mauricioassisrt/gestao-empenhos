@@ -82,7 +82,7 @@
             </div>
             <hr>
 
-            <div class="row" id="divProdutos">
+            <div class="row" >
                 <div class="col-sm-12">
                     <label>Fornecedor </label>
                     <select name="fornecedor_id" class="form-control fornecedor" style="width: 100%;">
@@ -121,14 +121,14 @@
                     </select>
                     <br>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12" id="divProdutos">
 
                     <div class="card-body table-responsive p-0">
 
                         <input id="pesquisar" type="text" placeholder="Pesquise determinados produtos"
                             class="form-control form-control" style='display: none'>
 
-                        <table class="table " id="tabela_produtos">
+                        <table class="table table-hover" id="tabela_produtos">
 
 
                         </table>
@@ -141,7 +141,7 @@
             <div class="row" id="divItens" style="display:none">
                 <div class="col-sm-12">
                     <div class="card-body table-responsive p-0">
-                        <table class="table " id="tabela_itens">
+                        <table class="table table-hover" id="tabela_itens">
 
                         </table>
                     </div>
@@ -150,7 +150,7 @@
         </div>
         <div class="card-footer clearfix">
 
-            <a href="{{ url('licitacao/vincular') }}" class="btn btn-primary">
+            <a href="{{ url('licitacao/vincular') }}" class="btn btn-primary ">
 
                 <i class="fas fa-arrow-left"></i> Voltar </a>
             @if (Request::is('*/editar/*'))
@@ -173,7 +173,7 @@
                 {{-- <button type="submit" class="btn btn-success float-right" id="resumo" style="display:none"> <i
                         class=" fas fa-pen-alt"></i> Resumo da requisição </button> --}}
 
-                <a href="" class="btn btn-primary  float-right" data-toggle="modal" data-target="#modal-confirmar"
+                <a href="" class="btn btn-success " data-toggle="modal" data-target="#modal-confirmar"
                     id="resumo" style="display:none"><span class="glyphicon glyphicon-remove"><i
                             class=" fas fa-pen-alt"></i> Resumo da requisição</a>
 
@@ -193,8 +193,8 @@
                             </div>
                             <div class="modal-footer justify-content-between">
 
-                                <a href="#" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-remove"></span> <i class="fas fa-times-circle"
+                                <a href="" class="btn btn-primary" data-dismiss="modal">
+                                     <i class="fas fa-times-circle"
                                         data-dismiss="modal"></i>
                                     Cancelar
                                 </a>
@@ -341,13 +341,12 @@
                 listaRequisicao += '<td >' + value.lote + '</td>';
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao +=
-                    '<td>  <input type="number" required name="valorUnitario[]" class=" form-control form-control-border"> </td>';
+                    '<td>  <input type="number" step=0.01 required name="valorUnitario[]" class=" form-control form-control-border"> </td>';
                 listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
                     ' /> <input type="number" required name="quantidadeItens[]" class=" form-control form-control-border"> </td>';
                 listaRequisicao +=
                     '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
                 listaRequisicao += '</tr>';
-
 
             });
 
@@ -362,17 +361,13 @@
             listaRequisicao = '';
             // funcao para remover um itenm ao clicar no excluir
             $('#tabela_itens').on('click', 'tr a ', function(e) {
-
                 e.preventDefault();
                 $(this).parents('tr').remove();
-
                 var idProduto = $(this).find('td:eq(0)').text();
                 toastr.error("Apagado com sucesso !");
                 listaProdutosNova.splice($.inArray(idProduto, listaProdutosNova));
                 listaIdProdutos.splice($.inArray(idProduto, listaIdProdutos));
                 listaRequisicao.splice($.inArray(idProduto, listaRequisicao));
-
-
             });
 
         });
