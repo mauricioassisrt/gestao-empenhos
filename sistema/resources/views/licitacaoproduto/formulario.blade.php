@@ -2,9 +2,9 @@
 @section('topo')
     <!-- DATA TIME PICKER Style -->
 
-    <link rel="stylesheet" href="/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- toast CSS-->
-    <link rel="stylesheet" href="/css/toastr.min.css">
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
     <link rel="stylesheet" href=" {{ asset('css/select2.min.css') }}" />
 
     <link rel="stylesheet" href=" {{ asset('css/select2-bootstrap4.min.css') }}" />
