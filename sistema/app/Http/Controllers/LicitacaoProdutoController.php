@@ -54,27 +54,26 @@ class LicitacaoProdutoController extends Controller
 
                 $valor_final = 0;
                 $total_produtos = 0;
+                $licitacaoProduto = Licitacao::findOrFail($request->licitacao_id);
 
                 foreach ($request->produto_id as $key => $value) {
-                    $produto = Produto::findOrfail($value);
-                    $valor_final += $request->quantidadeItens[$key] * $produto->valor_unitario;
+                    //$produto = Produto::findOrfail($value);
+                    $valor_final += $request->quantidadeItens[$key] * $request->valorUnitario[$key];
                     $total_produtos += $request->quantidadeItens[$key];
                 }
-
-                $licitacaoProduto = Licitacao::findOrFail($request->licitacao_id);
 
                 $request['valor_final'] = $valor_final + $licitacaoProduto->valor_final;
                 $request['total_produtos'] =   $total_produtos + $licitacaoProduto->total_produtos;
 
                 //verificar o produto inserido se já existe e inserir ou atualizar a quantidade
-                // dd($request->all());
+
                 $licitacaoProduto->update($request->all());
 
                 $licitacaoProdutoProduto = new LicitacaoProduto();
 
                 foreach ($request->produto_id as $key => $value) {
-                    $produto = Produto::findOrfail($value);
-                    $produtoLicitacao = LicitacaoProduto::where('produto_id', $produto->id)->first();
+
+                    $produtoLicitacao = LicitacaoProduto::where('produto_id', $request->produto_id[$key])->first();
 
                     $valorIten = 0;
 
@@ -83,25 +82,25 @@ class LicitacaoProdutoController extends Controller
                      **/
                     if ($produtoLicitacao == null) {
 
-                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+                        $valorIten = $request->quantidadeItens[$key] * $request->valorUnitario[$key];
                         $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
                         $licitacaoProdutoProduto->valor_total_iten = $valorIten;
                         $licitacaoProdutoProduto->licitacao_id = $request->licitacao_id;
-                        $licitacaoProdutoProduto->produto_id = $produto->id;
+                        $licitacaoProdutoProduto->produto_id = $request->produto_id[$key];
                         $licitacaoProdutoProduto->fornecedor_id = $request->fornecedor_id;
                         $licitacaoProdutoProduto->save();
-
                         $licitacaoProdutoProduto = new LicitacaoProduto();
+
                         /*
                         *   caso o fornecedor escolhido seja diferente de algúm retornado
                         */
                     } else if ($produtoLicitacao->fornecedor_id != $request->fornecedor_id) {
 
-                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+                        $valorIten = $request->quantidadeItens[$key] * $request->valorUnitario[$key];
                         $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
                         $licitacaoProdutoProduto->valor_total_iten = $valorIten;
                         $licitacaoProdutoProduto->licitacao_id = $request->licitacao_id;
-                        $licitacaoProdutoProduto->produto_id = $produto->id;
+                        $licitacaoProdutoProduto->produto_id = $request->produto_id[$key];
                         $licitacaoProdutoProduto->fornecedor_id = $request->fornecedor_id;
                         $licitacaoProdutoProduto->save();
                         $licitacaoProdutoProduto = new LicitacaoProduto();
@@ -109,9 +108,13 @@ class LicitacaoProdutoController extends Controller
                          * Caso a consulta produtoLicitacao não seja null e o fornecedor vindo da view seja igual o do banco, dai faz update
                         */
                     } else {
-                        $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+                        /*
+                            obtem o valor vindo do form e atualiza
+                        */
+                        $valorIten = ($request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto) * $request->valorUnitario[$key];
+
                         $licitacaoProdutoAtualizar['quantidade_produto'] = $request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto;
-                        $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten + $produtoLicitacao->valor_total_iten;
+                        $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten ;
                         $produtoLicitacao->update($licitacaoProdutoAtualizar);
                     }
                 }
@@ -133,7 +136,7 @@ class LicitacaoProdutoController extends Controller
             if (Gate::allows('Edit_LicitacaoProduto')) {
 
                 $titulo = "Total de produtos nesta licitação  ";
-                $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->get();
+                $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->paginate(2);
                 return view('licitacaoproduto.editar', compact('licitacaoProdutos', 'titulo', 'licitacaoProduto'));
             } else {
                 return view('errors.sem_permissao');

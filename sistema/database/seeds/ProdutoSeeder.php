@@ -17,7 +17,7 @@ class ProdutoSeeder extends Seeder
                 'nome' => 'Arroz tipo 1 5kg',
                 'lote' => '20210301 12:00:15',
                 'descricao' => 'Descrição do produto',
-                'valor_unitario' => '50.00',
+                // 'valor_unitario' => '50.00',
 
                 'categoria_id' => '2',
 
@@ -26,7 +26,7 @@ class ProdutoSeeder extends Seeder
                 'nome' => 'Feijão Carioca 1kg',
                 'lote' => '20210301 12:00:15',
                 'descricao' => 'Descrição do produto',
-                'valor_unitario' => '10.00',
+                // 'valor_unitario' => '10.00',
                 //'fornecedor_id' => '1',
                 'categoria_id' => '2',
 

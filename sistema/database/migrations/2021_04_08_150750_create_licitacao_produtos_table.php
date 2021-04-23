@@ -17,13 +17,12 @@ class CreateLicitacaoProdutosTable extends Migration
             $table->increments('id');
             $table->double('quantidade_produto', 8, 2);
             $table->double('valor_total_iten', 8, 2);
+            $table->double('valor_unitario_iten', 8, 2);
             $table->integer('fornecedor_id')->unsigned()->nullable();
             $table->integer('produto_id')->unsigned()->nullable();
-
             $table->foreign('fornecedor_id')->references('id')->on('fornecedors');
-
             $table->integer('licitacao_id')->unsigned()->nullable();
-            $table->foreign('licitacao_id')->references('id')->on('licitacao_produtos');
+            $table->foreign('licitacao_id')->references('id')->on('licitacaos');
             $table->foreign('produto_id')->references('id')->on('produtos');
             $table->timestamps();
         });

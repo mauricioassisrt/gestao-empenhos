@@ -157,7 +157,7 @@
                                             <td>{!! $licitacaoProduto->produtos->nome !!}</td>
                                             <td>{!! $licitacaoProduto->fornecedor->nome_fornecedor !!}</td>
                                             <td>{!! $licitacaoProduto->produtos->categoria->nome_categoria !!}</td>
-                                            <td>R${!! $licitacaoProduto->produtos->valor_unitario !!}</td>
+                                            <td>R${!! $licitacaoProduto->valor_total_iten / $licitacaoProduto->quantidade_produto!!}</td>
 
                                             <td>{!! $licitacaoProduto->quantidade_produto !!}</td>
 
