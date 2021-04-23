@@ -15,19 +15,13 @@ class ProdutoSeeder extends Seeder
         $produto = array(
             [
                 'nome' => 'Arroz tipo 1 5kg',
-                'lote' => '20210301 12:00:15',
                 'descricao' => 'Descrição do produto',
-                // 'valor_unitario' => '50.00',
-
                 'categoria_id' => '2',
 
             ],
             [
                 'nome' => 'Feijão Carioca 1kg',
-                'lote' => '20210301 12:00:15',
                 'descricao' => 'Descrição do produto',
-                // 'valor_unitario' => '10.00',
-                //'fornecedor_id' => '1',
                 'categoria_id' => '2',
 
 

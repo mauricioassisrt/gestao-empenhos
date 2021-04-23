@@ -6,7 +6,7 @@
     <!-- toast CSS-->
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
     <link rel="stylesheet" href=" {{ asset('css/select2.min.css') }}" />
-
+    <!--Select2 -->
     <link rel="stylesheet" href=" {{ asset('css/select2-bootstrap4.min.css') }}" />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -82,7 +82,7 @@
             </div>
             <hr>
 
-            <div class="row" >
+            <div class="row">
                 <div class="col-sm-12">
                     <label>Fornecedor </label>
                     <select name="fornecedor_id" class="form-control fornecedor" style="width: 100%;">
@@ -173,9 +173,9 @@
                 {{-- <button type="submit" class="btn btn-success float-right" id="resumo" style="display:none"> <i
                         class=" fas fa-pen-alt"></i> Resumo da requisição </button> --}}
 
-                <a href="" class="btn btn-success " data-toggle="modal" data-target="#modal-confirmar"
-                    id="resumo" style="display:none"><span class="glyphicon glyphicon-remove"><i
-                            class=" fas fa-pen-alt"></i> Resumo da requisição</a>
+                <a href="" class="btn btn-success " data-toggle="modal" data-target="#modal-confirmar" id="resumo"
+                    style="display:none"><span class="glyphicon glyphicon-remove"><i class=" fas fa-pen-alt"></i> Resumo da
+                        requisição</a>
 
 
                 <div class="modal fade" id="modal-confirmar" style="display: none;" tabindex='-1' aria-hidden="true">
@@ -194,8 +194,7 @@
                             <div class="modal-footer justify-content-between">
 
                                 <a href="" class="btn btn-primary" data-dismiss="modal">
-                                     <i class="fas fa-times-circle"
-                                        data-dismiss="modal"></i>
+                                    <i class="fas fa-times-circle" data-dismiss="modal"></i>
                                     Cancelar
                                 </a>
                                 <button type="submit" class="btn btn-success float-right" id="resumo"> <i
@@ -230,7 +229,7 @@
     <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
     <script src=" {{ asset('js/toastr.min.js') }}"></script>
     <!-- FIM TOAST SWEETALERT  -->
-
+    <!-- SELECT2 -->
     <script src="{{ asset('js/select2.full.min.js') }}"></script>
 
 
@@ -276,11 +275,10 @@
                     if (result.success) {
                         $("#tabela_produtos").empty();
                         lista =
-                            '<thead> <th>Código</th>   <th>Lote </th>   <th>Produto </th> </thead><tbody>';
+                            '<thead> <th>Código</th>   <th>Produto </th> </thead><tbody>';
                         $.each(result.produtos, function(key, value) {
                             lista += '<tr >';
                             lista += '<td  class="id">' + value.id + '</td>';
-                            lista += '<td >' + value.lote + '</td>';
                             lista += '<td >' + value.nome + '</td>';
                             lista +=
                                 '<td class=""> <a class="btn btn-success adicionar"  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
@@ -306,9 +304,9 @@
                             idProduto = "";
                         });
                     } else {
-                    //caso não encontre nenhum produto na categoria
+                        //caso não encontre nenhum produto na categoria
 
-                    lista = '';
+                        lista = '';
                         toastr.error("Esta categoria não possui nenhum produto cadastrado!!!");
                     }
                 }
@@ -332,13 +330,11 @@
             });
             //cria o cabeçalho da pagina
             listaRequisicao =
-                '    <thead> <th>Lote </th>   <th>Produto </th> <th>Valor unitario </th><th>Quantidade </th></thead></thead>';
+                '    <thead>    <th>Produto </th> <th>Valor unitario </th><th>Quantidade </th></thead></thead>';
 
             //add as linhas na tabela
             $.each(listaProdutosNova, function(key, value) {
                 listaRequisicao += '<tr class="del">';
-
-                listaRequisicao += '<td >' + value.lote + '</td>';
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao +=
                     '<td>  <input type="number" step=0.01 required name="valorUnitario[]" class=" form-control form-control-border"> </td>';

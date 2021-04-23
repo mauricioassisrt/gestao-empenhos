@@ -80,8 +80,8 @@ class RequisicaoComLicitacaoController extends Controller
             $total_produtos = 0;
 
             foreach ($request->produto_id as $key => $value) {
-                $produto = Produto::findOrfail($value);
-                $valor_final += $request->quantidadeItens[$key] * $produto->valor_unitario;
+               // $produto = Produto::findOrfail($value);
+                $valor_final += $request->quantidadeItens[$key] * $request->valor_unitario[$key];
                 $total_produtos += $request->quantidadeItens[$key];
             }
 
@@ -99,12 +99,12 @@ class RequisicaoComLicitacaoController extends Controller
             $requisicao->update($reqArray);
             $requisicaoProduto = new RequisicaoProduto();
             foreach ($request->produto_id as $key => $value) {
-                $produto = Produto::findOrfail($value);
-                $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+               // $produto = Produto::findOrfail($value);
+                $valorIten = $request->quantidadeItens[$key] * $request->valor_unitario[$key];
                 $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
                 $requisicaoProduto->valor_total_iten = $valorIten;
                 $requisicaoProduto->requisicao_id = $id;
-                $requisicaoProduto->produto_id = $produto->id;
+                $requisicaoProduto->produto_id = $request->produto_id[$key];
                 $requisicaoProduto->licitacao_produto_id = $request->licitacao_id[$key];
                 $requisicaoProduto->save();
                 $requisicaoProduto = new RequisicaoProduto();

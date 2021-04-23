@@ -689,11 +689,11 @@ class PermissionTableSeeder extends Seeder
                 'role_id' => '1'
             ],
             [
-                'permission_id' => '61',
+                'permission_id' => '62',
                 'role_id' => '1'
             ],
             [
-                'permission_id' => '61',
+                'permission_id' => '62',
                 'role_id' => '2'
             ],
 

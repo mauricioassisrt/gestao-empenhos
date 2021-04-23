@@ -31,12 +31,7 @@
                 <input type="text" class="form-control" placeholder="Arroz, Feijão" name="nome" @if (Request::is('*/editar/*')) value="{{ $produto->nome }}" @endif required>
 
             </div>
-            <div class="form-group">
 
-                <label>Lote</label>
-                <input type="number" class="form-control" placeholder="545040" name="lote" @if (Request::is('*/editar/*')) value="{{ $produto->lote }}" @endif required>
-
-            </div>
             <div class="form-group">
 
                 <label>Descrição</label>
@@ -68,7 +63,7 @@
                         @endforeach
                     @endif
                 </select>
-                <input type="text" id="test">
+
             </div>
 
 
@@ -102,17 +97,7 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         })
-        $(function(){
-            // turn the element to select2 select style
-            $('.select2').select2({
-              placeholder: "Select a state"
-            });
 
-            $('.select2').on('change', function() {
-              var data = $(".select2 option:selected").text();
-              $("#test").val(data);
-            })
-          });
     </script>
 @endsection
 

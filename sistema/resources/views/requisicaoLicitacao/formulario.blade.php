@@ -2,9 +2,12 @@
 @section('topo')
     <!-- DATA TIME PICKER Style -->
 
-    <link rel="stylesheet" href=" {{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- toast CSS-->
-    <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href=" {{ asset('css/select2.min.css') }}" />
+    <!--Select2 -->
+    <link rel="stylesheet" href=" {{ asset('css/select2-bootstrap4.min.css') }}" />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -44,34 +47,32 @@
                     </div>
                     <div class="col-sm-9">
                         @if (Gate::allows('minhas_requisicoes'))
-                        <label>Pessoa e suas unidades </label>
-                        <select name="unidade_id" class="form-control select2" style="width: 100%;" required>
-
+                            <label>Pessoa e suas unidades </label>
+                            <select name="unidade_id" class="form-control unidade" style="width: 100%;" required>
+                                <option> </option>
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
-                                @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
-                                    <option value="{{ $pessoa_unidade->unidade->id }}">
-                                        UNIDADE: {{ $pessoa_unidade->unidade->nome }} - PESSOA:
-                                        {{ $pessoa_unidade->pessoa->name }}
-                                    </option>
-                                @endif
+                                    @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
+                                        <option value="{{ $pessoa_unidade->unidade->id }}">
+                                            UNIDADE: {{ $pessoa_unidade->unidade->nome }}
+                                        </option>
+                                    @endif
 
 
-                            @endforeach
+                                @endforeach
 
-                        </select>
+                            </select>
                         @else
-                        <label>Pessoa e suas unidades </label>
-                        <select name="unidade_id" class="form-control select2" style="width: 100%;">
+                            <label>Pessoa e suas unidades </label>
+                            <select name="unidade_id" class="form-control unidade" style="width: 100%;">
+                                <option> </option>
+                                @foreach ($pessoa_unidades as $pessoa_unidade)
 
-                            @foreach ($pessoa_unidades as $pessoa_unidade)
+                                    <option value="{{ $pessoa_unidade->unidade->id }}">
+                                        UNIDADE: {{ $pessoa_unidade->unidade->nome }}
+                                    </option>
 
-                                <option value="{{ $pessoa_unidade->unidade->id }}">
-                                    UNIDADE: {{ $pessoa_unidade->unidade->nome }} - PESSOA:
-                                    {{ $pessoa_unidade->pessoa->name }}
-                                </option>
-
-                            @endforeach
-                        </select>
+                                @endforeach
+                            </select>
                         @endif
 
 
@@ -81,12 +82,12 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label>Justificativa </label>
-                        <textarea class="form-control" rows="3"  name="justificativa"
+                        <textarea class="form-control" rows="3" name="justificativa"
                             placeholder="Qual sua  justificativa para a requisição"></textarea>
                     </div>
                     <div class="col-sm-6">
                         <label>observação </label>
-                        <textarea class="form-control" rows="3"  name="observacao"
+                        <textarea class="form-control" rows="3" name="observacao"
                             placeholder="Possui alguma observação para incluir ?"></textarea>
                     </div>
                 </div>
@@ -103,20 +104,23 @@
             <div class="row" id="divProdutos">
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>
-                    <select name="licitacao_id" class="form-control select2" style="width: 100%;" id="licitacao_id">
-
+                    <select name="licitacao_id" class="form-control licitacao" style="width: 100%;" id="licitacao_id">
+                        <option> </option>
                         @foreach ($licitacaos as $licitacao)
-                            <option value="{{ $licitacao->id}}">
-                              Número da Licitacação  {{  $licitacao->ano }}/{{  $licitacao->numero_licitacao }}
+                            <option value="{{ $licitacao->id }}">
+                                Número da Licitacação {{ $licitacao->ano }}/{{ $licitacao->numero_licitacao }}
                             </option>
                         @endforeach
 
                     </select>
                 </div>
                 <div class="col-sm-12">
+                    <br>
+                    <input id="pesquisar" type="text" placeholder="Pesquise determinados produtos"
+                    class="form-control form-control" style='display: none'>
 
                     <div class="card-body table-responsive p-0">
-                        <table class="table " id="tabela_produtos">
+                        <table class="table  table-hover" id="tabela_produtos">
 
                         </table>
                     </div>
@@ -128,7 +132,7 @@
             <div class="row" id="divItens" style="display:none">
                 <div class="col-sm-12">
                     <div class="card-body table-responsive p-0">
-                        <table class="table " id="tabela_itens">
+                        <table class="table  table-hover" id="tabela_itens">
 
                         </table>
                     </div>
@@ -177,15 +181,25 @@
     <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
     <script src=" {{ asset('js/toastr.min.js') }}"></script>
     <!-- FIM TOAST SWEETALERT  -->
+    <!-- SELECT2 -->
+    <script src="{{ asset('js/select2.full.min.js') }}"></script>
 
 
     <script>
+        // Configuracao select2
+        $('.licitacao').select2({
+            placeholder: "Selecione uma licitação  "
+        });
+        $('.unidade').select2({
+            placeholder: "Selecione uma unidade/orgão  "
+        });
+        // fim da config
+
         var listaRequisicao = [];
         var lista = '';
         var listaIdProdutos = [];
         var listaProdutosNova = [];
-
-        $('#licitacao_id').blur(function(e) {
+        $('#licitacao_id').on('change', function() {
 
             $.ajaxSetup({
                 headers: {
@@ -193,7 +207,7 @@
                 }
             });
             $.ajax({
-                {{--  API  --}}
+                {{-- API --}}
                 url: "{{ url('requisicaoComLicitacao/getLicitacao') }}",
                 method: "POST",
                 data: {
@@ -204,30 +218,32 @@
 
                     if (result.success) {
                         $("#tabela_produtos").empty()
-                        {{--  Monta a tabela com base no resultado  --}}
+                        {{-- Monta a tabela com base no resultado --}}
+                        lista =
+                            '<thead> <th>Código</th>   <th>Produto </th><th>Valor Unitario </th> </thead><tbody>';
                         $.each(result.produtos, function(key, value) {
-                            {{--  add no TR um class para pegar o atributo do id do produto  --}}
-                            lista += '<tr class="adicionar">';
-                            lista += '<td >' + value.produto_id + '</td>';
-                            lista += '<td >' + value.lote + '</td>';
+                            {{-- add no TR um class para pegar o atributo do id do produto --}}
+                            lista += '<tr >';
+                            lista += '<td  class="id">' + value.produto_id + '</td>';
                             lista += '<td >' + value.nome + '</td>';
-                            lista += '<td> R$' + value.valor_unitario + '</td>';
+                            lista += '<td> R$' +value.valor_total_iten / value.quantidade_produto + '</td>';
                             lista +=
-                                '<td> <a class="btn btn-success "  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
+                                '<td> <a class="btn btn-success adicionar"  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
                             lista += '</tr>';
                         });
-                        {{--  add na tabela   --}}
+                        {{-- add na tabela --}}
+                        $("#pesquisar").show();
                         $('#tabela_produtos').append(lista);
-                        {{--  limpo a lista   --}}
+                        {{-- limpo a lista --}}
                         lista = '';
-                        {{--  ao clicar na row   --}}
+                        {{-- ao clicar na row --}}
                         $('.adicionar').click(function(e) {
-                            {{--  pega o id do produto ao clicar na linha atraves do td:eq, 0 é a posição   --}}
-                            var idProduto = $(this).find('td:eq(0)').text();
-
+                             // pega o value do id da linha da tabela (TR)
+                             var idProduto = $(this).closest("tr").find(".id").text();
+                             //verifica se o ID do produto já está na lista
                             $.each(result.produtos, function(key, value) {
-                                {{--  faz uma comparação do id do produto pegado no click do mouse com o do resultado do get da api caso sejam igual ele add  --}}
-                                if (idProduto == value.produto_id ) {
+                                {{-- faz uma comparação do id do produto pegado no click do mouse com o do resultado do get da api caso sejam igual ele add --}}
+                                if (idProduto == value.produto_id) {
                                     listaIdProdutos.push(value);
                                     toastr.success("Produto adicionado na requisição");
                                 }
@@ -238,8 +254,10 @@
                         });
 
                     } else {
-                        {{--  se a busca retornar como vazia retorna essa msg  --}}
-                        toastr.error("Está licitação ainda não contém produtos vinculados, vá até o menu ->licitação->vincular produtos e faça o vinculo !");
+                        {{-- se a busca retornar como vazia retorna essa msg --}}
+                        toastr.error(
+                            "Está licitação ainda não contém produtos vinculados, vá até o menu ->licitação->vincular produtos e faça o vinculo !"
+                        );
                         //
                     }
                 }
@@ -250,44 +268,41 @@
             $("#divProdutos").hide();
             $("#divItens").show();
             $("#tabela_itens").empty()
-            {{--  percorre a lista que foi add com os click do usuario   --}}
+            {{-- percorre a lista que foi add com os click do usuario --}}
             $.each(listaIdProdutos, function(i, e) {
-                {{--  verifica se não tem itens repetidos  --}}
-               var matchingItems = $.grep(listaProdutosNova, function(item) {
-                    return item.produto_id === e.produto_id;
+                {{-- verifica se não tem itens repetidos --}}
+                var matchingItems = $.grep(listaProdutosNova, function(item) {
+                    return item.produto_id == e.produto_id;
                 });
-                if (matchingItems.length === 0) {
+                if (matchingItems.length == 0) {
                     listaProdutosNova.push(e);
                 }
             });
-            {{--  preenche na view a nova table com os produtos escolhidos   --}}
+            {{-- preenche na view a nova table com os produtos escolhidos --}}
+            listaRequisicao = '<thead> <th ><p style="display:none">Código</p></th>  <th>Produto</th>   <th>Categoria </th><th>Valor Unitario </th><th>Quantidade </th>  </thead><tbody>';
             $.each(listaProdutosNova, function(key, value) {
 
                 listaRequisicao += '<tr class="del">';
                 listaRequisicao += '<td ><p style="display:none">' + key + '</p></td>';
-                listaRequisicao += '<td >' + value.lote + '</td>';
+
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao += '<td >' + value.nome_categoria + '</td>';
-                listaRequisicao += '<td>R$' + value.valor_unitario + '</td>';
-                listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.produto_id  +
-                    ' /> <input type="hidden" name="licitacao_id[]" value=' + value.licitacao_id  +
-                    ' /><input type="number" placeholder="Quantidade desejada" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
-                    /editar/ *
-                    ')) value="{{  }}" @endif> </td>';
-                listaRequisicao += '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
+                listaRequisicao += '<td><input type="hidden" name="valor_unitario[]" value=' + value.valor_total_iten / value.quantidade_produto  + ' /> <input type="hidden" name="licitacao_id[]" value=' + value.licitacao_id  + ' />R$' + value.valor_total_iten / value.quantidade_produto + ' <input type="hidden" name="produto_id[]" value=' + value.produto_id +' /><input type="hidden" name="licitacao_id[]" value=' + value.licitacao_id + '></td>';
+                listaRequisicao += '<td>  <input type="number" placeholder="Quantidade desejada" required name="quantidadeItens[]" class=" form-control form-control-border"> </td>';
+                listaRequisicao +=   '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
                 listaRequisicao += '</tr>';
 
             });
-            {{--  add na view  --}}
+            {{-- add na view --}}
             $('#tabela_itens').append(listaRequisicao);
-            {{--  fecha a div e a tabela anterior para abria  nova  --}}
+            {{-- fecha a div e a tabela anterior para abria  nova --}}
             $("#irParaLista").hide();
             $("#resumo").show();
             $("#voltarProdutos").show();
 
             listaRequisicao = '';
 
-            {{--  função para remoção de itens da lista   --}}
+            {{-- função para remoção de itens da lista --}}
             $('#tabela_itens').on('click', 'tr a ', function(e) {
 
                 e.preventDefault();
@@ -304,7 +319,7 @@
 
         });
 
-        {{--  função voltar produtos   --}}
+        {{-- função voltar produtos --}}
         $('#voltarProdutos').click(function(e) {
             $("#divProdutos").show();
             $("#divItens").hide();
@@ -313,6 +328,15 @@
             $("#voltarProdutos").hide();
 
         });
+    //funcao para pesquisar na tabela
+    $(document).ready(function() {
+        $("#pesquisar").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tabela_produtos tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
     </script>
 @endsection
