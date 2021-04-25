@@ -82,6 +82,14 @@ class RequisicaoController extends Controller
 
     public function insert(Request $request)
     {
+
+        $validated = $request->validate([
+            'justificativa' => 'required|max:255',
+            'orcamento_um' => "required|mimetypes:application/pdf|max:10000",
+            'orcamento_dois' => "required|mimetypes:application/pdf|max:10000",
+            'orcamento_tres' => "required|mimetypes:application/pdf|max:10000",
+
+        ]);
         if (Gate::allows('Insert_requisicao')) {
 
             $valor_final = 0;

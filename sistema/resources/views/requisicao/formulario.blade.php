@@ -1,5 +1,6 @@
 @extends('adminapp')
 @section('topo')
+
     <!-- DATA TIME PICKER Style -->
 
     <link rel="stylesheet" href=" {{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
@@ -7,6 +8,25 @@
     <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style type="text/css">
+        input[type='file'] {
+            display: none
+        }
+
+        .input-wrapper label {
+            background-color: #3498db;
+            border-radius: 5px;
+            color: #fff;
+            margin: 10px;
+            padding: 6px 20px
+        }
+
+        .input-wrapper label:hover {
+            background-color: #2980b9
+        }
+
+    </style>
 @endsection
 
 @section('content')
@@ -30,6 +50,26 @@
             @endif
 
             <div class="col-sm-12">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-info"></i> Atenção! </h5>
+                    1º Escolha uma das unidades nas quais possui vinculo <br>
+                    2º Anexar o arquivo da pesquisa de preços dos produtos que foram escolhidos, é necessário adicionar no
+                    minimo uma pesquisa de preço <br>
+                    3º O tamanho máximo do arquivo é de 1 MB, e o formato permitido é PDF somente <br>
+                    4º Escolher os produtos desejados <br>
+                    5º Adicionar a quantidade e o MENOR valor unitario encontrado, após isso tudo finalize seu orçamento
+                </div>
+
                 @csrf
                 <div class="row">
                     <div class="col-sm-1 ">
@@ -44,71 +84,76 @@
                     </div>
                     <div class="col-sm-9">
                         @if (Gate::allows('minhas_requisicoes'))
-                        <label>Unidades vinculadas </label>
-                        <select name="unidade_id" class="form-control select2" style="width: 100%;">
+                            <label>Unidades vinculadas </label>
+                            <select name="unidade_id" class="form-control select2" style="width: 100%;">
 
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
-                                @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
-                                    <option value="{{ $pessoa_unidade->unidade->id }}">
-                                        UNIDADE: {{ $pessoa_unidade->unidade->nome }} - PESSOA:
-                                        {{ $pessoa_unidade->pessoa->name }}
-                                    </option>
-                                @endif
+                                    @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
+                                        <option value="{{ $pessoa_unidade->unidade->id }}">
+                                            UNIDADE: {{ $pessoa_unidade->unidade->nome }}
+                                        </option>
+                                    @endif
 
 
-                            @endforeach
+                                @endforeach
 
-                        </select>
+                            </select>
                         @else
-                        <label>Todas as Unidades  </label>
-                        <select name="unidade_id" class="form-control select2" style="width: 100%;">
+                            <label>Todas as Unidades </label>
+                            <select name="unidade_id" class="form-control select2" style="width: 100%;">
 
-                            @foreach ($pessoa_unidades as $pessoa_unidade)
+                                @foreach ($pessoa_unidades as $pessoa_unidade)
 
-                                <option value="{{ $pessoa_unidade->unidade->id }}">
-                                    Unidade {{ $pessoa_unidade->unidade->nome }} Pessoa
-                                    {{ $pessoa_unidade->pessoa->name }}
-                                </option>
+                                    <option value="{{ $pessoa_unidade->unidade->id }}">
+                                        Unidade {{ $pessoa_unidade->unidade->nome }}
+                                    </option>
 
-                            @endforeach
-                        </select>
+                                @endforeach
+                            </select>
                         @endif
 
                     </div>
                 </div>
+                <br>
                 <div class="row">
-                    {{-- <div class="col-sm-6">
-                        <label>Fonte dos recursos </label>
-                        <select name="fonte_recurso" class="form-control select2">
-                            <option @if (Request::is('*/editar/*')) value="{{ $requisicao->fonte_recurso }}" >{{ $requisicao->fonte_recurso }} @endif </option>
-                            <option value="Recurso Livre">Recurso Livre </option>
-                            <option value="Fonte Vinculada ">Fonte Vinculada </option>
-                            <option value="Outra fonte "> Outra Fonte </option>
-                        </select>
-                    </div> --}}
-                    {{-- <div class="col-sm-6">
-                        <label>Fornecedor </label>
-                        <select name="fornecedor_id" required class="form-control select2" style="width: 100%;">
+                    <div class="col-sm-4">
+                        <div class='input-wrapper'>
+                            <label for='orcamento_um'>
+                                <i class="fas fa-upload"></i> Orçamento 1
+                            </label>
+                            <input id='orcamento_um' type='file' name='orcamento_um' accept="application/pdf" />
+                            <span id='orcamento_label'></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class='input-wrapper'>
+                            <label for='orcamento_dois'>
+                                <i class="fas fa-upload"></i> Orçamento 2
+                            </label>
+                            <input id='orcamento_dois' type='file' />
+                            <span id='orcamento_label_dois'></span>
+                        </div>
 
-                            @foreach ($fornecedors as $fornecedor)
-                                <option value="{{ $fornecedor->id }}">
-                                    {{ $fornecedor->nome_fornecedor }}
-                                </option>
-                            @endforeach
-
-                        </select>
-                    </div> --}}
-
+                    </div>
+                    <div class="col-sm-4">
+                        <div class='input-wrapper'>
+                            <label for='orcamento_tres'>
+                                <i class="fas fa-upload"></i> Orçamento 3
+                            </label>
+                            <input id='orcamento_tres' type='file' />
+                            <span id='orcamento_label_tres'></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <label>Justificativa </label>
-                        <textarea class="form-control" rows="3"  name="justificativa"
+                        <textarea class="form-control" rows="3" name="justificativa"
                             placeholder="Qual sua  justificativa para a requisição"></textarea>
                     </div>
                     <div class="col-sm-6">
                         <label>observação </label>
-                        <textarea class="form-control" rows="3"  name="observacao"
+                        <textarea class="form-control" rows="3" name="observacao"
                             placeholder="Possui alguma observação para incluir ?"></textarea>
                     </div>
                 </div>
@@ -117,11 +162,7 @@
             </div>
 
             <hr>
-            <div class="  callout callout-success ">
-                <h5><b>Vamos escolher os produtos da requisição ? !!!</b> </h5>
 
-                <p> Basta informar a quantidade somente para montar a requisição </p>
-            </div>
             <div class="row" id="divProdutos">
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>
@@ -286,10 +327,9 @@
                 listaRequisicao += '<td >' + value.nome + '</td>';
                 listaRequisicao += '<td>' + value.valor_unitario + '</td>';
                 listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
-                    ' /> <input type="text" required name="quantidadeItens[]" class=" form-control form-control-border" @if (Request::is(' *
-                    /editar/ *
-                    ')) value="{{  }}" @endif> </td>';
-                listaRequisicao += '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
+                    '> </td>';
+                listaRequisicao +=
+                    '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
                 listaRequisicao += '</tr>';
 
             });
@@ -326,8 +366,29 @@
             $("#voltarProdutos").hide();
 
         });
+        /// pegar nome do arquivo
+        var $orcamentoUm = document.getElementById('orcamento_um'),
+            $orcamentoLabel = document.getElementById('orcamento_label');
+
+        $orcamentoUm.addEventListener('change', function() {
+            $orcamentoLabel.textContent = this.value;
+        });
+
+        var $orcamentoDois = document.getElementById('orcamento_dois'),
+            $orcamentoLabelDois = document.getElementById('orcamento_label_dois');
+
+        $orcamentoDois.addEventListener('change', function() {
+            $orcamentoLabelDois.textContent = this.value;
+        });
+        var $orcamentoTres = document.getElementById('orcamento_tres'),
+            $orcamentoLabelTres = document.getElementById('orcamento_label_tres');
+
+        $orcamentoTres.addEventListener('change', function() {
+            $orcamentoLabelTres.textContent = this.value;
+        });
 
     </script>
+
 @endsection
 
 @endsection

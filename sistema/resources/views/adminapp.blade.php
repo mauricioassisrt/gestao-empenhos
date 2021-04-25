@@ -8,6 +8,7 @@ $empresa = Empresa::all();
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -385,16 +386,18 @@ $empresa = Empresa::all();
 
     <!-- jQuery -->
     <script src=" {{ asset('js/app.js') }}"></script>
-
+    //alert
+    @include('sweetalert::alert')
     <script src=" {{ asset('js/jquery.form.min.js') }}"></script>
     <!-- FECHAR DIALOG -->
     <script type="text/javascript">
         setTimeout(function() {
             $('#dialog').fadeOut('fast');
         }, 2000);
-
+        toast('Your Post as been submited!','success');
     </script>
     @yield('rodape')
+
 
 </body>
 
