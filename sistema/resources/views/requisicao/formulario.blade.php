@@ -1,11 +1,13 @@
 @extends('adminapp')
 @section('topo')
 
-    <!-- DATA TIME PICKER Style -->
 
-    <link rel="stylesheet" href=" {{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- toast CSS-->
-    <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href=" {{ asset('css/select2.min.css') }}" />
+    <!--Select2 -->
+    <link rel="stylesheet" href=" {{ asset('css/select2-bootstrap4.min.css') }}" />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -51,13 +53,16 @@
 
             <div class="col-sm-12">
                 @if ($errors->any())
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-ban"></i> Atenção!</h5>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
+
                 @endif
                 <div class="alert alert-info alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -85,7 +90,7 @@
                     <div class="col-sm-9">
                         @if (Gate::allows('minhas_requisicoes'))
                             <label>Unidades vinculadas </label>
-                            <select name="unidade_id" class="form-control select2" style="width: 100%;">
+                            <select name="unidade_id" class="form-control unidade" style="width: 100%;">
 
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
                                     @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
@@ -100,7 +105,7 @@
                             </select>
                         @else
                             <label>Todas as Unidades </label>
-                            <select name="unidade_id" class="form-control select2" style="width: 100%;">
+                            <select name="unidade_id" class="form-control unidade" style="width: 100%;">
 
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
 
@@ -121,8 +126,13 @@
                             <label for='orcamento_um'>
                                 <i class="fas fa-upload"></i> Orçamento 1
                             </label>
-                            <input id='orcamento_um' type='file' name='orcamento_um' accept="application/pdf" />
+                            <input id='orcamento_um' class="  @if ($errors->has('orcamento_um')) is-invalid @endif" type='file' name='orcamento_um'
+                            accept="application/pdf" />
                             <span id='orcamento_label'></span>
+
+                            @if ($errors->has('orcamento_um'))
+                                <span class="text-danger">{{ $errors->first('orcamento_um') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -130,7 +140,7 @@
                             <label for='orcamento_dois'>
                                 <i class="fas fa-upload"></i> Orçamento 2
                             </label>
-                            <input id='orcamento_dois' type='file' />
+                            <input id='orcamento_dois' type='file' accept="application/pdf" />
                             <span id='orcamento_label_dois'></span>
                         </div>
 
@@ -140,7 +150,7 @@
                             <label for='orcamento_tres'>
                                 <i class="fas fa-upload"></i> Orçamento 3
                             </label>
-                            <input id='orcamento_tres' type='file' />
+                            <input id='orcamento_tres' type='file' accept="application/pdf" />
                             <span id='orcamento_label_tres'></span>
                         </div>
                     </div>
@@ -166,7 +176,7 @@
             <div class="row" id="divProdutos">
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>
-                    <select name="categoria_id" class="form-control select2" style="width: 100%;" id="getCategoria">
+                    <select name="categoria_id" class="form-control categoria" style="width: 100%;" id="getCategoria">
 
                         @foreach ($categorias as $categoria)
                             <option value="{{ $categoria->id }}">
@@ -179,6 +189,10 @@
                 <div class="col-sm-12">
 
                     <div class="card-body table-responsive p-0">
+                        <br>
+                        <input id="pesquisar" type="text" placeholder="Pesquise determinados produtos"
+                            class="form-control form-control" style='display: none'>
+
                         <table class="table " id="tabela_produtos">
 
                         </table>
@@ -240,132 +254,11 @@
     <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
     <script src=" {{ asset('js/toastr.min.js') }}"></script>
     <!-- FIM TOAST SWEETALERT  -->
+    <!-- SELECT2 -->
+    <script src="{{ asset('js/select2.full.min.js') }}"></script>
 
 
     <script>
-        var listaRequisicao = [];
-        var lista = '';
-        var listaIdProdutos = [];
-        var listaProdutosNova = [];
-        $('#getCategoria').blur(function(e) {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: "{{ url('requisicao/getCategoria') }}",
-                method: "POST",
-                data: {
-                    categoria_id: $("#getCategoria").val(),
-
-                },
-                success: function(result) {
-
-                    if (result.success) {
-                        $("#tabela_produtos").empty()
-                        $.each(result.produtos, function(key, value) {
-
-                            lista += '<tr class="adicionar">';
-                            lista += '<td >' + value.id + '</td>';
-                            lista += '<td >' + value.lote + '</td>';
-                            lista += '<td >' + value.nome + '</td>';
-                            lista += '<td>' + value.valor_unitario + '</td>';
-                            lista +=
-                                '<td> <a class="btn btn-success "  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
-                            lista += '</tr>';
-                        });
-                        $('#tabela_produtos').append(lista);
-
-
-                        lista = '';
-
-                        $('.adicionar').click(function(e) {
-                            var idProduto = $(this).find('td:eq(0)').text();
-
-                            $.each(result.produtos, function(key, value) {
-                                if (idProduto == value.id) {
-                                    listaIdProdutos.push(value);
-                                    toastr.success("Produto adicionado na listagem");
-
-                                }
-
-
-                            });
-
-                            idProduto = "";
-                        });
-
-                    } else {
-                        toastr.error("Esta categoria não possui nenhum produto cadastrado!!!");
-                        //
-                    }
-                }
-            });
-        });
-        $('#irParaLista').click(function(e) {
-
-            $("#divProdutos").hide();
-            $("#divItens").show();
-            $("#tabela_itens").empty()
-
-            $.each(listaIdProdutos, function(i, e) {
-                var matchingItems = $.grep(listaProdutosNova, function(item) {
-                    return item.id === e.id;
-                });
-                if (matchingItems.length === 0) {
-                    listaProdutosNova.push(e);
-                }
-            });
-
-            $.each(listaProdutosNova, function(key, value) {
-
-                listaRequisicao += '<tr class="del">';
-                listaRequisicao += '<td ><p style="display:none">' + key + '</p></td>';
-                listaRequisicao += '<td >' + value.lote + '</td>';
-                listaRequisicao += '<td >' + value.nome + '</td>';
-                listaRequisicao += '<td>' + value.valor_unitario + '</td>';
-                listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
-                    '> </td>';
-                listaRequisicao +=
-                    '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
-                listaRequisicao += '</tr>';
-
-            });
-
-            $('#tabela_itens').append(listaRequisicao);
-
-            $("#irParaLista").hide();
-            $("#resumo").show();
-            $("#voltarProdutos").show();
-
-            listaRequisicao = '';
-
-            $('#tabela_itens').on('click', 'tr a ', function(e) {
-
-                e.preventDefault();
-                $(this).parents('tr').remove();
-
-                var idProduto = $(this).find('td:eq(0)').text();
-                toastr.error("Apagado com sucesso !");
-                listaProdutosNova.splice($.inArray(idProduto, listaProdutosNova));
-                listaIdProdutos.splice($.inArray(idProduto, listaIdProdutos));
-                listaRequisicao.splice($.inArray(idProduto, listaRequisicao));
-
-
-            });
-
-        });
-
-        $('#voltarProdutos').click(function(e) {
-            $("#divProdutos").show();
-            $("#divItens").hide();
-            $("#resumo").hide();
-            $("#irParaLista").show();
-            $("#voltarProdutos").hide();
-
-        });
         /// pegar nome do arquivo
         var $orcamentoUm = document.getElementById('orcamento_um'),
             $orcamentoLabel = document.getElementById('orcamento_label');
@@ -385,6 +278,158 @@
 
         $orcamentoTres.addEventListener('change', function() {
             $orcamentoLabelTres.textContent = this.value;
+        });
+
+        var data = '';
+        var listaRequisicao = [];
+        var lista = '';
+        var listaIdProdutos = [];
+        var listaProdutosNova = [];
+
+        //toast alert
+        @if (session('status'))
+            toastr.success( "{{ session()->get('status') }}" );
+
+        @endif
+        //fim do toas
+
+        // Configuracao select2
+        $('.categoria').select2({
+            placeholder: "Selecione uma categoria "
+        });
+        $('.unidade').select2({
+            placeholder: "Selecione um orgão/unidade "
+        });
+        // fim da config
+
+        //ao clicar em uma categoria
+        $('#getCategoria').on('change', function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('requisicao/getCategoria') }}",
+                method: "POST",
+                data: {
+                    categoria_id: $("#getCategoria").val(),
+
+                },
+                success: function(result) {
+                    /// caso retorne success
+                    if (result.success) {
+                        $("#tabela_produtos").empty();
+                        lista =
+                            '<thead> <th>Código</th>   <th>Produto </th> </thead><tbody>';
+                        $.each(result.produtos, function(key, value) {
+                            lista += '<tr >';
+                            lista += '<td  class="id">' + value.id + '</td>';
+                            lista += '<td >' + value.nome + '</td>';
+                            lista +=
+                                '<td class=""> <a class="btn btn-success adicionar"  href="javascript:"  ><i   class=" fas fa-plus"></i> </a>  </td>';
+                            lista += '</tr>';
+                        });
+                        //exibe a pesquisa
+                        $("#pesquisar").show();
+                        $('#tabela_produtos').append(lista);
+
+                        lista = '';
+                        //ao clicar no botão verde add
+                        $('.adicionar').click(function(e) {
+                            // pega o value do id da linha da tabela (TR)
+                            var idProduto = $(this).closest("tr").find(".id").text();
+                            //verifica se o ID do produto já está na lista
+                            $.each(result.produtos, function(key, value) {
+                                if (idProduto == value.id) {
+                                    listaIdProdutos.push(value);
+                                    toastr.success("Produto adicionado na listagem");
+                                }
+                            });
+                            //inicializa a variavel
+                            idProduto = "";
+                        });
+                    } else {
+                        //caso não encontre nenhum produto na categoria
+
+                        lista = '';
+                        toastr.error("Esta categoria não possui nenhum produto cadastrado!!!");
+                    }
+                }
+            });
+        });
+        //ao clicar em ir para lista
+        $('#irParaLista').click(function(e) {
+            //fecha as divs limpa a tabela de itens
+            $("#divProdutos").hide();
+            $("#divItens").show();
+            //limpa a tabela
+            $("#tabela_itens").empty()
+            //foreach para comparar se foi add algum item repatido caso seja add remove
+            $.each(listaIdProdutos, function(i, e) {
+                var matchingItems = $.grep(listaProdutosNova, function(item) {
+                    return item.id === e.id;
+                });
+                if (matchingItems.length === 0) {
+                    listaProdutosNova.push(e);
+                }
+            });
+            //cria o cabeçalho da pagina
+            listaRequisicao =
+                '    <thead>    <th>Produto </th> <th>Menor valor Orçado  </th><th>Quantidade </th></thead></thead>';
+
+            //add as linhas na tabela
+            $.each(listaProdutosNova, function(key, value) {
+                listaRequisicao += '<tr class="del">';
+                listaRequisicao += '<td >' + value.nome + '</td>';
+                listaRequisicao +=
+                    '<td>  <input type="number" step=0.01 required name="valorUnitario[]" class=" form-control form-control-border"> </td>';
+                listaRequisicao += '<td> <input type="hidden" name="produto_id[]" value=' + value.id +
+                    ' /> <input type="number" required name="quantidadeItens[]" class=" form-control form-control-border"> </td>';
+                listaRequisicao +=
+                    '<td> <a href="#" class="btn btn-danger " ><i   class=" fas fa-trash"></i> </a> </td>';
+                listaRequisicao += '</tr>';
+
+            });
+
+            $('#tabela_itens').append(listaRequisicao);
+            //oculta o botao
+            $("#irParaLista").hide();
+            //exibe o botão resumo da requisicao
+            $("#resumo").show();
+            //exibe o botão voltar a escolher produtos
+            $("#voltarProdutos").show();
+
+            listaRequisicao = '';
+            // funcao para remover um itenm ao clicar no excluir
+            $('#tabela_itens').on('click', 'tr a ', function(e) {
+                e.preventDefault();
+                $(this).parents('tr').remove();
+                var idProduto = $(this).find('td:eq(0)').text();
+                toastr.error("Apagado com sucesso !");
+                listaProdutosNova.splice($.inArray(idProduto, listaProdutosNova));
+                listaIdProdutos.splice($.inArray(idProduto, listaIdProdutos));
+                listaRequisicao.splice($.inArray(idProduto, listaRequisicao));
+            });
+
+        });
+        //botao voltar produtos
+        $('#voltarProdutos').click(function(e) {
+            $("#divProdutos").show();
+            $("#divItens").hide();
+            $("#resumo").hide();
+            $("#irParaLista").show();
+            $("#voltarProdutos").hide();
+
+        });
+        //funcao para pesquisar na tabela
+        $(document).ready(function() {
+            $("#pesquisar").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tabela_produtos tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
         });
 
     </script>

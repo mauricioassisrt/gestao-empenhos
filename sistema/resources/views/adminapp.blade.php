@@ -387,14 +387,14 @@ $empresa = Empresa::all();
     <!-- jQuery -->
     <script src=" {{ asset('js/app.js') }}"></script>
     //alert
-    @include('sweetalert::alert')
+
     <script src=" {{ asset('js/jquery.form.min.js') }}"></script>
     <!-- FECHAR DIALOG -->
     <script type="text/javascript">
         setTimeout(function() {
             $('#dialog').fadeOut('fast');
         }, 2000);
-        toast('Your Post as been submited!','success');
+
     </script>
     @yield('rodape')
 

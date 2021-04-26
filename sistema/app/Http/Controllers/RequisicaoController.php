@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Fornecedor;
+use App\Http\Requests\RequisicaoRequest;
 use App\PessoaUnidade;
 use App\Produto;
 use App\Requisicao;
@@ -80,24 +81,19 @@ class RequisicaoController extends Controller
         }
     }
 
-    public function insert(Request $request)
+    public function insert(RequisicaoRequest $request)
     {
 
-        $validated = $request->validate([
-            'justificativa' => 'required|max:255',
-            'orcamento_um' => "required|mimetypes:application/pdf|max:10000",
-            'orcamento_dois' => "required|mimetypes:application/pdf|max:10000",
-            'orcamento_tres' => "required|mimetypes:application/pdf|max:10000",
 
-        ]);
+
         if (Gate::allows('Insert_requisicao')) {
-
+            dd($request->all());
             $valor_final = 0;
             $total_produtos = 0;
 
             foreach ($request->produto_id as $key => $value) {
-                $produto = Produto::findOrfail($value);
-                $valor_final += $request->quantidadeItens[$key] * $produto->valor_unitario;
+                //$produto = Produto::findOrfail($value);
+                $valor_final += $request->quantidadeItens[$key] * $request->valorUnitario[$key];
                 $total_produtos += $request->quantidadeItens[$key];
             }
 
@@ -115,8 +111,8 @@ class RequisicaoController extends Controller
             $requisicao->update($reqArray);
             $requisicaoProduto = new RequisicaoProduto();
             foreach ($request->produto_id as $key => $value) {
-                $produto = Produto::findOrfail($value);
-                $valorIten = $request->quantidadeItens[$key] * $produto->valor_unitario;
+              //  $produto = Produto::findOrfail($value);
+                $valorIten = $request->quantidadeItens[$key] * $request->valorUnitario[$key];
 
                 $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
                 $requisicaoProduto->valor_total_iten = $valorIten;
