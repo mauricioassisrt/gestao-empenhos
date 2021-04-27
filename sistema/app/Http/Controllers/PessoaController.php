@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pessoa;
 use App\PessoaUnidade;
+use App\Secretaria;
 use App\Unidade;
 use App\User;
 use Illuminate\Http\Request;
@@ -37,8 +38,9 @@ class PessoaController extends Controller
 
                 $titulo = "Pessoas  ";
                 $pessoas = Pessoa::paginate(10);
+                $secretarias = Secretaria::all();
 
-                return view('pessoa.index', compact('titulo', 'pessoas'));
+                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias'));
             } else {
                 $titulo = "SEM ACESSO ";
 
@@ -162,7 +164,28 @@ class PessoaController extends Controller
             return view('errors.404');
         }
     }
+    public function updateSecretaria(Request $request, Pessoa $pessoa)
+    {
 
+        try {
+            if (Gate::allows('pessoa_edit') && $pessoa->secretaria_id==null) {
+
+                $pessoa->update($request->all());
+                return redirect('pessoas')->with('status', 'Definido o secretário com sucesso !');
+            }else if($pessoa->secretaria_id !=null){
+                $pessoa->update($request->all());
+                return redirect('pessoas')->with('remove', 'Apagado com sucesso !!');
+
+            }
+            else {
+                $titulo = "SEM ACESSO ";
+                return view('errors.sem_permissao', compact('titulo'));
+            }
+        } catch (\Throwable $th) {
+
+            return view('errors.503', compact('th'));
+        }
+    }
     public function destroy(Pessoa $pessoa)
     {
         try {
@@ -269,7 +292,7 @@ class PessoaController extends Controller
     {
         try {
             $titulo = 'Vincular uma Unidade a pessoa  ';
-            if (Gate::allows('pessoa_vincular_unidade')) {
+            if (Gate::allows('pessoa_vincular_unidade')&&  $pessoa->secretaria_id ==null) {
                 $unidades = Unidade::all();
 
                 $pessoa_unidades = PessoaUnidade::where('pessoa_id', $pessoa->id)->get();
@@ -278,6 +301,7 @@ class PessoaController extends Controller
                 $unidade_id = 0;
                 return view('pessoa.formulario-vincular-unidade', compact('titulo', 'unidades', 'pessoa', 'pessoa_unidades', 'unidade_id'));
             } else {
+                return redirect('pessoas')->with('status', 'Esta pessoa é um secretário no momento !');
             }
         } catch (\Throwable $th) {
             return view('errors.404');

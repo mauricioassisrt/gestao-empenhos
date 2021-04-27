@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Pessoa extends Model
 {
     protected $fillable = [
-        'name', 'data_nascimento','sexo', 'celular', 'foto_pessoa', 'user_id'
+        'name', 'data_nascimento','sexo', 'celular', 'foto_pessoa', 'user_id', 'secretaria_id'
     ];
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id' );
     }
 
-    // public function pessoas()
-    // {
-    //       return $this->belongsTo(User::class, 'user_id', 'id' );
-    // }
+    public function secretaria()
+    {
+        return $this->belongsTo(Secretaria::class, 'secretaria_id' );
+    }
 }

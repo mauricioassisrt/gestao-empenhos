@@ -17,7 +17,8 @@ class RoleTableSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'label' => 'Administrador do sistema',
-            ], [
+            ],
+            [
                 'name' => 'Prefeitura nivel 1  ',
                 'label' => 'Administrador da prefeitura ',
             ],
@@ -25,6 +26,11 @@ class RoleTableSeeder extends Seeder
                 'name' => 'Prefeitura nivel 2  ',
                 'label' => 'Usuário  da prefeitura ',
             ],
+            [
+                'name' => 'Secretário(a) Municipal	 ',
+                'label' => 'Secretário municipal responsável por aprovar requisições de suas unidades respectivas ',
+            ],
+
         );
         foreach ($roles as $key => $value) {
             Role::create($value);
@@ -42,6 +48,10 @@ class RoleTableSeeder extends Seeder
             [
                 'role_id' => '3',
                 'user_id' => '3'
+            ],
+            [
+                'role_id' => '4',
+                'user_id' => '4'
             ]
         );
         foreach ($role_users as $key => $value) {

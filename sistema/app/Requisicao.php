@@ -8,7 +8,7 @@ class Requisicao extends Model
 {
     protected $fillable = [
         'justificativa','observacao' ,'requisicao_ano',
-        'total_produtos', 'valor_final', 'unidade_id'
+        'total_produtos', 'valor_final', 'unidade_id', 'orcamento_um', 'orcamento_dois', 'orcamento_tres', 'status',
     ];
     public function unidades()
     {

@@ -270,7 +270,10 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'pessoa_delete_unidade',
                 'label' => 'Permite o prórprio usuário remover a sua permissão ',
             ],
-
+            [
+                'name' => 'secretario_municipal_aprova_requisicao',
+                'label' => 'Secretário municipal responsável por aprovar requisições de suas unidades respectivas '
+            ]
 
         );
         foreach ($permissions as $key => $value) {
@@ -696,7 +699,14 @@ class PermissionTableSeeder extends Seeder
                 'permission_id' => '62',
                 'role_id' => '2'
             ],
-
+            [
+                'permission_id' => '63',
+                'role_id' => '4'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '4'
+            ],
 
         );
         foreach ($permission_roles as $key => $value) {

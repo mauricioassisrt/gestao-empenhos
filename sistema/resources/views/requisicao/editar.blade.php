@@ -143,7 +143,7 @@
                                         </td>
                                         <td>{!! $requisicaoProduto->produtos->nome !!}</td>
 
-                                        <td>R${!! $requisicaoProduto->produtos->valor_unitario !!}</td>
+                                        <td>R${!!  $requisicaoProduto->valor_total_iten/$requisicaoProduto->quantidade_produto !!}</td>
 
                                         <td>{!! $requisicaoProduto->quantidade_produto !!}</td>
 

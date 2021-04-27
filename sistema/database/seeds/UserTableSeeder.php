@@ -27,6 +27,11 @@ class UserTableSeeder extends Seeder
                 'name' => 'Maria josé',
                 'email' => 'maria@prefeitura.com',
                 'password' => bcrypt('123')
+            ],
+            [
+                'name' => 'Sec saude',
+                'email' => 'secretario@saude.com',
+                'password' => bcrypt('123')
             ]
         );
         foreach ($users as $key => $value) {

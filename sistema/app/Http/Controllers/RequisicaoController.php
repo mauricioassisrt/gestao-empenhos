@@ -84,49 +84,88 @@ class RequisicaoController extends Controller
     public function insert(RequisicaoRequest $request)
     {
 
+        try {
+            if (Gate::allows('Insert_requisicao') &&  $request->hasFile('orcamento_um')) {
 
+                $valor_final = 0;
+                $total_produtos = 0;
+                $orcamento_dois = null;
+                $orcamento_tres = null;
 
-        if (Gate::allows('Insert_requisicao')) {
-            dd($request->all());
-            $valor_final = 0;
-            $total_produtos = 0;
+                foreach ($request->produto_id as $key => $value) {
+                    //$produto = Produto::findOrfail($value);
+                    $valor_final += $request->quantidadeItens[$key] * $request->valorUnitario[$key];
+                    $total_produtos += $request->quantidadeItens[$key];
+                }
 
-            foreach ($request->produto_id as $key => $value) {
-                //$produto = Produto::findOrfail($value);
-                $valor_final += $request->quantidadeItens[$key] * $request->valorUnitario[$key];
-                $total_produtos += $request->quantidadeItens[$key];
-            }
+                $request['valor_final'] = $valor_final;
+                $request['total_produtos'] =   $total_produtos;
+                $request['status'] = "Enviado";
 
-            $request['valor_final'] = $valor_final;
-            $request['total_produtos'] =   $total_produtos;
+                $id = Requisicao::create($request->all())->id;
+                $requisicaoAno = $id . '-' . $year = date('Y');
+                $requisicao = Requisicao::findOrFail($id);
 
-            $id = Requisicao::create($request->all())->id;
-            $requisicaoAno = $id . '/' . $year = date('Y');
-            $requisicao = Requisicao::findOrFail($id);
+                /* UPLOAD de imagem ORCAMENTO 1  */
+                $image = $request->file('orcamento_um');
+                $dir = "img/requisicoes/orcamentos/" . $requisicaoAno;
+                $extencao = $image->guessClientExtension();
+                $nomeImagem = "requisicao-orcamento-1" . "." . $extencao;
+                $image->move($dir, $nomeImagem);
+                $orcamento_um = $dir . "/" . $nomeImagem;
 
-            $reqArray = array(
-                'requisicao_ano' => $requisicaoAno,
+                /* fim do upload  */
+                if ($request->hasFile('orcamento_dois')) {
 
-            );
-            $requisicao->update($reqArray);
-            $requisicaoProduto = new RequisicaoProduto();
-            foreach ($request->produto_id as $key => $value) {
-              //  $produto = Produto::findOrfail($value);
-                $valorIten = $request->quantidadeItens[$key] * $request->valorUnitario[$key];
+                    /* UPLOAD de imagem ORCAMENTO 2  */
+                    $image = $request->file('orcamento_dois');
+                    $dir = "img/requisicoes/orcamentos/" . $requisicaoAno;
+                    $extencao = $image->guessClientExtension();
+                    $nomeImagem = "requisicao-orcamento-2" . "." . $extencao;
+                    $image->move($dir, $nomeImagem);
+                    $orcamento_dois = $dir . "/" . $nomeImagem;
+                    /* fim do upload  */
+                } if ($request->hasFile('orcamento_tres')) {
+                    /* UPLOAD de imagem ORCAMENTO 2  */
 
-                $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
-                $requisicaoProduto->valor_total_iten = $valorIten;
-                $requisicaoProduto->requisicao_id = $id;
-                $requisicaoProduto->produto_id = $produto->id;
+                    $image = $request->file('orcamento_tres');
+                    $dir = "img/requisicoes/orcamentos/" . $requisicaoAno;
+                    $extencao = $image->guessClientExtension();
+                    $nomeImagem = "requisicao-orcamento-3" . "." . $extencao;
+                    $image->move($dir, $nomeImagem);
+                    $orcamento_tres = $dir . "/" . $nomeImagem;
+                    /* fim do upload  */
+                }
 
-                $requisicaoProduto->save();
+                $reqArray = array(
+                    'requisicao_ano' => $requisicaoAno,
+                    'orcamento_um' => $orcamento_um,
+                    'orcamento_dois' => $orcamento_dois,
+                    'orcamento_tres' => $orcamento_tres
+                );
+
+                $requisicao->update($reqArray);
                 $requisicaoProduto = new RequisicaoProduto();
+                foreach ($request->produto_id as $key => $value) {
+                    //  $produto = Produto::findOrfail($value);
+                    $valorIten = $request->quantidadeItens[$key] * $request->valorUnitario[$key];
+
+                    $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
+                    $requisicaoProduto->valor_total_iten = $valorIten;
+                    $requisicaoProduto->requisicao_id = $id;
+                    $requisicaoProduto->produto_id = $request->produto_id[$key];
+
+                    $requisicaoProduto->save();
+                    $requisicaoProduto = new RequisicaoProduto();
+                }
+
+
+                return redirect('requisicao');
+            } else {
+                return view('errors.sem_permissao');
             }
-
-
-            return redirect('requisicao');
-        } else {
-            return view('errors.sem_permissao');
+        } catch (\Throwable $th) {
+            return view('errors.503', compact('th'));
         }
     }
 
@@ -144,8 +183,7 @@ class RequisicaoController extends Controller
                 }
 
                 return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo'));
-            }
-            else if (Gate::allows('Edit_requisicao')) {
+            } else if (Gate::allows('Edit_requisicao')) {
 
                 $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
                     ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
@@ -200,7 +238,7 @@ class RequisicaoController extends Controller
     {
         try {
             $titulo = 'Pesquisa de Requisicaoes com o nome de  ' . $request->get('table_search');
-            if (Gate::allows('View_requisicao') &&  Gate::allows('search_requisicao') ) {
+            if (Gate::allows('View_requisicao') &&  Gate::allows('search_requisicao')) {
                 $requisicao = new Requisicao();
                 $search = $request->get('table_search');
 

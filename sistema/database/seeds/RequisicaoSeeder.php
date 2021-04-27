@@ -20,6 +20,7 @@ class RequisicaoSeeder extends Seeder
 
                 'justificativa' => 'Justificativa ',
                 'observacao' => 'OBS ',
+                'status'=>'Enviado',
 
                 'requisicao_ano' => '1020/2021',
                 'valor_final' => '80',
@@ -29,6 +30,7 @@ class RequisicaoSeeder extends Seeder
             [
                 'justificativa' => 'Justificativa ',
                 'observacao' => 'OBS ',
+                'status'=>'Enviado',
 
                 'requisicao_ano' => '1020/2021',
                 'valor_final' => '80',

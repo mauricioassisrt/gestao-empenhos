@@ -95,7 +95,9 @@
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
                                     @if ($pessoa_unidade->pessoa->users->id === Auth::user()->id)
                                         <option value="{{ $pessoa_unidade->unidade->id }}">
-                                            UNIDADE: {{ $pessoa_unidade->unidade->nome }}
+                                            Unidade {{ $pessoa_unidade->unidade->nome }}/Secretaria
+                                            {{ $pessoa_unidade->unidade->secretaria->nome }}
+
                                         </option>
                                     @endif
 
@@ -110,7 +112,8 @@
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
 
                                     <option value="{{ $pessoa_unidade->unidade->id }}">
-                                        Unidade {{ $pessoa_unidade->unidade->nome }}
+                                        Unidade {{ $pessoa_unidade->unidade->nome }}/Secretaria
+                                        {{ $pessoa_unidade->unidade->secretaria->nome }}
                                     </option>
 
                                 @endforeach
@@ -140,7 +143,7 @@
                             <label for='orcamento_dois'>
                                 <i class="fas fa-upload"></i> Orçamento 2
                             </label>
-                            <input id='orcamento_dois' type='file' accept="application/pdf" />
+                            <input id='orcamento_dois' type='file' accept="application/pdf" name='orcamento_dois' />
                             <span id='orcamento_label_dois'></span>
                         </div>
 
@@ -150,7 +153,7 @@
                             <label for='orcamento_tres'>
                                 <i class="fas fa-upload"></i> Orçamento 3
                             </label>
-                            <input id='orcamento_tres' type='file' accept="application/pdf" />
+                            <input id='orcamento_tres' type='file' accept="application/pdf" name='orcamento_tres' />
                             <span id='orcamento_label_tres'></span>
                         </div>
                     </div>
@@ -229,8 +232,36 @@
                 <a href="javascript:" class="btn btn-primary" id="irParaLista">
 
                     <i class="fas fa-arrow-right"></i> Ir para lista de itens </a>
-                <button type="submit" class="btn btn-success" id="resumo" style="display:none"> <i
-                        class=" fas fa-pen-alt"></i> Resumo da requisição </button>
+                <a href="" class="btn btn-success " data-toggle="modal" data-target="#modal-confirmar" id="resumo"
+                    style="display:none"><span class="glyphicon glyphicon-remove"><i class=" fas fa-pen-alt"></i> Resumo da
+                        requisição</a>
+                <div class="modal fade" id="modal-confirmar" style="display: none;" tabindex='-1' aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"><i class="fas fa-exclamation-triangle"></i>Atenção </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Tem certeza que deseja finalizar a requisição ?!
+                                </h4>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+
+                                <a href="" class="btn btn-primary" data-dismiss="modal">
+                                    <i class="fas fa-times-circle" data-dismiss="modal"></i>
+                                    Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-success float-right" id="resumo"> <i
+                                        class=" fas fa-pen-alt"></i> Finalizar </button>
+
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
             @endif
 
         </div>

@@ -39,6 +39,15 @@ class PessoaSeeder extends Seeder
                 'foto_pessoa' => 'img/pessoa/user.jpg',
                 'updated_at' => '2021-03-01 12:00:15',
                 'user_id' => '3'
+            ],
+            [
+                'name' => 'Secretário saude ',
+                'data_nascimento' => '2021-03-01 12:00:15',
+                'sexo' => 'Feminino',
+                'celular' => '(44) 9 9999-9999',
+                'foto_pessoa' => 'img/pessoa/user.jpg',
+                'updated_at' => '2021-03-01 12:00:15',
+                'user_id' => '4'
             ]
         );
 

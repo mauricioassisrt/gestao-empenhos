@@ -21,6 +21,10 @@ class CreateRequisicaoProdutosTable extends Migration
             $table->string('requisicao_ano')->nullable();
             $table->double('total_produtos', 8, 2);
             $table->double('valor_final', 8, 2);
+            $table->string('orcamento_um')->nullable();
+            $table->string('orcamento_dois')->nullable();
+            $table->string('orcamento_tres')->nullable();
+            $table->string('status');
             $table->integer('unidade_id')->unsigned();
             $table->foreign('unidade_id')->references('id')->on('unidades');
             $table->timestamps();

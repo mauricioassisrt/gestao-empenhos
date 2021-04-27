@@ -174,8 +174,8 @@
                         class=" fas fa-pen-alt"></i> Resumo da requisição </button> --}}
 
                 <a href="" class="btn btn-success " data-toggle="modal" data-target="#modal-confirmar" id="resumo"
-                    style="display:none"><span class="glyphicon glyphicon-remove"><i class=" fas fa-pen-alt"></i> Resumo da
-                        requisição</a>
+                    style="display:none"><span class="glyphicon glyphicon-remove"><i class=" fas fa-pen-alt"></i>  Finalizar Licitação
+                         </a>
 
 
                 <div class="modal fade" id="modal-confirmar" style="display: none;" tabindex='-1' aria-hidden="true">

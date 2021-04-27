@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- toast CSS-->
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href=" {{ asset('css/select2.min.css') }}" />
+    <!--Select2 -->
+    <link rel="stylesheet" href=" {{ asset('css/select2-bootstrap4.min.css') }}" />
+
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -24,7 +28,8 @@
                 <div class="col-sm-12 ">
                     <div class="alert alert-info alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h5><i class="icon fas fa-info"></i> Selecione as unidades nas quais estão pertencentes e vinculadas
+                        <h5><i class="icon fas fa-info"></i> Selecione as unidades nas quais estão pertencentes e
+                            vinculadas
                             a este usuário !</h5>
                         Uma vez selecionado e salvo, estas unidades estarão pertencentes e vinculadas a este usuário!
                     </div>
@@ -40,7 +45,7 @@
 
                 <div class="col-sm-6">
                     <label>Unidade a ser vinculado</label>
-                    <select name="unidade_id" id="" class="form-control">
+                    <select name="unidade_id" id="" class="form-control unidade">
                         @foreach ($unidades as $unidade)
 
                             <option value="{{ $unidade->id }}">{{ $unidade->nome }}</option>
@@ -58,15 +63,15 @@
 
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3> Permissão</h3>
+                    <h3> Unidades/Orgãos vinculados a essa pessoa </h3>
                 </div>
                 <div class="box-body">
 
 
                     <table class='table'>
                         <thead>
-                            <th>Permissão</th>
-                            <th>Ação</th>
+                            <th>Nome </th>
+                            <th>Remover</th>
                         </thead>
                         <tbody>
                             @foreach ($pessoa_unidades as $unidadesVinculadas)
@@ -154,8 +159,14 @@
     <script src="{{ asset('js/toastr.min.js') }}"></script>
     <!-- FIM TOAST SWEETALERT  -->
     <!-- Modulo categoria-->
+    <!-- SELECT2 -->
+    <script src="{{ asset('js/select2.full.min.js') }}"></script>
 
     <script>
+        // Configuracao select2
+        $('.unidade').select2({
+            placeholder: "Selecione uma unidade "
+        });
         @if (session('status'))
             toastr.success( "{{ session()->get('status') }}" );
 

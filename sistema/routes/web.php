@@ -1,11 +1,15 @@
 <?php
+use RealRashid\SweetAlert\Facades\Alert;
 
 use Illuminate\Support\Facades\Auth;
-
 /*
     rotas autenticadas
 */
+Route::get('test', function () {
+    Alert::success('Success Title', 'Success Message');
 
+    return view('welcome');
+});
 Auth::routes();
 
 /*
@@ -67,6 +71,7 @@ Route::get('/pessoas', 'PessoaController@index')->name('pessoa');
 Route::get('pessoas/cadastrar', 'PessoaController@create');
 Route::post('pessoas/insert', 'PessoaController@store');
 Route::get('pessoas/editar/{pessoa}', 'PessoaController@editar_pessoa');
+Route::post('pessoas/vincularSecretaria/{pessoa}', 'PessoaController@updateSecretaria');
 Route::patch('pessoas/update/{pessoa}', 'PessoaController@update');
 Route::get('pessoas/deletar/{pessoa}', 'PessoaController@destroy');
 Route::get('pessoas/visualizar/{user}', 'PessoaController@view');
