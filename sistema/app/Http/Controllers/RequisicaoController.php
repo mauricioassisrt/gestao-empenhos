@@ -27,11 +27,14 @@ class RequisicaoController extends Controller
     {
         try {
             if (Gate::allows('View_requisicao') && Gate::allows('minhas_requisicoes')) {
+                $user = Auth::user();
+                $pessoa = Pessoa::where('user_id', $user->id)->first();
+                $pessoaUnidade = PessoaUnidade::where('pessoa_id', $pessoa->id)->first();
 
                 $titulo = "Minhas Requisições ";
                 $requisicaos = Requisicao::paginate(20);
 
-                return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo'));
+                return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo', 'pessoaUnidade'));
             } else if (Gate::allows('View_requisicao') && !Gate::allows('secretario_municipal_aprova_requisicao')) {
 
                 $titulo = "Todas as requisições  ";
