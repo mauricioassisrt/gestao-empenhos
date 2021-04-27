@@ -727,6 +727,15 @@ class PermissionTableSeeder extends Seeder
                 'permission_id' => '21',
                 'role_id' => '3'
             ],
+            [
+                'permission_id' => '49',
+                'role_id' => '4'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '4'
+            ],
+
 
         );
         foreach ($permission_roles as $key => $value) {

@@ -32,7 +32,7 @@ class RequisicaoController extends Controller
                 $requisicaos = Requisicao::paginate(20);
 
                 return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo'));
-            } else if (Gate::allows('View_requisicao')) {
+            } else if (Gate::allows('View_requisicao') && !Gate::allows('secretario_municipal_aprova_requisicao')) {
 
                 $titulo = "Todas as requisições  ";
                 $requisicaos = Requisicao::paginate(20);
@@ -224,15 +224,17 @@ class RequisicaoController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Requisicao $requisicao)
     {
-        if (Gate::allows('Edit_requisicao')) {
-            $requisicao = Requisicao::findOrFail($id);
-            $formRequest = $request->all();
-            $update =  $requisicao->update($formRequest);
-            return redirect('requisicao');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Edit_requisicao')) {
+                $requisicao->update($request->all());
+                return redirect('requisicao');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.503', compact('th'));
         }
     }
 

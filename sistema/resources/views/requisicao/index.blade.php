@@ -46,7 +46,7 @@
                             #
                         </th>
                         <th>
-                            Unidade
+                            Secretaria/Unidade
                         </th>
                         <th>
                             Data da Requisicao
@@ -70,7 +70,7 @@
                                 {{ $requisicao->id }}
                             </td>
                             <td>
-                                {{ $requisicao->unidades->nome }}
+                                {{ $requisicao->unidades->secretaria->nome }}/           {{ $requisicao->unidades->nome }}
                             </td>
                             <td>
                                 {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
@@ -93,9 +93,18 @@
                             </td>
                             <td>
                                 <center>
-                                    <span class="card bg-success"> {{ $requisicao->status }}</span>
+                                    @if ($requisicao->status == 'Indeferido')
+                                        <span class="card bg-danger"> {{ $requisicao->status }} <br>Motivo {{$requisicao->status_justificativa }}</span>
+                                    @endif
+                                    @if ($requisicao->status == 'Enviado')
+                                        <span class="card bg-default"> {{ $requisicao->status }}</span>
+                                    @endif
+                                    @if ($requisicao->status == 'Deferido')
+                                        <span class="card bg-success"> {{ $requisicao->status }}</span>
+                                    @endif
                                 </center>
                             </td>
+
 
                             <td>
                                 <a href="{{ url('requisicao/editar/' . $requisicao->id) }}" class="btn btn-primary"><span

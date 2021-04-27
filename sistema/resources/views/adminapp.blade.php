@@ -416,7 +416,7 @@ $empresa = Empresa::all();
 
     <!-- jQuery -->
     <script src=" {{ asset('js/app.js') }}"></script>
-    //alert
+
 
     <script src=" {{ asset('js/jquery.form.min.js') }}"></script>
     <!-- FECHAR DIALOG -->

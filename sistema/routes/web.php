@@ -220,6 +220,7 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' => 'web'], function () {
     Route::get('requisicao', 'RequisicaoController@index');
     Route::get('requisicao/cadastrar', 'RequisicaoController@cadastrar');
+    Route::patch('requisicao/update/{requisicao}','RequisicaoController@update');
     Route::post('requisicao/insert', 'RequisicaoController@insert');
     Route::get('requisicao/editar/{requisicao}', 'RequisicaoController@editar');
     Route::get('requisicao/search', 'RequisicaoController@search');

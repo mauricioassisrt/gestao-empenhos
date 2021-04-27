@@ -47,16 +47,21 @@
                         <th>
                             Data da Requisicao
                         </th>
-                        {{-- <th>
-                            Responsável
-                        </th> --}}
+                        <th>
+                            Arquivos
+                        </th>
                         <th>
                             Status
                         </th>
                         <th>
-                            Ações
+                            Detalhes
                         </th>
-
+                        <th>
+                            Indefirir Requisição
+                        </th>
+                        <th>
+                            Deferir Requisição
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,29 +78,63 @@
                                 <td>
                                     {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
                                 </td>
-                                {{-- <td>
-                                    {{ $requisicao->pessoaUnidade->pessoa->name }}
-                                </td> --}}
+                                <td>
+                                    @if ($requisicao->orcamento_um != null)
+                                        <a href="{{ $requisicao->orcamento_um }}" title="Orçamento 1 "> <i
+                                                class="fas fa-upload"></i> </a>
+                                    @else
+                                        Sem arquivo vinculado
+                                    @endif
+                                    @if ($requisicao->orcamento_dois != null)<a
+                                            href="{{ $requisicao->orcamento_dois }}" title="Orçamento 2 "> <i
+                                                class="fas fa-upload"></i> </a>@endif
+                                    @if ($requisicao->orcamento_tres != null)<a
+                                            href="{{ $requisicao->orcamento_tres }}" title="Orçamento 3 "> <i
+                                                class="fas fa-upload"></i> </a>@endif
+
+                                </td>
                                 <td>
                                     <center>
-                                        <span class="card bg-success"> {{ $requisicao->status }}</span>
+                                        @if ($requisicao->status == 'Indeferido')
+                                            <span class="card bg-danger"> {{ $requisicao->status }} <br>Motivo {{$requisicao->status_justificativa }}</span>
+                                        @endif
+                                        @if ($requisicao->status == 'Enviado')
+                                            <span class="card bg-default"> {{ $requisicao->status }}</span>
+                                        @endif
+                                        @if ($requisicao->status == 'Deferido')
+                                            <span class="card bg-success"> {{ $requisicao->status }}</span>
+                                        @endif
                                     </center>
                                 </td>
                                 <td>
 
-                                    <a href="{{ url('requisicao/editar/' . $requisicao->id) }}"
-                                        class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
-                                        </span>
-                                        <i class="fas fa-info-circle"></i> Detalhes da Requisição </a>
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-status-{{ $requisicao->id }}"><span></span> <i
-                                            class="fas fa-check-circle"></i> Deferir Requisição
+                                    <a href="{{ url('requisicao/editar/' . $requisicao->id) }}" class="btn btn-primary"
+                                        title="Detalhes da Requisição ">
+                                        <i class="fas fa-info-circle"></i> </a>
+                                </td>
+                                <td>
+                                    @if ($requisicao->status != 'Indeferido')
+                                    <a href="" class="btn btn-danger " data-toggle="modal"
+                                        data-target="#modal-indeferir-{{ $requisicao->id }}"
+                                        title=" Indeferir Requisição"> <i class="fas fa-window-close"></i>
                                     </a>
-                                    <!--MODAL REMOVE  VINCULO SECRETARIo -->
-                                    <div class="modal fade" id="modal-status-{{ $requisicao->id }}" style="display: none;"
-                                        tabindex='-1' aria-hidden="true">
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($requisicao->status != 'Deferido')
+                                        {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
+                                        <input type="hidden" name="status" value="Deferido" />
+                                        <input type="hidden" name="status_justificativa" value="" />
+
+                                        <button type="submit" class="btn btn-success " title="Deferir">
+                                            <i class=" fas fa-check-square"></i> </button>
+                                        {!! Form::close() !!}
+                                    @endif
+                                    <!--MODAL REMOVE  INDEFERIR  -->
+                                    <div class="modal fade" id="modal-indeferir-{{ $requisicao->id }}"
+                                        style="display: none;" tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">
-                                            {!! Form::model($requisicao, ['method' => 'POST', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
+                                            {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
 
                                             <div class="modal-content">
                                                 <!-- CABEÇALHO  -->
@@ -108,22 +147,13 @@
                                                 </div>
                                                 <!-- CONTEUDO -->
                                                 <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="status">
-                                                            <label class="form-check-label">Deferir</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input indeferir" type="radio" name="status" value="Indeferido">
-                                                            <label class="form-check-label">Indeferir</label>
-                                                        </div>
-
-                                                    </div>
-                                                    <div id="justificativa" style="display: none">
+                                                    <input type="hidden" name="status" value="Indeferido" />
+                                                    <div id="justificativa">
                                                         <div class="col-sm-12">
                                                             <label>Justificativa </label>
-                                                            <textarea class="form-control" rows="3" name="status_justificativa"
-                                                                placeholder="Qual sua  justificativa para indeferir requisição"></textarea>
+                                                            <textarea class="form-control" rows="3"
+                                                                name="status_justificativa"
+                                                                placeholder="Informe uma justificativa para indeferir a requisição">{{ $requisicao->status_justificativa }}</textarea>
                                                         </div>
                                                     </div>
 
@@ -161,11 +191,6 @@
         </div>
     </div>
 @section('rodape')
-    <script>
-        $('.indeferir').click(function(e) {
-            $("#justificativa").show();
-        });
 
-    </script>
 @endsection
 @endsection

@@ -77,14 +77,19 @@
                                     {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
                                 </td>
                                 <td>
+                                    @if ($requisicao->orcamento_um != null)
                                     <a href="{{ $requisicao->orcamento_um }}" title="Orçamento 1 "> <i
                                             class="fas fa-upload"></i> </a>
-                                    @if ($requisicao->orcamento_dois != null)<a
-                                            href="{{ $requisicao->orcamento_dois }}" title="Orçamento 2 "> <i
-                                                class="fas fa-upload"></i> </a>@endif
-                                    @if ($requisicao->orcamento_tres != null)<a
-                                            href="{{ $requisicao->orcamento_tres }}" title="Orçamento 3 "> <i
-                                                class="fas fa-upload"></i> </a>@endif
+                                @else
+                                        Sem arquivo vinculado
+                                @endif
+                                @if ($requisicao->orcamento_dois != null)<a
+                                        href="{{ $requisicao->orcamento_dois }}" title="Orçamento 2 "> <i
+                                            class="fas fa-upload"></i> </a>@endif
+                                @if ($requisicao->orcamento_tres != null)<a
+                                        href="{{ $requisicao->orcamento_tres }}" title="Orçamento 3 "> <i
+                                            class="fas fa-upload"></i> </a>@endif
+
 
 
                                 </td>
