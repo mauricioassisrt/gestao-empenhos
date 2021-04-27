@@ -58,16 +58,23 @@
                             <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->id }}" @endif disabled>
 
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <label>Requisição</label>
                             <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->requisicao_ano }}" @endif
                                 disabled>
 
                         </div>
-                        <div class="col-sm-9">
+
+                        <div class="col-sm-4">
+
+                            <label>Secretaria </label>
+                            <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->unidades->secretaria->nome }}" @endif disabled>
+
+                        </div>
+                        <div class="col-sm-4">
 
                             <label>Unidade na qual fez a requisição </label>
-                            <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->pessoaUnidade->pessoa->name }}" @endif disabled>
+                            <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->unidades->nome }}" @endif disabled>
 
                         </div>
                     </div>
@@ -133,17 +140,17 @@
                                 @foreach ($requisicaoProdutos as $requisicaoProduto)
                                     <tr>
                                         <td>
-                                            @if ($requisicaoProduto->licitacao_produto_id ===null)
-                                            Sem licitação vinculada
+                                            @if ($requisicaoProduto->licitacao_produto_id === null)
+                                                Sem licitação vinculada
                                             @else
 
-                                            {!! $requisicaoProduto->numero_licitacao !!}
+                                                {!! $requisicaoProduto->numero_licitacao !!}
                                             @endif
 
                                         </td>
                                         <td>{!! $requisicaoProduto->produtos->nome !!}</td>
 
-                                        <td>R${!!  $requisicaoProduto->valor_total_iten/$requisicaoProduto->quantidade_produto !!}</td>
+                                        <td>R${!! $requisicaoProduto->valor_total_iten / $requisicaoProduto->quantidade_produto !!}</td>
 
                                         <td>{!! $requisicaoProduto->quantidade_produto !!}</td>
 

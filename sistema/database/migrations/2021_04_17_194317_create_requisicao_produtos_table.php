@@ -24,6 +24,7 @@ class CreateRequisicaoProdutosTable extends Migration
             $table->string('orcamento_um')->nullable();
             $table->string('orcamento_dois')->nullable();
             $table->string('orcamento_tres')->nullable();
+            $table->string('status_justificativa')->nullable();
             $table->string('status');
             $table->integer('unidade_id')->unsigned();
             $table->foreign('unidade_id')->references('id')->on('unidades');
@@ -54,6 +55,5 @@ class CreateRequisicaoProdutosTable extends Migration
 
         Schema::dropIfExists('requisicao_produtos');
         Schema::dropIfExists('requisicaos');
-
     }
 }

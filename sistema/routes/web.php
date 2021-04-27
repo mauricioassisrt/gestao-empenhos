@@ -1,10 +1,12 @@
 <?php
+
 use RealRashid\SweetAlert\Facades\Alert;
 
 use Illuminate\Support\Facades\Auth;
 /*
     rotas autenticadas
 */
+
 Route::get('test', function () {
     Alert::success('Success Title', 'Success Message');
 
@@ -217,7 +219,6 @@ Route::group(['middleware' => 'web'], function () {
  */
 Route::group(['middleware' => 'web'], function () {
     Route::get('requisicao', 'RequisicaoController@index');
-
     Route::get('requisicao/cadastrar', 'RequisicaoController@cadastrar');
     Route::post('requisicao/insert', 'RequisicaoController@insert');
     Route::get('requisicao/editar/{requisicao}', 'RequisicaoController@editar');

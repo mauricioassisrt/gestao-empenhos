@@ -12,8 +12,8 @@
                 </div>
             @endif
             @can('Insert_requisicao')
-                {{--  <a href="{{ url('requisicao/cadastrar') }}" class="btn btn-primary float-right">
-                    <i class="fas fa-plus"></i> Novo </a>  --}}
+                {{-- <a href="{{ url('requisicao/cadastrar') }}" class="btn btn-primary float-right">
+                    <i class="fas fa-plus"></i> Novo </a> --}}
             @endcan
             @can('search_requisicao')
 
@@ -51,16 +51,15 @@
                         <th>
                             Data da Requisicao
                         </th>
-                        {{--  <th>
-                            Responsável
-                        </th>  --}}
+                        <th>
+                            Arquivos
+                        </th>
                         <th>
                             Status
                         </th>
                         <th>
                             Ações
                         </th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -76,23 +75,35 @@
                             <td>
                                 {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
                             </td>
-                            {{--  <td>
-                                {{ $requisicao->pessoaUnidade->pessoa->name }}
-                            </td>  --}}
                             <td>
+                                @if ($requisicao->orcamento_um != null)
+                                    <a href="{{ $requisicao->orcamento_um }}" title="Orçamento 1 "> <i
+                                            class="fas fa-upload"></i> </a>
+                                @else
+                                        Sem arquivo vinculado
+                                @endif
+                                @if ($requisicao->orcamento_dois != null)<a
+                                        href="{{ $requisicao->orcamento_dois }}" title="Orçamento 2 "> <i
+                                            class="fas fa-upload"></i> </a>@endif
+                                @if ($requisicao->orcamento_tres != null)<a
+                                        href="{{ $requisicao->orcamento_tres }}" title="Orçamento 3 "> <i
+                                            class="fas fa-upload"></i> </a>@endif
+
 
                             </td>
                             <td>
+                                <center>
+                                    <span class="card bg-success"> {{ $requisicao->status }}</span>
+                                </center>
+                            </td>
 
-
+                            <td>
                                 <a href="{{ url('requisicao/editar/' . $requisicao->id) }}" class="btn btn-primary"><span
                                         class="glyphicon glyphicon-pencil">
                                     </span>
-                                    <i class="fas fa-edit"></i> Editar </a>
+                                    <i class="fas fa-info-circle"></i> Detalhes da Requisição </a>
 
-                                <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
-                                    </span>
-                                    <i class="fas fa-next"></i> Realizar andamento </a>
+
                             </td>
 
                         </tr>

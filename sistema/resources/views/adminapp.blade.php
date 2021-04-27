@@ -88,42 +88,47 @@ $empresa = Empresa::all();
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item has-treeview menu-close">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas  fa-file-invoice"></i>
-                                <p>
-                                    Requisições
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('requisicao/cadastrar') }}" class="nav-link active">
-                                        <i class="nav-icon fas fa-file-prescription"></i>
-                                        <p>
-                                            Sem licitação Vinculada
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('requisicaoComLicitacao/cadastrar') }}" class="nav-link active">
-                                        <i class="nav-icon fas fa-gavel"></i>
-                                        <p>
-                                            Com licitação vinculada
-                                        </p>
-                                    </a>
-                                </li>
-                                @can('minhas_requisicoes')
+                        @can('Insert_requisicao')
+                            <li class="nav-item has-treeview menu-close">
+                                <a href="#" class="nav-link active">
+                                    <i class="nav-icon fas  fa-file-invoice"></i>
+                                    <p>
+                                        Requisições
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
                                     <li class="nav-item">
-                                        <a href="{{ url('requisicao') }}" class="nav-link active">
-                                            <i class="nav-icon fas fa-receipt"></i>
+                                        <a href="{{ url('requisicao/cadastrar') }}" class="nav-link active">
+                                            <i class="nav-icon fas fa-file-prescription"></i>
                                             <p>
-                                                Requisições da unidade
+                                                Sem licitação Vinculada
                                             </p>
                                         </a>
                                     </li>
-                                @endcan
-                                {{-- @can('Edit_requisicao')
+
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('requisicaoComLicitacao/cadastrar') }}" class="nav-link active">
+                                            <i class="nav-icon fas fa-gavel"></i>
+                                            <p>
+                                                Com licitação vinculada
+                                            </p>
+                                        </a>
+                                    </li>
+
+                                    @can('minhas_requisicoes')
+                                        <li class="nav-item">
+                                            <a href="{{ url('requisicao') }}" class="nav-link active">
+                                                <i class="nav-icon fas fa-receipt"></i>
+                                                <p>
+                                                    Requisições da unidade
+                                                </p>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    {{-- @can('Edit_requisicao')
                                 <li class="nav-item">
 
                                         <a href="{{ url('requisicao') }}" class="nav-link active">
@@ -136,9 +141,34 @@ $empresa = Empresa::all();
 
                                 </li>
                                 @endcan --}}
-                            </ul>
-                            </a>
-                        </li>
+                                </ul>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('secretario_municipal_aprova_requisicao')
+
+                            <li class="nav-item has-treeview menu-close">
+                                <a href="#" class="nav-link active">
+                                    <i class="nav-icon fas   fa-university nav-icon"></i>
+                                    <p>
+                                        Secretaria
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('requisicao') }}" class="nav-link active">
+                                            <i class="nav-icon fas fa-dolly"></i>
+                                            <p>
+                                                Requisições Realizadas
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        @endcan
                         @can('View_LicitacaoProduto')
                             <li class="nav-item has-treeview menu-close">
                                 <a href="#" class="nav-link active">

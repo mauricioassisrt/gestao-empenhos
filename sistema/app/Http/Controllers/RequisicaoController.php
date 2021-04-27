@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Categoria;
 use App\Fornecedor;
 use App\Http\Requests\RequisicaoRequest;
+use App\Pessoa;
 use App\PessoaUnidade;
 use App\Produto;
 use App\Requisicao;
 use App\RequisicaoProduto;
+use App\Secretaria;
 use App\Unidade;
 use Illuminate\Http\Request;
 use Gate;
@@ -37,6 +39,13 @@ class RequisicaoController extends Controller
 
 
                 return view('requisicao.index', compact('requisicaos', 'titulo'));
+            } else if (Gate::allows('secretario_municipal_aprova_requisicao')) {
+                $titulo = "Todas as requisições aguardando aprovação  ";
+                $user = Auth::user();
+                $pessoa = Pessoa::where('user_id', $user->id)->first();
+                //$unidades = Unidade::where('secretaria_id', $pessoa->secretaria_id)->get();
+                $requisicaos = Requisicao::paginate(10);
+                return view('requisicao.secretaria_aprovar_requisicao', compact('titulo', 'requisicaos', 'pessoa'));
             } else {
                 return view('errors.sem_permissao');
             }
@@ -125,7 +134,8 @@ class RequisicaoController extends Controller
                     $image->move($dir, $nomeImagem);
                     $orcamento_dois = $dir . "/" . $nomeImagem;
                     /* fim do upload  */
-                } if ($request->hasFile('orcamento_tres')) {
+                }
+                if ($request->hasFile('orcamento_tres')) {
                     /* UPLOAD de imagem ORCAMENTO 2  */
 
                     $image = $request->file('orcamento_tres');
@@ -172,9 +182,12 @@ class RequisicaoController extends Controller
 
     public function editar(Requisicao $requisicao)
     {
+
         try {
+
             $titulo = "Detalhes da requisição ";
-            if ($requisicao->pessoaUnidade->pessoa->users->id === Auth::user()->id && Gate::allows('minhas_requisicoes')) {
+
+            if ($requisicao->unidades->unidadesPessoa->pessoa->users->id == Auth::user()->id && Gate::allows('minhas_requisicoes')) {
 
                 $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
                     ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
@@ -193,6 +206,7 @@ class RequisicaoController extends Controller
                 if ($requisicaoProdutos->isEmpty()) {
                     $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
                 }
+
                 //   dd($requisicaoProdutos);
                 // $collection = collect($requisicaoProdutosA);
 

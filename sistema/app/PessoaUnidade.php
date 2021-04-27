@@ -17,4 +17,5 @@ class PessoaUnidade extends Model
      {
          return $this->belongsTo(Unidade::class, 'unidade_id' );
      }
+
 }

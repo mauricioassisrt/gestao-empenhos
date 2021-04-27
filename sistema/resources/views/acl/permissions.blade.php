@@ -52,6 +52,9 @@
                     @foreach ($permissions as $permission)
                         <tr>
                             <td>
+                                {{ $permission->id }}
+                            </td>
+                            <td>
                                 {{ date('d/m/Y', strtotime($permission->created_at)) }}
                             </td>
                             <td>

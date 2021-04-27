@@ -87,9 +87,10 @@ class RequisicaoComLicitacaoController extends Controller
 
             $request['valor_final'] = $valor_final;
             $request['total_produtos'] =   $total_produtos;
+            $request['status'] = "Enviado";
 
             $id = Requisicao::create($request->all())->id;
-            $requisicaoAno = $id . '/' . $year = date('Y');
+            $requisicaoAno = $id . '-' . $year = date('Y');
             $requisicao = Requisicao::findOrFail($id);
 
             $reqArray = array(

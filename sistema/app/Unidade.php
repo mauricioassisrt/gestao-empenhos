@@ -14,4 +14,8 @@ class Unidade extends Model
      {
          return $this->belongsTo(Secretaria::class, 'secretaria_id' );
      }
+     public function unidadesPessoa()
+     {
+         return $this->belongsTo(PessoaUnidade::class, 'id' );
+     }
 }

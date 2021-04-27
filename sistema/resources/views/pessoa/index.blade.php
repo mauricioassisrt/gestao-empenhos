@@ -325,7 +325,7 @@
                                     <!-- CONTEUDO -->
                                     <div class="modal-body">
                                         <input type="hidden" name="secretaria_id" value="" </div>
-                                        <h4> <b> Tem certeza que deseja remover {{ $pessoa->name }} de secretário(a) municipal ?</b></h4>
+                                        <h4> <b> Tem certeza que deseja remover {{ $pessoa->name }} de secretário(a) municipal ? </b></h4>
                                         <!-- RODA PE DIALOG -->
                                         <div class="modal-footer ">
 
