@@ -64,6 +64,8 @@
                 </thead>
                 <tbody>
                     @foreach ($requisicaos as $requisicao)
+
+                        @if($requisicao->status != 'Indeferido' && $requisicao->status != 'Enviado')
                         <tr>
 
                             <td>
@@ -128,6 +130,7 @@
                             </td>
 
                         </tr>
+                        @endif
                     @endforeach
 
                 </tbody>

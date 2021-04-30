@@ -30,17 +30,18 @@ class RequisicaoController extends Controller
                 $user = Auth::user();
                 $pessoa = Pessoa::where('user_id', $user->id)->first();
                 $pessoaUnidade = PessoaUnidade::where('pessoa_id', $pessoa->id)->first();
-
                 $titulo = "Minhas Requisições ";
                 $requisicaos = Requisicao::paginate(20);
-
                 return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo', 'pessoaUnidade'));
-            } else if (Gate::allows('View_requisicao') && !Gate::allows('secretario_municipal_aprova_requisicao')) {
+            } else if (Gate::allows('finalizar_requisicao')) {
 
+                $titulo = "Todas as requisições aguardando finalização   ";
+                $requisicaos =  Requisicao::where('status', 'Empenho')->paginate(10);
+
+                return view('requisicao.index', compact('titulo', 'requisicaos'));
+            } else if (Gate::allows('View_requisicao') && !Gate::allows('secretario_municipal_aprova_requisicao')) {
                 $titulo = "Todas as requisições  ";
                 $requisicaos = Requisicao::paginate(20);
-
-
                 return view('requisicao.index', compact('requisicaos', 'titulo'));
             } else if (Gate::allows('secretario_municipal_aprova_requisicao')) {
                 $titulo = "Todas as requisições aguardando aprovação  ";

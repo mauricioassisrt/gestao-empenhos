@@ -12,8 +12,6 @@
                 </div>
             @endif
 
-
-
             @can('search_requisicao')
                 <form action="{{ url('/requisicao/search') }}" method="get">
                     <div class="card-tools">
@@ -125,7 +123,7 @@
                                         <i class="fas fa-info-circle"></i> </a>
                                 </td>
                                 <td>
-                                    @if ($requisicao->status != 'Indeferido')
+                                    @if ($requisicao->status != 'Indeferido' && $requisicao->status != 'Empenho'  && $requisicao->status != 'Contabilidade')
                                         <a href="" class="btn btn-danger " data-toggle="modal"
                                             data-target="#modal-indeferir-{{ $requisicao->id }}"
                                             title=" Indeferir Requisição"> <i class="fas fa-window-close"></i>
@@ -133,7 +131,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($requisicao->status != 'Deferido')
+                                    @if ($requisicao->status != 'Deferido' && $requisicao->status != 'Empenho' && $requisicao->status != 'Contabilidade'  )
                                         {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
                                         <input type="hidden" name="status" value="Deferido" />
                                         <input type="hidden" name="status_justificativa" value="" />
