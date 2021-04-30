@@ -99,15 +99,26 @@
                                     <td>
                                         <center>
                                             @if ($requisicao->status == 'Indeferido')
-                                                <span class="card bg-danger"> {{ $requisicao->status }} <br>Motivo
-                                                    {{ $requisicao->status_justificativa }}</span>
-                                            @endif
-                                            @if ($requisicao->status == 'Enviado')
-                                                <span class="card bg-default"> {{ $requisicao->status }}</span>
-                                            @endif
-                                            @if ($requisicao->status == 'Deferido')
-                                                <span class="card bg-success"> {{ $requisicao->status }}</span>
-                                            @endif
+                                            <span class="card bg-danger"> {{ $requisicao->status }} <br>Motivo
+                                                {{ $requisicao->status_justificativa }}</span>
+                                        @endif
+                                        @if ($requisicao->status == 'Enviado')
+                                            <span class="card bg-default"> {{ $requisicao->status }}</span>
+                                        @endif
+                                        @if ($requisicao->status == 'Deferido')
+                                            <span class="card bg-success"> {{ $requisicao->status }}</span>
+                                        @endif
+                                        @if ($requisicao->status == 'Empenho')
+                                            <span class="card bg-warning "> {{ $requisicao->status }}</span>
+                                        @endif
+                                        @if ($requisicao->status == 'Contabilidade')
+                                            <span class="card bg-teal color-palette "> {{ $requisicao->status }}</span>
+                                        @endif
+                                        @if ($requisicao->status == 'Finalizado')
+                                            <span class="card bg-info "> {{ $requisicao->status }}</span>
+                                        @endif
+
+
                                         </center>
                                     </td>
 

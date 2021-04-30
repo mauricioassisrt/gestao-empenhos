@@ -13,18 +13,18 @@ class EmpresaSeeder extends Seeder
     public function run()
     {
         $obj = new Empresa();
-        $obj->nome_fantasia = "Nome Prefeitura";
-        $obj->razao_social = "Nome";
-        $obj->cnpj = "CNPJ";
-        $obj->contato = "contato";
-        $obj->email = "email";
+        $obj->nome_fantasia = "Prefeitura Municipal de Santa Isabel do Ivaí";
+        $obj->razao_social = "Santa Isabel do Ivaí";
+        $obj->cnpj = "76.974.823/0001-80";
+        $obj->contato = "(44) 3453-8300";
+        $obj->email = "prefeitura@santaisabel.com";
         $obj->foto_caminho = "img/empresa/empresa.jpg";
-        $obj->numero = "SN";
-        $obj->endereco = "Nome da rua";
-        $obj->bairro = "Nome bairro";
+        $obj->numero = " 470";
+        $obj->endereco = "Avenida: Manoel Ribas,";
+        $obj->bairro = "CENTRO";
         $obj->cep = "cep ";
-        $obj->cidade = "cidade ";
-        $obj->estado = "estado ";
+        $obj->cidade = "Santa Isabel do Ivaí  ";
+        $obj->estado = "Paraná ";
         $obj->save();
     }
 }

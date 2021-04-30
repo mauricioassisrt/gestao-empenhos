@@ -5,8 +5,8 @@
 
     <!-- /.login-box -->
 
-    <div class="card">
-        <div class="card-body login-card-body col-sm-12">
+    <div class="login-box">
+        <div class="login-card-body col-md-12">
             <form class="form-signin" role="form" method="POST" action="{{ route('login') }}" class="">
                 {{ csrf_field() }}
 
@@ -30,7 +30,7 @@
                             class="alert alert-danger alert-dismissible form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                             <h5><i class="icon fas fa-ban"></i> Atenção !</h5>
-                            {{ $errors->first('email') }}
+                            Usuário ou senha incorretos !!
                         </div>
                     @endif
                     <div class="icon-addon addon-lg">
@@ -58,9 +58,9 @@
                 <hr />
                 <button class="btn btn-lg btn-success btn-block" type="submit"> <i class="fas fa-sign-in-alt"></i>
                     Entrar</button>
-                <a class="btn btn-link" href="{{ route('password.request') }}">
+                {{--  <a class="btn btn-link" href="{{ route('password.request') }}">
                     {{ __('Esqueceu a senha?') }}
-                </a>
+                </a>  --}}
 
 
             </form>

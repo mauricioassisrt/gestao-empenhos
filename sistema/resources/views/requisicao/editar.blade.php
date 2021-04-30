@@ -41,11 +41,19 @@
                         href="#custom-content-above-profile" role="tab" aria-controls="custom-content-above-profile"
                         aria-selected="false">Produtos</a>
                 </li>
+                @can('ver_reduzido')
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-content-above-messages-tab" data-toggle="pill"
+                            href="#custom-content-above-messages" role="tab" aria-controls="custom-content-above-messages"
+                            aria-selected="false">Andamentos</a>
+                    </li>
+                @endcan
                 <li class="nav-item">
-                    <a class="nav-link" id="custom-content-above-messages-tab" data-toggle="pill"
-                        href="#custom-content-above-messages" role="tab" aria-controls="custom-content-above-messages"
-                        aria-selected="false">Andamentos</a>
+                    <a class="nav-link" id="custom-content-above-empenho-tab" data-toggle="pill"
+                        href="#custom-content-above-empenho" role="tab" aria-controls="custom-content-above-empenho"
+                        aria-selected="false">Empenho</a>
                 </li>
+
 
             </ul>
 
@@ -74,7 +82,8 @@
                         <div class="col-sm-4">
 
                             <label>Unidade na qual fez a requisição </label>
-                            <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->unidades->nome }}" @endif disabled>
+                            <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->unidades->nome }}" @endif
+                                disabled>
 
                         </div>
                     </div>
@@ -163,8 +172,68 @@
                     </div>
 
                 </div>
-                <div class="tab-pane fade" id="custom-content-above-messages" role="tabpanel" cc </div>
+                @can('ver_reduzido')
+                    <div class="tab-pane fade" id="custom-content-above-messages" role="tabpanel">
+                        {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
+                        @csrf
+                        <div class="row">
 
+                            <div class="col-sm-3">
+
+                                <label>Secretaria </label>
+                                <input type="text" name="secretaria" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->secretaria }}" @endif>
+
+                            </div>
+                            <div class="col-sm-3">
+
+                                <label>Unidade na qual fez a requisição </label>
+                                <input type="text" name="orgao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>
+
+                            </div>
+                            <div class="col-sm-6">
+
+                                <label>Reduzido </label>
+                                <input type="text" name="reduzido" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->reduzido }}" @endif>
+
+                            </div>
+                        </div>
+                        @can('atualizar_reduzido')
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    <label>Enviar para empenho? </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" value="Empenho">
+                                        <label class="form-check-label">Sim</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" checked="" value="Contabilidade">
+                                        <label class="form-check-label">Não</label>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <hr>
+
+
+
+                            <div class="row">
+
+                                <div class="col-sm-4">
+
+                                    <button type="submit" class="btn btn-success ">
+                                        <i class=" fas fa-check-square"></i> Atualizar reduzido </button>
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+                        @endcan
+                    </div>
+                @endcan
+                <div class="tab-pane fade" id="custom-content-above-empenho" role="tabpanel">
+                    asdasd
                 </div>
             </div>
         </div>

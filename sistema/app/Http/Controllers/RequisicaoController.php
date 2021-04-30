@@ -97,11 +97,13 @@ class RequisicaoController extends Controller
     {
 
         try {
-            if (Gate::allows('Insert_requisicao') &&  $request->hasFile('orcamento_um')) {
+            // &&  $request->hasFile('orcamento_um')
+            if (Gate::allows('Insert_requisicao')) {
 
                 $valor_final = 0;
                 $total_produtos = 0;
                 $orcamento_dois = null;
+                $orcamento_um = null;
                 $orcamento_tres = null;
 
                 foreach ($request->produto_id as $key => $value) {
@@ -118,15 +120,18 @@ class RequisicaoController extends Controller
                 $requisicaoAno = $id . '-' . $year = date('Y');
                 $requisicao = Requisicao::findOrFail($id);
 
-                /* UPLOAD de imagem ORCAMENTO 1  */
-                $image = $request->file('orcamento_um');
-                $dir = "img/requisicoes/orcamentos/" . $requisicaoAno;
-                $extencao = $image->guessClientExtension();
-                $nomeImagem = "requisicao-orcamento-1" . "." . $extencao;
-                $image->move($dir, $nomeImagem);
-                $orcamento_um = $dir . "/" . $nomeImagem;
+                if ($request->hasFile('orcamento_um')) {
+                    /* UPLOAD de imagem ORCAMENTO 1  */
+                    $image = $request->file('orcamento_um');
+                    $dir = "img/requisicoes/orcamentos/" . $requisicaoAno;
+                    $extencao = $image->guessClientExtension();
+                    $nomeImagem = "requisicao-orcamento-1" . "." . $extencao;
+                    $image->move($dir, $nomeImagem);
+                    $orcamento_um = $dir . "/" . $nomeImagem;
 
-                /* fim do upload  */
+                    /* fim do upload  */
+                }
+
                 if ($request->hasFile('orcamento_dois')) {
 
                     /* UPLOAD de imagem ORCAMENTO 2  */
@@ -230,6 +235,7 @@ class RequisicaoController extends Controller
     public function update(Request $request, Requisicao $requisicao)
     {
         try {
+
             if (Gate::allows('Edit_requisicao')) {
                 $requisicao->update($request->all());
                 return redirect('requisicao');

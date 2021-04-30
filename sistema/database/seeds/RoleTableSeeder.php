@@ -19,18 +19,21 @@ class RoleTableSeeder extends Seeder
                 'label' => 'Administrador do sistema',
             ],
             [
-                'name' => 'Prefeitura nivel 1  ',
-                'label' => 'Administrador da prefeitura ',
+                'name' => 'Contabilidade',
+                'label' => 'Contabilidade',
             ],
             [
-                'name' => 'Prefeitura nivel 2  ',
-                'label' => 'Usuário  da prefeitura ',
+                'name' => 'Usuário que realiza requisição',
+                'label' => 'Usuário normal nivel 1',
             ],
             [
                 'name' => 'Secretário(a) Municipal	 ',
                 'label' => 'Secretário municipal responsável por aprovar requisições de suas unidades respectivas ',
             ],
-
+            [
+                'name' => 'Emepenho ',
+                'label' => 'Com essa permissão é possivel visualizar toda as requisições que foram enviadas para empenho e finalizar ',
+            ],
         );
         foreach ($roles as $key => $value) {
             Role::create($value);
@@ -52,6 +55,10 @@ class RoleTableSeeder extends Seeder
             [
                 'role_id' => '4',
                 'user_id' => '4'
+            ],
+            [
+                'role_id' => '5',
+                'user_id' => '5'
             ]
         );
         foreach ($role_users as $key => $value) {

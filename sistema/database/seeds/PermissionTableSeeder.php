@@ -273,7 +273,23 @@ class PermissionTableSeeder extends Seeder
             [
                 'name' => 'secretario_municipal_aprova_requisicao',
                 'label' => 'Secretário municipal responsável por aprovar requisições de suas unidades respectivas '
-            ]
+            ],
+            [
+                'name' => 'empenho_view_requisicao',
+                'label' => 'É possível visualizar as requisições nas quais estão aguardando serem finalizadas '
+            ],
+            [
+                'name' => 'atualizar_reduzido',
+                'label' => 'É possível atualizar o reduzido de uma requisição '
+            ],
+            [
+                'name' => 'ver_reduzido',
+                'label' => 'É possível ver o reduzido de uma requisição '
+            ],
+            [
+                'name' => 'finalizar_requisicao',
+                'label' => 'É possível finalizar uma requisição '
+            ],
 
         );
         foreach ($permissions as $key => $value) {
@@ -735,8 +751,47 @@ class PermissionTableSeeder extends Seeder
                 'permission_id' => '48',
                 'role_id' => '4'
             ],
+            [
+                'permission_id' => '64',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '66',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '67',
+                'role_id' => '5'
+            ],
 
-
+            [
+                'permission_id' => '65',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '65',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '66',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '66',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '5'
+            ],
         );
         foreach ($permission_roles as $key => $value) {
             Permission_role::create($value);

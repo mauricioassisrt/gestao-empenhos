@@ -25,7 +25,7 @@ class RequisicaoRequest extends FormRequest
     {
         return [
 
-            'orcamento_um' => "required|mimetypes:application/pdf|max:1000",
+            'orcamento_um' => "mimetypes:application/pdf|max:1000",
             'orcamento_dois' => "mimetypes:application/pdf|max:1000",
             'orcamento_tres' => "mimetypes:application/pdf|max:1000",
         ];
@@ -34,7 +34,7 @@ class RequisicaoRequest extends FormRequest
     {
         return [
 
-            'orcamento_um.required' => 'Deve ser fornecido pelo menos um orçamento!',
+            // 'orcamento_um.required' => 'Deve ser fornecido pelo menos um orçamento!',
             'orcamento_um.max' => 'O arquivo é maior que o tamanho permitido de 1Mega',
             'orcamento_um.mimetypes' => 'O arquivo deve ser no formato PDF',
 

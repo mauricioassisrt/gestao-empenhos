@@ -22,7 +22,7 @@ $empresa = Empresa::all();
 </head>
 
 <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
+    <div class="wrapper ">
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -48,7 +48,9 @@ $empresa = Empresa::all();
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar elevation-4 sidebar-dark-red">
+        <aside class="main-sidebar elevation-4 sidebar-dark-red ">
+
+
             <!-- Brand Logo -->
             <a href="" class="brand-link navba-dark-white">
                 <img src="/{{ $empresa[0]->foto_caminho }}" class="brand-image img-circle elevation-3"
@@ -57,6 +59,7 @@ $empresa = Empresa::all();
                     <h6>{{ $empresa[0]->nome_fantasia }}</h6>
                 </span>
             </a>
+
 
             <!-- Sidebar -->
             <div class="sidebar">
