@@ -36,8 +36,7 @@ class RequisicaoController extends Controller
             } else if (Gate::allows('finalizar_requisicao')) {
 
                 $titulo = "Todas as requisições aguardando finalização   ";
-                $requisicaos =  Requisicao::where('status', 'Empenho')->paginate(10);
-
+                $requisicaos = Requisicao::paginate(20);
                 return view('requisicao.index', compact('titulo', 'requisicaos'));
             } else if (Gate::allows('View_requisicao') && !Gate::allows('secretario_municipal_aprova_requisicao')) {
                 $titulo = "Todas as requisições  ";

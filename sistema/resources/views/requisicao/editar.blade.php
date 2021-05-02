@@ -48,12 +48,13 @@
                             aria-selected="false">Andamentos</a>
                     </li>
                 @endcan
-                <li class="nav-item">
-                    <a class="nav-link" id="custom-content-above-empenho-tab" data-toggle="pill"
-                        href="#custom-content-above-empenho" role="tab" aria-controls="custom-content-above-empenho"
-                        aria-selected="false">Empenho</a>
-                </li>
-
+                @can('finalizar_requisicao')
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-content-above-empenho-tab" data-toggle="pill"
+                            href="#custom-content-above-empenho" role="tab" aria-controls="custom-content-above-empenho"
+                            aria-selected="false">Empenho</a>
+                    </li>
+                @endcan
 
             </ul>
 
@@ -232,9 +233,38 @@
                         @endcan
                     </div>
                 @endcan
-                <div class="tab-pane fade" id="custom-content-above-empenho" role="tabpanel">
-                    asdasd
-                </div>
+                @can('finalizar_requisicao')
+                    <div class="tab-pane fade" id="custom-content-above-empenho" role="tabpanel">
+                        {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
+                        @csrf
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <label>Finalizar a requisição? </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" value="Finalizado">
+                                    <label class="form-check-label">Sim</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" checked="" value="Empenho">
+                                    <label class="form-check-label">Não</label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-4">
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class=" fas fa-save"></i> Finalizar </button>
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                @endcan
+
             </div>
         </div>
         <div class="card-footer clearfix">

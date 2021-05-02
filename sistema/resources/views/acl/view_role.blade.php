@@ -28,6 +28,7 @@
                     <thead>
                         <tr>
                             <th>Ativar/Desativar</th>
+                            <th>ID</th>
                             <th>Nome</th>
                             <th>Nome</th>
                         </tr>
@@ -39,6 +40,7 @@
                                     <tr>
                                         <td><input type="checkbox" name="permissions[]" value="{{ $per->id }}" checked>
                                         </td>
+                                        <td> {{ $per->id }}</td>
                                         <td> {{ $per->name }}</td>
                                         <td> {{ $per->label }}</td>
                                     </tr>
@@ -51,6 +53,7 @@
                             @if ($per->id != $permission_numb)
                                 <tr>
                                     <td><input type="checkbox" name="permissions[]" value="{{ $per->id }}"></td>
+                                    <td> {{ $per->id }}</td>
                                     <td> {{ $per->name }}</td>
                                     <td> {{ $per->label }}</td>
                                 </tr>

@@ -792,6 +792,46 @@ class PermissionTableSeeder extends Seeder
                 'permission_id' => '48',
                 'role_id' => '5'
             ],
+            [
+                'permission_id' => '14',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '15',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '16',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '17',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '51',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '52',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '18',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '20',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '5',
+                'role_id' => '2'
+            ],
         );
         foreach ($permission_roles as $key => $value) {
             Permission_role::create($value);
