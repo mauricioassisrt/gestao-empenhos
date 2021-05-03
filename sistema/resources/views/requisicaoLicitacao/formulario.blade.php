@@ -63,7 +63,7 @@
                             </select>
                         @else
                             <label>Pessoa e suas unidades </label>
-                            <select name="unidade_id" class="form-control unidade" style="width: 100%;">
+                            <select name="unidade_id" class="form-control unidade" style="width: 100%;" required>
                                 <option> </option>
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
 
@@ -104,7 +104,7 @@
             <div class="row" id="divProdutos">
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>
-                    <select name="licitacao_id" class="form-control licitacao" style="width: 100%;" id="licitacao_id">
+                    <select name="licitacao_id" class="form-control licitacao" style="width: 100%;" id="licitacao_id" required>
                         <option> </option>
                         @foreach ($licitacaos as $licitacao)
                             <option value="{{ $licitacao->id }}">
