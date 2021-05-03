@@ -199,17 +199,58 @@
                             </div>
                         </div>
                         @can('atualizar_reduzido')
-                        @if($requisicao->status !='Finalizado')
+                            @if ($requisicao->status != 'Finalizado')
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <label>Enviar para empenho? </label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" value="Empenho">
+                                            <label class="form-check-label">Sim</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" checked=""
+                                                value="Contabilidade">
+                                            <label class="form-check-label">Não</label>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                                <hr>
+
+
+
+                                <div class="row">
+
+                                    <div class="col-sm-4">
+
+                                        <button type="submit" class="btn btn-success ">
+                                            <i class=" fas fa-check-square"></i> Atualizar reduzido </button>
+                                    </div>
+                                </div>
+                                {!! Form::close() !!}
+                            @endif
+                        @endcan
+                    </div>
+                @endcan
+                @can('finalizar_requisicao')
+                    <div class="tab-pane fade" id="custom-content-above-empenho" role="tabpanel">
+                        @if ($requisicao->status != 'Contabilidade')
+                            {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
+                            @csrf
                             <div class="row">
                                 <div class="col-sm-12">
 
-                                    <label>Enviar para empenho? </label>
+                                    <label>Finalizar a requisição? </label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" value="Empenho">
+                                        <input class="form-check-input" type="radio" name="status" value="Finalizado">
                                         <label class="form-check-label">Sim</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" checked="" value="Contabilidade">
+                                        <input class="form-check-input" type="radio" name="status" checked="" value="Empenho">
                                         <label class="form-check-label">Não</label>
                                     </div>
 
@@ -217,53 +258,25 @@
                                 </div>
                             </div>
 
-
-                            <hr>
-
-
-
                             <div class="row">
 
                                 <div class="col-sm-4">
 
-                                    <button type="submit" class="btn btn-success ">
-                                        <i class=" fas fa-check-square"></i> Atualizar reduzido </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class=" fas fa-save"></i> Finalizar </button>
                                 </div>
                             </div>
                             {!! Form::close() !!}
-                            @endif
-                        @endcan
-                    </div>
-                @endcan
-                @can('finalizar_requisicao')
-                    <div class="tab-pane fade" id="custom-content-above-empenho" role="tabpanel">
-                        {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
-                        @csrf
-                        <div class="row">
-                            <div class="col-sm-12">
-
-                                <label>Finalizar a requisição? </label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" value="Finalizado">
-                                    <label class="form-check-label">Sim</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" checked="" value="Empenho">
-                                    <label class="form-check-label">Não</label>
-                                </div>
-
-
+                        @else
+                        <br>
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h5><i class="icon fas fa-exclamation-triangle"></i> Atenção!</h5>
+                                A requisição para ser finaliza é necessário a contabilidade realizar o encaminhamento ! <br>
+                                Para isso acessar a requisição e ir até a aba andamentos, e marcar a opção SIM, em enviar para
+                                empenho
                             </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-sm-4">
-
-                                <button type="submit" class="btn btn-primary">
-                                    <i class=" fas fa-save"></i> Finalizar </button>
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
+                        @endif
                     </div>
                 @endcan
 

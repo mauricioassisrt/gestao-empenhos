@@ -179,8 +179,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('relatorio/requsicao/periodo', 'RelatorioController@periodo');
     Route::get('relatorio/requsicao/periodo/buscar', 'RelatorioController@periodoBusca');
     Route::get('relatorio/requisicao/unidade', 'RelatorioController@unidade');
-    // Route::get('relatorio/requisicao/resumo', 'RelatorioController@requisicaoResumo');
-    Route::get('relatorio/requisicao/resumo', 'RelatorioController@requisicaoResumo')->name('pdf');
+
+    Route::get('relatorio/requisicao/resumo/{requisicao}', 'RelatorioController@requisicaoResumo');
 
 });
 

@@ -63,6 +63,7 @@
                     </div>
                     <!-- /.info-box -->
                 </div>
+
             @endcan
             </div>
 

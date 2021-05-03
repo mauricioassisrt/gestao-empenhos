@@ -164,7 +164,7 @@ $empresa = Empresa::all();
                                         <a href="{{ url('requisicao') }}" class="nav-link active">
                                             <i class="nav-icon fas fa-dolly"></i>
                                             <p>
-                                                Requisições Realizadas
+                                                Requisições solicitadas
                                             </p>
                                         </a>
                                     </li>
