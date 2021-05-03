@@ -129,7 +129,7 @@
 
 
                                     @if ($requisicao->status == 'Finalizado')
-                                        <a href="{{ url('requisicao/editar/' . $requisicao->id) }}"
+                                        <a href="{{ url('relatorio/requisicao/resumo/' . $requisicao->id) }}"
                                             class="btn btn-primary"><span>
                                             </span>
                                             <i class="fas fa-print"></i> Imprimir </a>
