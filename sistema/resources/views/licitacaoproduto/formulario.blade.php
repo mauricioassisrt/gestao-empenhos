@@ -85,7 +85,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <label>Fornecedor </label>
-                    <select name="fornecedor_id" class="form-control fornecedor" style="width: 100%;">
+                    <select name="fornecedor_id" class="form-control fornecedor" style="width: 100%;" required>
                         @if (Request::is('*/editar/*'))
                             <option value="{{ $licitacaoProduto->fornecedor->id }}">
                                 {{ $licitacaoProduto->fornecedor->nome_fornecedor }}
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>
-                    <select name="categoria_id" class="form-control categoria" style="width: 100%;" id="getCategoria">
+                    <select name="categoria_id" class="form-control categoria" style="width: 100%;" id="getCategoria" required>
                         <option> </option>
                         @foreach ($categorias as $categoria)
                             <option value="{{ $categoria->id }}">

@@ -123,7 +123,8 @@
                                         <i class="fas fa-info-circle"></i> </a>
                                 </td>
                                 <td>
-                                    @if ($requisicao->status != 'Indeferido' && $requisicao->status != 'Empenho'  && $requisicao->status != 'Contabilidade')
+
+                                    @if ($requisicao->status != 'Finalizado' && $requisicao->status != 'Indeferido' && $requisicao->status != 'Empenho'  && $requisicao->status != 'Contabilidade')
                                         <a href="" class="btn btn-danger " data-toggle="modal"
                                             data-target="#modal-indeferir-{{ $requisicao->id }}"
                                             title=" Indeferir Requisição"> <i class="fas fa-window-close"></i>
@@ -131,7 +132,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($requisicao->status != 'Deferido' && $requisicao->status != 'Empenho' && $requisicao->status != 'Contabilidade'  )
+                                    @if ($requisicao->status != 'Deferido' && $requisicao->status != 'Empenho' && $requisicao->status != 'Contabilidade' && $requisicao->status != 'Finalizado' )
                                         {!! Form::model($requisicao, ['method' => 'PATCH', 'url' => 'requisicao/update/' . $requisicao->id]) !!}
                                         <input type="hidden" name="status" value="Deferido" />
                                         <input type="hidden" name="status_justificativa" value="" />

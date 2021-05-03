@@ -132,7 +132,7 @@
                                         <a href="{{ url('requisicao/editar/' . $requisicao->id) }}"
                                             class="btn btn-primary"><span>
                                             </span>
-                                            <i class="fas fa-info-circle"></i> Imprimir </a>
+                                            <i class="fas fa-print"></i> Imprimir </a>
 
                                     @endif
 

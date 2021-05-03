@@ -199,6 +199,7 @@
                             </div>
                         </div>
                         @can('atualizar_reduzido')
+                        @if($requisicao->status !='Finalizado')
                             <div class="row">
                                 <div class="col-sm-12">
 
@@ -230,6 +231,7 @@
                                 </div>
                             </div>
                             {!! Form::close() !!}
+                            @endif
                         @endcan
                     </div>
                 @endcan
