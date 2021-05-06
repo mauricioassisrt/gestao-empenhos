@@ -100,7 +100,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Tem certeza que deseja excluir esta pessoa
+                                                    <p>Tem certeza que deseja excluir este setor cadastrado ?
                                                         {{ $setor->descricao }}</p>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">

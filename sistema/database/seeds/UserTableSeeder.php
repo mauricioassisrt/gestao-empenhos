@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-use App\Pessoa;
 
 class UserTableSeeder extends Seeder
 {
@@ -17,11 +16,26 @@ class UserTableSeeder extends Seeder
             [
                 'name' => 'Administrador',
                 'email' => 'admin@laravel.com',
+                'password' => bcrypt('admin1234')
+            ],
+            [
+                'name' => 'Gerente prefeitura',
+                'email' => 'gerente@prefeitura.com',
                 'password' => bcrypt('123')
             ],
             [
-                'name' => 'MASTER PREFEITURA',
-                'email' => 'master@laravel.com',
+                'name' => 'Maria josé',
+                'email' => 'maria@prefeitura.com',
+                'password' => bcrypt('123')
+            ],
+            [
+                'name' => 'Sec saude',
+                'email' => 'secretario@saude.com',
+                'password' => bcrypt('123')
+            ],
+            [
+                'name' => 'Empenho',
+                'email' => 'empenho@prefeitura.com',
                 'password' => bcrypt('123')
             ]
         );

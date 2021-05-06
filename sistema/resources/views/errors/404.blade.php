@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Erro TESTE HOMOLOGACAO </title>
+    <title>Ambiente de homologação </title>
     <meta charset="utf-8">
 
     <link rel="shortcut icon" href="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}">
@@ -23,7 +23,9 @@
             <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                 Não foi possível encontrar a página que você estava procurando. </font><font style="vertical-align: inherit;">Enquanto isso, você pode </font></font><a href="{{url('/dashboard')}}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">retornar ao painel</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> ou tentar usar o formulário de pesquisa.
                 </font></font></p>
+                <h6>
 
+                </h6>
         </div>
         <!-- /.error-content -->
     </div>

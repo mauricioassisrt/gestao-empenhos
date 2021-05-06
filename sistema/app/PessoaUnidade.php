@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PessoaUnidade extends Model
 {
     protected $fillable = [
-        'data', 'pessoa_id', 'unidade_id',
+        'pessoa_id', 'unidade_id',
      ];
      public function pessoa()
      {
@@ -17,4 +17,5 @@ class PessoaUnidade extends Model
      {
          return $this->belongsTo(Unidade::class, 'unidade_id' );
      }
+
 }

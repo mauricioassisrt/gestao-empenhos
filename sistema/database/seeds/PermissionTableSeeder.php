@@ -13,6 +13,7 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
+
         $permissions = array(
             [
                 'name' => 'Edit_post',
@@ -204,7 +205,91 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Delete_setor',
                 'label' => 'Apagar setor',
             ],
+            [
+                'name' => 'Insert_requisicao',
+                'label' => 'Adicionar requisicao',
+            ],
+            [
+                'name' => 'View_requisicao',
+                'label' => 'Visualizar requisicao',
+            ],
+            [
+                'name' => 'Edit_requisicao',
+                'label' => 'Editar requisicao',
+            ],
+            [
+                'name' => 'Delete_requisicao',
+                'label' => 'Apagar requisicao',
+            ],
+            [
+                'name' => 'pessoa_vincular_unidade',
+                'label' => 'Vincula um usuário a uma unidade ',
+            ],
+            [
+                'name' => 'insert_unidade_pessoa',
+                'label' => 'Insere na unidad a pessao  ',
+            ],
 
+            [
+                'name' => 'Edit_licitacao',
+                'label' => 'Editar licitacao',
+            ],
+            [
+                'name' => 'View_licitacao',
+                'label' => 'Visualizar licitacao',
+            ],
+            [
+                'name' => 'Delete_licitacao',
+                'label' => 'Deletar licitacao',
+            ],
+            [
+                'name' => 'Insert_licitacao',
+                'label' => 'Adicionar licitacao',
+            ],
+            [
+                'name' => 'Edit_LicitacaoProduto',
+                'label' => 'Editar secretaria do produto',
+            ],
+            [
+                'name' => 'View_LicitacaoProduto',
+                'label' => 'Visualizar secretaria',
+            ],
+            [
+                'name' => 'Delete_LicitacaoProduto',
+                'label' => 'Deletar secretaria ',
+            ],
+            [
+                'name' => 'Insert_LicitacaoProduto',
+                'label' => 'Adicionar secretaria',
+            ],
+            [
+                'name' => 'minhas_requisicoes',
+                'label' => 'Visualização de requisições realizadas pelo usuário',
+            ],
+            [
+                'name' => 'pessoa_delete_unidade',
+                'label' => 'Permite o prórprio usuário remover a sua permissão ',
+            ],
+            [
+                'name' => 'secretario_municipal_aprova_requisicao',
+                'label' => 'Secretário municipal responsável por aprovar requisições de suas unidades respectivas '
+            ],
+            [
+                'name' => 'empenho_view_requisicao',
+                'label' => 'É possível visualizar as requisições nas quais estão aguardando serem finalizadas '
+            ],
+            [
+                'name' => 'atualizar_reduzido',
+                'label' => 'É possível atualizar o reduzido de uma requisição '
+            ],
+            [
+                'name' => 'ver_reduzido',
+                'label' => 'É possível ver o reduzido de uma requisição '
+            ],
+            [
+                'name' => 'finalizar_requisicao',
+                'label' => 'É possível finalizar uma requisição '
+            ],
 
         );
         foreach ($permissions as $key => $value) {
@@ -378,6 +463,41 @@ class PermissionTableSeeder extends Seeder
             [
                 'permission_id' => '41',
                 'role_id' => '1'
+            ],   [
+                'permission_id' => '42',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '43',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '44',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '45',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '46',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '47',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '50',
+                'role_id' => '1'
             ],
             [
                 'permission_id' => '22',
@@ -457,6 +577,259 @@ class PermissionTableSeeder extends Seeder
             ],
             [
                 'permission_id' => '41',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '42',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '43',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '44',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '45',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '46',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '47',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '50',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '47',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '50',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '51',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '52',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '53',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '54',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '55',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '52',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '53',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '54',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '55',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '56',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '57',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '58',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '59',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '56',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '57',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '58',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '59',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '60',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '60',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '62',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '62',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '63',
+                'role_id' => '4'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '4'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '3'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '3'
+            ],
+            [
+                'permission_id' => '47',
+                'role_id' => '3'
+            ],
+            [
+                'permission_id' => '61',
+                'role_id' => '3'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '3'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '4'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '4'
+            ],
+            [
+                'permission_id' => '64',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '66',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '67',
+                'role_id' => '5'
+            ],
+
+            [
+                'permission_id' => '65',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '65',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '66',
+                'role_id' => '1'
+            ],
+            [
+                'permission_id' => '66',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '49',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '48',
+                'role_id' => '5'
+            ],
+            [
+                'permission_id' => '14',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '15',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '16',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '17',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '51',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '52',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '18',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '20',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '21',
+                'role_id' => '2'
+            ],
+            [
+                'permission_id' => '5',
                 'role_id' => '2'
             ],
         );

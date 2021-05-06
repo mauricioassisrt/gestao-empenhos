@@ -1,11 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
+use Illuminate\Support\Facades\Auth;
 /*
     rotas autenticadas
 */
 
+Route::get('test', function () {
+    Alert::success('Success Title', 'Success Message');
+
+    return view('welcome');
+});
 Auth::routes();
 
 /*
@@ -67,6 +73,7 @@ Route::get('/pessoas', 'PessoaController@index')->name('pessoa');
 Route::get('pessoas/cadastrar', 'PessoaController@create');
 Route::post('pessoas/insert', 'PessoaController@store');
 Route::get('pessoas/editar/{pessoa}', 'PessoaController@editar_pessoa');
+Route::post('pessoas/vincularSecretaria/{pessoa}', 'PessoaController@updateSecretaria');
 Route::patch('pessoas/update/{pessoa}', 'PessoaController@update');
 Route::get('pessoas/deletar/{pessoa}', 'PessoaController@destroy');
 Route::get('pessoas/visualizar/{user}', 'PessoaController@view');
@@ -76,17 +83,19 @@ Route::get('dadosPessoais/{id}', 'PessoaController@edit');
 #ROUTES PESQUISA
 Route::get('pessoas/search', 'PessoaController@search');
 Route::post('pessoas/carregaSenha', 'PessoaController@retorna_senhas');
+Route::get('vincularUnidade/{pessoa}', 'PessoaController@vincularUnidade');
+Route::post('vincularUnidade/insert', 'PessoaController@insertUnidadePessoa');
+Route::get('vincularUnidade/deletar/{id}/{pessoa}', 'PessoaController@destroyUnidadePessoa');
+
 /*
-    REQUISICAO ROUTES
-*/
-Route::get('/requisicao', 'RequisicaoController@index')->name('requisicao');
+
 
 
 /*
     Fornecedor Routers
 */
 Route::group(['middleware' => 'web'], function () {
-   Route::get('fornecedor', 'FornecedorController@index');
+    Route::get('fornecedor', 'FornecedorController@index');
     Route::get('fornecedor/cadastrar', 'FornecedorController@cadastrar');
     Route::post('fornecedor/insert', 'FornecedorController@insert');
     Route::get('fornecedor/editar/{fornecedor}', 'FornecedorController@editar');
@@ -100,38 +109,134 @@ Route::group(['middleware' => 'web'], function () {
 */
 Route::group(['middleware' => 'web'], function () {
     Route::get('categoria', 'CategoriaController@index');
-     Route::get('categoria/cadastrar', 'CategoriaController@cadastrar');
-     Route::post('categoria/insert', 'CategoriaController@insert');
-     Route::get('categoria/editar/{categoria}', 'CategoriaController@editar');
-     Route::patch('categoria/update/{id}', 'CategoriaController@update');
-     Route::get('categoria/deletar/{categoria}', 'CategoriaController@deletar');
-     Route::get('categoria/visualizar/{categoria}', 'CategoriaController@view');
-     Route::get('categoria/search', 'CategoriaController@search');
- });
+    Route::get('categoria/cadastrar', 'CategoriaController@cadastrar');
+    Route::post('categoria/insert', 'CategoriaController@insert');
+    Route::get('categoria/editar/{categoria}', 'CategoriaController@editar');
+    Route::patch('categoria/update/{id}', 'CategoriaController@update');
+    Route::get('categoria/deletar/{categoria}', 'CategoriaController@deletar');
+    Route::get('categoria/visualizar/{categoria}', 'CategoriaController@view');
+    Route::get('categoria/search', 'CategoriaController@search');
+});
 /*
     Secretarias Routers
 */
- Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => 'web'], function () {
     Route::get('secretaria', 'SecretariaController@index');
-     Route::get('secretaria/cadastrar', 'SecretariaController@cadastrar');
-     Route::post('secretaria/insert', 'SecretariaController@insert');
-     Route::get('secretaria/editar/{secretaria}', 'SecretariaController@editar');
-     Route::patch('secretaria/update/{id}', 'SecretariaController@update');
-     Route::get('secretaria/deletar/{secretaria}', 'SecretariaController@deletar');
-     Route::get('secretaria/visualizar/{secretaria}', 'SecretariaController@view');
-     Route::get('secretaria/search', 'SecretariaController@search');
- });
+    Route::get('secretaria/cadastrar', 'SecretariaController@cadastrar');
+    Route::post('secretaria/insert', 'SecretariaController@insert');
+    Route::get('secretaria/editar/{secretaria}', 'SecretariaController@editar');
+    Route::patch('secretaria/update/{id}', 'SecretariaController@update');
+    Route::get('secretaria/deletar/{secretaria}', 'SecretariaController@deletar');
+    Route::get('secretaria/visualizar/{secretaria}', 'SecretariaController@view');
+    Route::get('secretaria/search', 'SecretariaController@search');
+});
 
 /*
     Setores Routers
 */
 Route::group(['middleware' => 'web'], function () {
     Route::get('setor', 'SetorController@index');
-     Route::get('setor/cadastrar', 'SetorController@cadastrar');
-     Route::post('setor/insert', 'SetorController@insert');
-     Route::get('setor/editar/{setor}', 'SetorController@editar');
-     Route::patch('setor/update/{id}', 'SetorController@update');
-     Route::get('setor/deletar/{setor}', 'SetorController@deletar');
-     Route::get('setor/visualizar/{setor}', 'SetorController@view');
-     Route::get('setor/search', 'SetorController@search');
- });
+    Route::get('setor/cadastrar', 'SetorController@cadastrar');
+    Route::post('setor/insert', 'SetorController@insert');
+    Route::get('setor/editar/{setor}', 'SetorController@editar');
+    Route::patch('setor/update/{id}', 'SetorController@update');
+    Route::get('setor/deletar/{setor}', 'SetorController@deletar');
+    Route::get('setor/visualizar/{setor}', 'SetorController@view');
+    Route::get('setor/search', 'SetorController@search');
+});
+
+/*
+    Produtos Routers
+*/
+Route::group(['middleware' => 'web'], function () {
+    Route::get('produto', 'ProdutoController@index');
+    Route::get('produto/cadastrar', 'ProdutoController@cadastrar');
+    Route::post('produto/insert', 'ProdutoController@insert');
+    Route::get('produto/editar/{produto}', 'ProdutoController@editar');
+    Route::patch('produto/update/{id}', 'ProdutoController@update');
+    Route::get('produto/deletar/{produto}', 'ProdutoController@deletar');
+    Route::get('produto/visualizar/{produto}', 'ProdutoController@view');
+    Route::get('produto/search', 'ProdutoController@search');
+});
+/*
+    Produtos Unidades
+*/
+Route::group(['middleware' => 'web'], function () {
+    Route::get('unidade', 'UnidadeController@index');
+    Route::get('unidade/cadastrar', 'UnidadeController@cadastrar');
+    Route::post('unidade/insert', 'UnidadeController@insert');
+    Route::get('unidade/editar/{unidade}', 'UnidadeController@editar');
+    Route::patch('unidade/update/{id}', 'UnidadeController@update');
+    Route::get('unidade/deletar/{unidade}', 'UnidadeController@deletar');
+    Route::get('unidade/visualizar/{unidade}', 'UnidadeController@view');
+    Route::get('unidade/search', 'UnidadeController@search');
+});
+/*
+    Relatorios
+*/
+
+Route::group(['middleware' => 'web'], function () {
+    Route::get('relatorio/requsicao/periodo', 'RelatorioController@periodo');
+    Route::get('relatorio/requsicao/periodo/buscar', 'RelatorioController@periodoBusca');
+    Route::get('relatorio/requisicao/unidade', 'RelatorioController@unidade');
+    Route::post('relatorio/requisicao/unidade/exibir', 'RelatorioController@unidadeResultados')->name('relatorio.requisicao.unidade.exibir');
+    Route::get('relatorio/requisicao/resumo/{requisicao}', 'RelatorioController@requisicaoResumo');
+
+});
+
+/**
+ *
+ *      Licitação
+ *
+ */
+
+Route::group(['middleware' => 'web'], function () {
+    // Route::get('licitacao', 'LicitacaoController@index')->name('licitacao');
+    Route::get('licitacao/cadastrar', 'LicitacaoController@cadastrar')->name('licitacao.create');
+    Route::post('licitacao/novo', 'LicitacaoController@insert')->name('licitacao.insert');
+    Route::get('licitacao/editar/{licitacao}', 'LicitacaoController@editar')->name('licitacao.edit');
+    Route::patch('licitacao/update/{id}', 'LicitacaoController@update')->name('licitacao.update');
+    Route::get('licitacao/deletar/{licitacao}', 'LicitacaoController@deletar')->name('licitacao.delete');
+    Route::get('licitacao/visualizar/{licitacao}', 'LicitacaoController@view')->name('licitacao.view');
+    Route::get('licitacao/pesquisar', 'LicitacaoController@search')->name('licitacao.search');
+});
+
+/**
+ *
+ *      RELACIONAR PRODUTOS EM LICITAÇÃO
+ *
+ */
+
+Route::group(['middleware' => 'web'], function () {
+    Route::get('licitacao/vincular', 'LicitacaoProdutoController@index')->name('licitacao.vincular');
+    Route::get('licitacao/vincular/cadastrar/{licitacao}', 'LicitacaoProdutoController@cadastrar')->name('licitacao.vincular.create');
+    Route::post('licitacao/vincular/novo', 'LicitacaoProdutoController@insert')->name('licitacao.vincular.insert');
+    Route::get('licitacao/vincular/editar/{licitacaoProduto}', 'LicitacaoProdutoController@editar')->name('licitacao.vincular.edit');
+    Route::patch('licitacao/vincular/update/{id}', 'LicitacaoProdutoController@update')->name('licitacao.vincular.update');
+    Route::get('licitacao/vincular/deletar/{licitacao}', 'LicitacaoProdutoController@deletar')->name('licitacao.vincular.delete');
+    Route::get('licitacao/vincular/visualizar/{licitacao/vincular}', 'LicitacaoProdutoController@view')->name('licitacao.vincular.view');
+    Route::get('licitacao/vincular/pesquisar', 'LicitacaoProdutoController@search')->name('licitacao.vincular.search');
+});
+/*
+ *REQUISICAO ROUTES
+ */
+Route::group(['middleware' => 'web'], function () {
+    Route::get('requisicao', 'RequisicaoController@index');
+    Route::get('requisicao/cadastrar', 'RequisicaoController@cadastrar');
+    Route::patch('requisicao/update/{requisicao}','RequisicaoController@update');
+    Route::post('requisicao/insert', 'RequisicaoController@insert');
+    Route::get('requisicao/editar/{requisicao}', 'RequisicaoController@editar');
+    Route::get('requisicao/search', 'RequisicaoController@search');
+    Route::post('requisicao/getCategoria', 'RequisicaoController@getCategoria');
+});
+
+/*
+ *REQUISICAOLICITACAO ROUTES
+ */
+Route::group(['middleware' => 'web'], function () {
+    // Route::get('requisicaoComLicitacao', 'RequisicaoComLicitacaoController@index');
+    Route::get('requisicaoComLicitacao/cadastrar', 'RequisicaoComLicitacaoController@cadastrar');
+    Route::post('requisicaoComLicitacao/insert', 'RequisicaoComLicitacaoController@insert');
+    Route::get('requisicaoComLicitacao/editar/{requisicao}', 'RequisicaoComLicitacaoController@editar');
+    Route::post('requisicaoComLicitacao/getLicitacao', 'RequisicaoComLicitacaoController@getLicitacao');
+});

@@ -38,17 +38,10 @@ class CreateUnidadesTable extends Migration
             $table->string('telefone');
             $table->string('email');
             $table->integer('secretaria_id')->unsigned();
-            $table->foreign('secretaria_id')->references('id')->on('secretarias')->onDelete('cascade');
+            $table->foreign('secretaria_id')->references('id')->on('secretarias');
             $table->timestamps();
         });
-        Schema::create('pessoaunidade', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('unidade_id')->unsigned();
-            $table->integer('pessoa_id')->unsigned();
-            $table->foreign('unidade_id')->references('id')->on('unidades')->onDelete('cascade');
-            $table->foreign('pessoa_id')->references('id')->on('pessoas')->onDelete('cascade');
-            $table->timestamps();
-        });
+
     }
 
     /**
@@ -58,9 +51,9 @@ class CreateUnidadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pessoaunidade');
         Schema::dropIfExists('unidades');
         Schema::dropIfExists('secretarias');
+
 
 
     }

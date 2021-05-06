@@ -1,38 +1,4 @@
 
-## Sistema de gestão de empenhos
-
-## Install Project 
- Copie o arquivo env.example
-NAO```shell php -r "copy('.env.example', '.env'); ```
- ## Caso haja necessidade 
- exculte o comando para gerar uma nova key 
-```shell php artisan key:generate ```
-
-
- Suba o arquivo do banco de dados e crie o database com o nome nomedobanco 
-
-
-Comentar o foreach no arquivo app/Providers/AuthServiceProvider.php, caso ele não estiver comentado o php artisan não funciona.
-Instalação das tabelas no banco de dados, entre no terminal até a pasta do sistema, em seguida digite a linha de código php artisan migrate
-# php artisan migrate
-# refresh no migrate  php artisan migrate:fresh
-Após a instalação das migrations instale as seeds
-
-instale os permissions php artisan db:seed --class=EmpresaSeeder
-instale os usuários php artisan db:seed --class=UserTableSeeder
-instale o arquivo da tabela pessoa  php artisan db:seed --class=PessoaSeeder
-instale os roles php artisan db:seed --class=RoleTableSeeder
-instale os permissions php artisan db:seed --class=PermissionTableSeeder
-
-
-
- após isso exculte o comando 
-```shell php artisan serve ```
-
- acesse o browser com a URL localhost:8000
-=
-
-Após a instalação sistema pronto acesse a tela de login Usuário: admin@laravel.com e Senha: admin1234.
 
 #### Caso ocorra as mensagens de envio de email estar em outro idioma utilize na pasta vendor no caminho altere o metodo \vendor\laravel\framework\src\Illuminate\Auth\Notifications\ResetPassword.php
 
@@ -112,3 +78,68 @@ Route::resource('nome','Controller');
 //         dd($shellexec);
 //     }
 // ); -->
+
+/*
+* metodo finalizar requisicao
+*/
+
+ public function reparoRequest(Request $request)
+    {
+        //dd($request->all());
+        $contador = 0;
+        $totalPecas = 0;
+        $valorFinal = 0;
+        $servico =  new Servico();
+        //dd(count($servico));
+        for ($i = 0; $i < count($request->pecaid); $i++) {
+            $peca = Peca::findOrfail($request->pecaid[$i]);
+
+            if ($int = (int) $request->quantidade[$i] != 0) {
+                $total = $request->quantidade[$i] * $peca->preco;
+
+                $pecaServico[$contador += 1] = array(
+                    "valorTotalPorPeca" => $total,
+                    "quantidade" => (int) $request->quantidade[$i],
+                    "peca_id" => $peca->id,
+
+                );
+                $valorFinal += $total;
+                $totalPecas += (int) $request->quantidade[$i];
+            }
+        }
+        //var_dump($pecaServico);
+        //converter data para padrão banco 
+        $converterData = strtotime($request->dataOs);
+        $servico->data = date('Y-m-d', $converterData);
+
+        $servico->totalpecas = $totalPecas;
+        $servico->valorFinal = $valorFinal;
+        $servico->equipamento_id = $request->equipamento;
+
+        $servico->save();
+        ///dd($servico->id);
+        $pecaServico = new PecasServicos();
+        for ($i = 0; $i < count($request->pecaid); $i++) {
+            $peca = Peca::findOrfail($request->pecaid[$i]);
+
+            if ($int = (int) $request->quantidade[$i] != 0) {
+                $pecaServico->valorSomaIten = $request->quantidade[$i] * $peca->preco;
+                $pecaServico->quantidade =  (int) $request->quantidade[$i];
+                $pecaServico->servico_id = $servico->id;
+                $pecaServico->peca_id = $peca->id;
+                $pecaServico->save();
+
+                $pecaServico = new PecasServicos();
+            }
+        }
+
+        if ($servico->id != null) {
+            $salvo = true;
+        } else {
+            $salvo = false;
+        }
+
+        $objetoPecas = Peca::all();
+        $objetoEquipamentos = Equipamento::all();
+        return view('peca.reparo', compact('salvo', 'objetoPecas', 'objetoEquipamentos'));
+    }
