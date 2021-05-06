@@ -27,21 +27,26 @@ class RequisicaoController extends Controller
     {
         try {
             if (Gate::allows('View_requisicao') && Gate::allows('minhas_requisicoes')) {
+
                 $user = Auth::user();
                 $pessoa = Pessoa::where('user_id', $user->id)->first();
-                $pessoaUnidade = PessoaUnidade::where('pessoa_id', $pessoa->id)->first();
+                $pessoaUnidades = PessoaUnidade::where('pessoa_id', $pessoa->id)->get();
+
                 $titulo = "Minhas Requisições ";
                 $requisicaos = Requisicao::paginate(20);
-                return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo', 'pessoaUnidade'));
+                return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo', 'pessoaUnidades'));
+
             } else if (Gate::allows('finalizar_requisicao')) {
 
                 $titulo = "Todas as requisições aguardando finalização   ";
                 $requisicaos = Requisicao::paginate(20);
                 return view('requisicao.index', compact('titulo', 'requisicaos'));
+
             } else if (Gate::allows('View_requisicao') && !Gate::allows('secretario_municipal_aprova_requisicao')) {
                 $titulo = "Todas as requisições  ";
                 $requisicaos = Requisicao::paginate(20);
                 return view('requisicao.index', compact('requisicaos', 'titulo'));
+
             } else if (Gate::allows('secretario_municipal_aprova_requisicao')) {
                 $titulo = "Todas as requisições aguardando aprovação  ";
                 $user = Auth::user();

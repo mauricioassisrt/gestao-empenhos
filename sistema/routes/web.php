@@ -179,7 +179,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('relatorio/requsicao/periodo', 'RelatorioController@periodo');
     Route::get('relatorio/requsicao/periodo/buscar', 'RelatorioController@periodoBusca');
     Route::get('relatorio/requisicao/unidade', 'RelatorioController@unidade');
-
+    Route::post('relatorio/requisicao/unidade/exibir', 'RelatorioController@unidadeResultados')->name('relatorio.requisicao.unidade.exibir');
     Route::get('relatorio/requisicao/resumo/{requisicao}', 'RelatorioController@requisicaoResumo');
 
 });
@@ -191,7 +191,7 @@ Route::group(['middleware' => 'web'], function () {
  */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('licitacao', 'LicitacaoController@index')->name('licitacao');
+    // Route::get('licitacao', 'LicitacaoController@index')->name('licitacao');
     Route::get('licitacao/cadastrar', 'LicitacaoController@cadastrar')->name('licitacao.create');
     Route::post('licitacao/novo', 'LicitacaoController@insert')->name('licitacao.insert');
     Route::get('licitacao/editar/{licitacao}', 'LicitacaoController@editar')->name('licitacao.edit');

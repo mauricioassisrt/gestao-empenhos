@@ -192,7 +192,7 @@ $empresa = Empresa::all();
                                     </li>
                                     <li class="nav-item">
                                         @can('View_licitacao')
-                                            <a href="{{ url('/licitacao') }}" class="nav-link active">
+                                            <a href="{{ url('/licitacao/cadastrar') }}" class="nav-link active">
                                                 <i class="fas fa-gavel nav-icon"></i>
                                                 <p>Cadastro de Licitação</p>
                                             </a>

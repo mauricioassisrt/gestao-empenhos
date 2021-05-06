@@ -38,10 +38,10 @@ class HomeController extends Controller
 
                 $user = Auth::user();
                 $pessoa = Pessoa::where('user_id', $user->id)->first();
-                $pessoaUnidade = PessoaUnidade::where('pessoa_id', $pessoa->id)->first();
+                $pessoaUnidades = PessoaUnidade::where('pessoa_id', $pessoa->id)->get();
                 $titulo = "Minhas Requisições ";
                 $requisicaos = Requisicao::paginate(20);
-                return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo', 'pessoaUnidade'));
+                return view('requisicao.minhaRequisicao', compact('requisicaos', 'titulo', 'pessoaUnidades'));
 
             } else if (Gate::allows('finalizar_requisicao')) {
 

@@ -168,18 +168,23 @@ class PessoaController extends Controller
     {
 
         try {
-            if (Gate::allows('pessoa_edit') && $pessoa->secretaria_id==null) {
+            $pessoas = Pessoa::where('secretaria_id', $request->secretaria_id)->first();
 
-                $pessoa->update($request->all());
-                return redirect('pessoas')->with('status', 'Definido o secretário com sucesso !');
-            }else if($pessoa->secretaria_id !=null){
+            if ($pessoas == null) {
+
+                if (Gate::allows('pessoa_edit') && $pessoa->secretaria_id == null) {
+
+                    $pessoa->update($request->all());
+                    return redirect('pessoas')->with('status', 'Definido o secretário com sucesso !');
+                }  else {
+                    $titulo = "SEM ACESSO ";
+                    return view('errors.sem_permissao', compact('titulo'));
+                }
+            }else if ($pessoa->secretaria_id != null) {
                 $pessoa->update($request->all());
                 return redirect('pessoas')->with('remove', 'Apagado com sucesso !!');
-
-            }
-            else {
-                $titulo = "SEM ACESSO ";
-                return view('errors.sem_permissao', compact('titulo'));
+            }else{
+                return redirect('pessoas')->with('remove', 'Atenção essa secretária já está vinculado a outro secretário(a) !');
             }
         } catch (\Throwable $th) {
 
@@ -292,7 +297,7 @@ class PessoaController extends Controller
     {
         try {
             $titulo = 'Vincular uma Unidade a pessoa  ';
-            if (Gate::allows('pessoa_vincular_unidade')&&  $pessoa->secretaria_id ==null) {
+            if (Gate::allows('pessoa_vincular_unidade') &&  $pessoa->secretaria_id == null) {
                 $unidades = Unidade::all();
 
                 $pessoa_unidades = PessoaUnidade::where('pessoa_id', $pessoa->id)->get();

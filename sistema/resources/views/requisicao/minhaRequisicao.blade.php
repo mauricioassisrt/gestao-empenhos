@@ -33,7 +33,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-            @if ($pessoaUnidade != null)
+            @if ($pessoaUnidades != null)
                 <table class="table table-hover text-nowrap">
 
                     <thead>
@@ -66,76 +66,77 @@
                     <tbody>
 
                         @foreach ($requisicaos as $requisicao)
+                            @foreach ($pessoaUnidades as $pessoaUnidade)
+                                @if ($requisicao->unidades->id == $pessoaUnidade->unidade_id)
+                                    <tr>
 
-                            @if ($requisicao->unidade_id == $pessoaUnidade->unidade_id)
-                                <tr>
-
-                                    <td>
-                                        {{ $requisicao->id }}
-                                    </td>
-                                    <td>
-                                        {{ $requisicao->unidades->nome }}
-                                    </td>
-                                    <td>
-                                        {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
-                                    </td>
-                                    <td>
-                                        @if ($requisicao->orcamento_um != null)
-                                            <a href="{{ $requisicao->orcamento_um }}" title="Orçamento 1 "> <i
-                                                    class="fas fa-upload"></i> </a>
-                                        @else
-                                            Sem arquivo vinculado
-                                        @endif
-                                        @if ($requisicao->orcamento_dois != null)<a
-                                                href="{{ $requisicao->orcamento_dois }}" title="Orçamento 2 "> <i
-                                                    class="fas fa-upload"></i> </a>@endif
-                                        @if ($requisicao->orcamento_tres != null)<a
-                                                href="{{ $requisicao->orcamento_tres }}" title="Orçamento 3 "> <i
-                                                    class="fas fa-upload"></i> </a>@endif
-
-
-
-                                    </td>
-                                    <td>
-                                        <center>
-                                            @if ($requisicao->status == 'Indeferido')
-                                            <span class="card bg-danger"> {{ $requisicao->status }} <br>Motivo
-                                                {{ $requisicao->status_justificativa }}</span>
-                                        @endif
-                                        @if ($requisicao->status == 'Enviado')
-                                            <span class="card bg-default"> {{ $requisicao->status }}</span>
-                                        @endif
-                                        @if ($requisicao->status == 'Deferido')
-                                            <span class="card bg-success"> {{ $requisicao->status }}</span>
-                                        @endif
-                                        @if ($requisicao->status == 'Empenho')
-                                            <span class="card bg-warning "> {{ $requisicao->status }}</span>
-                                        @endif
-                                        @if ($requisicao->status == 'Contabilidade')
-                                            <span class="card bg-teal color-palette "> {{ $requisicao->status }}</span>
-                                        @endif
-                                        @if ($requisicao->status == 'Finalizado')
-                                            <span class="card bg-info "> {{ $requisicao->status }}</span>
-                                        @endif
+                                        <td>
+                                            {{ $requisicao->id }}
+                                        </td>
+                                        <td>
+                                            {{ $requisicao->unidades->nome }}
+                                        </td>
+                                        <td>
+                                            {{ date('d/m/Y ', strtotime($requisicao->created_at)) }}
+                                        </td>
+                                        <td>
+                                            @if ($requisicao->orcamento_um != null)
+                                                <a href="{{ $requisicao->orcamento_um }}" title="Orçamento 1 "> <i
+                                                        class="fas fa-upload"></i> </a>
+                                            @else
+                                                Sem arquivo vinculado
+                                            @endif
+                                            @if ($requisicao->orcamento_dois != null)<a
+                                                    href="{{ $requisicao->orcamento_dois }}" title="Orçamento 2 "> <i
+                                                        class="fas fa-upload"></i> </a>@endif
+                                            @if ($requisicao->orcamento_tres != null)<a
+                                                    href="{{ $requisicao->orcamento_tres }}" title="Orçamento 3 "> <i
+                                                        class="fas fa-upload"></i> </a>@endif
 
 
-                                        </center>
-                                    </td>
 
-                                    <td>
-                                        <a href="{{ url('requisicao/editar/' . $requisicao->id) }}"
-                                            class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
-                                            </span>
-                                            <i class="fas fa-info-circle"></i> Detalhes da Requisição </a>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                @if ($requisicao->status == 'Indeferido')
+                                                    <span class="card bg-danger"> {{ $requisicao->status }} <br>Motivo
+                                                        {{ $requisicao->status_justificativa }}</span>
+                                                @endif
+                                                @if ($requisicao->status == 'Enviado')
+                                                    <span class="card bg-default"> {{ $requisicao->status }}</span>
+                                                @endif
+                                                @if ($requisicao->status == 'Deferido')
+                                                    <span class="card bg-success"> {{ $requisicao->status }}</span>
+                                                @endif
+                                                @if ($requisicao->status == 'Empenho')
+                                                    <span class="card bg-warning "> {{ $requisicao->status }}</span>
+                                                @endif
+                                                @if ($requisicao->status == 'Contabilidade')
+                                                    <span class="card bg-teal color-palette ">
+                                                        {{ $requisicao->status }}</span>
+                                                @endif
+                                                @if ($requisicao->status == 'Finalizado')
+                                                    <span class="card bg-info "> {{ $requisicao->status }}</span>
+                                                @endif
 
 
-                                    </td>
+                                            </center>
+                                        </td>
 
-                                </tr>
-                            @endif
+                                        <td>
+                                            <a href="{{ url('requisicao/editar/' . $requisicao->id) }}"
+                                                class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                                </span>
+                                                <i class="fas fa-info-circle"></i> Detalhes da Requisição </a>
 
+
+                                        </td>
+
+                                    </tr>
+                                @endif
+
+                            @endforeach
                         @endforeach
-
                     </tbody>
                 </table>
             @else

@@ -78,6 +78,9 @@
                             Nome
                         </th>
                         <th>
+                            Secretário(a)
+                        </th>
+                        <th>
                             E-mail
                         </th>
                         <th>
@@ -109,6 +112,19 @@
                             </td>
                             <td>
                                 {{ $pessoa->name }}
+                            </td>
+                            <td>
+                                @if ($pessoa->secretaria_id == null)
+                                    Sem vinculo a nenhuma secretaria
+                                @else
+                                    @foreach ($secretarias as $secretaria)
+                                        @if ($secretaria->id == $pessoa->secretaria_id)
+
+                                            <span class="card bg-success">   Secretario de {{ $secretaria->nome }}</span>
+                                        @endif
+                                    @endforeach
+                                @endif
+
                             </td>
                             <td>
                                 {{ $pessoa->users->email }}
@@ -269,25 +285,16 @@
 
                                         <label>Escolha a Secretaria na qual deseja definir para o secretário(a) </label>
                                         <select name="secretaria_id" class="form-control secretaria" style="width: 100%;">
-                                            @if ($pessoa->secretaria_id != null))
-                                                <option value="{{ $pessoa->secretaria->id }}">
-                                                    {{ $pessoa->secretaria->nome }}
-                                                </option>
-                                                @foreach ($secretarias as $secretaria)
-                                                    @if ($pessoa->secretaria->id != $secretaria->id)
-                                                        <option value="{{ $secretaria->id }}">
-                                                            {{ $secretaria->nome }}
-                                                        </option>
-                                                    @endif
+                                            @foreach ($secretarias as $secretaria)
 
-                                                @endforeach
-                                            @else
-                                                @foreach ($secretarias as $secretaria)
-                                                    <option value="{{ $secretaria->id }}">
-                                                        {{ $secretaria->nome }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
+
+                                                <option value="{{ $secretaria->id }}">
+
+                                                    {{ $secretaria->nome }}
+                                                </option>
+
+                                            @endforeach
+
                                         </select>
                                     </div>
                                     <!-- RODA PE DIALOG -->
@@ -325,7 +332,8 @@
                                     <!-- CONTEUDO -->
                                     <div class="modal-body">
                                         <input type="hidden" name="secretaria_id" value="" </div>
-                                        <h4> <b> Tem certeza que deseja remover {{ $pessoa->name }} de secretário(a) municipal ? </b></h4>
+                                        <h4> <b> Tem certeza que deseja remover {{ $pessoa->name }} de secretário(a)
+                                                municipal ? </b></h4>
                                         <!-- RODA PE DIALOG -->
                                         <div class="modal-footer ">
 
@@ -372,9 +380,9 @@
 
         @endif
         @if (session('remove'))
-        toastr.info( "{{ session()->get('remove') }}" );
+            toastr.info( "{{ session()->get('remove') }}" );
 
-    @endif
+        @endif
         $("input[data-bootstrap-switch]").each(function() {
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         })

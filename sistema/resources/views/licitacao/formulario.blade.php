@@ -84,7 +84,7 @@
         </div>
         <div class="card-footer clearfix">
 
-            <a href="{{ route('licitacao') }}" class="btn btn-primary">
+            <a href="{{ route('licitacao.vincular') }}" class="btn btn-primary">
 
                 <i class="fas fa-arrow-left"></i> Voltar </a>
 

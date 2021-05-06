@@ -7,7 +7,11 @@
     <div class="card">
 
         <div class="card-header">
+            @can('Insert_licitacao')
+                <a href="{{ route('licitacao.create') }}" class="btn btn-primary float-right">
+                    <i class="fas fa-plus"></i> Novo </a>
 
+            @endcan
             <form action="{{ route('licitacao.vincular.search') }}" method="get">
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -29,45 +33,52 @@
         <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
 
-                    <thead>
-                        <th>Ano</th>
-                        <th>Número </th>
-                        <th>Modalidade </th>
-                        <th>Pregão </th>
-                        <th>Ações </th>
-                    </thead>
-                    <tbody>
-                        @foreach ($licitacaos as $licitacao)
-                            <tr>
-                                <td>{!! $licitacao->ano !!}</td>
-                                <td>{!! $licitacao->numero_licitacao !!}</td>
-                                <td>{!! $licitacao->modalidade !!}</td>
-                                <td>{!! $licitacao->pregao !!}</td>
-                                <td>
+                <thead>
+                    <th>Ano</th>
+                    <th>Número </th>
+                    <th>Modalidade </th>
+                    <th>Pregão </th>
+                    <th>Ações </th>
+                </thead>
+                <tbody>
+                    @foreach ($licitacaos as $licitacao)
+                        <tr>
+                            <td>{!! $licitacao->ano !!}</td>
+                            <td>{!! $licitacao->numero_licitacao !!}</td>
+                            <td>{!! $licitacao->modalidade !!}</td>
+                            <td>{!! $licitacao->pregao !!}</td>
+                            <td>
 
-                                    @can('Edit_licitacao')
+                                @can('Edit_licitacao')
 
-                                        <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
-                                            class="btn btn-primary">
-                                            <span class="glyphicon glyphicon-pencil"> </span>
-                                            <i class="fas fa-edit"></i>
-                                            Visualizar licitação
-                                        </a>
+                                    <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
+                                        class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-pencil"> </span>
+                                        <i class="fas fa-edit"></i>
+                                        Visualizar licitação
+                                    </a>
 
-                                        <a href="{{ route('licitacao.vincular.create', ['licitacao' => $licitacao->id]) }}"
-                                            class="btn btn-primary ">
-                                            <i class="fas fa-plus"></i>
-                                            Vincular produtos
-                                        </a>
-                                    @endcan
-                                    {{-- @can('Delete_licitacao')
+                                    <a href="{{ route('licitacao.vincular.create', ['licitacao' => $licitacao->id]) }}"
+                                        class="btn btn-primary ">
+                                        <i class="fas fa-plus"></i>
+                                        Vincular produtos
+                                    </a>
+                                @endcan
+                                @can('Edit_licitacao')
+
+                                    <a href="{{ route('licitacao.edit', ['licitacao' => $licitacao->id]) }}"
+                                        class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
+                                        </span>
+                                        <i class="fas fa-edit"></i> Editar </a>
+                                @endcan
+                                @can('Delete_licitacao')
 
 
-                                    <a href="" class="btn btn-danger" data-toggle="modal"
+                                    <a href="" class="btn btn-primary" data-toggle="modal"
                                         data-target="#modal-default-{{ $licitacao->id }}"><span
                                             class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
                                     </a>
-
+                                    </a>
                                     <div class="modal fade" id="modal-default-{{ $licitacao->id }}" style="display: none;"
                                         tabindex='-1' aria-hidden="true">
                                         <div class="modal-dialog">
@@ -79,15 +90,13 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Tem certeza que deseja excluir esta licitação ? </br>
+                                                    <p>Tem certeza que deseja excluir esta pessoa
                                                         {{ $licitacao->numero_licitacao }} </p>
-
-
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Fechar</button>
-                                                    <a href="{{ route('licitacao.vincular.delete', ['licitacao' => $licitacao->id]) }}"
+                                                    <a href="{{ route('licitacao.delete', ['licitacao' => $licitacao->id]) }}"
                                                         class="btn btn-danger">
                                                         <span class="glyphicon glyphicon-remove"></span> <i
                                                             class="fas fa-trash"></i>
@@ -101,12 +110,12 @@
                                         </div>
                                         <!-- /.modal-dialog -->
                                     </div>
-                                @endcan --}}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                @endcan
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
         <div class="card-footer clearfix">
             {{ $licitacaos->links() }}

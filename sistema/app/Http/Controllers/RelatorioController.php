@@ -17,6 +17,10 @@ class RelatorioController extends Controller
     {
         $this->middleware('auth');
     }
+    /*
+    INICIO
+     ROUTE   relatorio/requsicao/periodo
+    */
     public function periodo(Request $request)
     {
         try {
@@ -31,6 +35,24 @@ class RelatorioController extends Controller
             return view('errors.404');
         }
     }
+    /*
+     ROUTE relatorio/requisicao/unidade/exibir
+    */
+    public function unidadeResultados(Request $request)
+    {
+        try {
+         //   dd($request->all());
+
+            $requisicao =  Requisicao::whereBetween('created_at', [$request->inicio, $request->fim])->get();
+            dd($requisicao);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    /*
+
+        FIM
+    */
     public function periodoBusca(Request $request)
     {
         try {

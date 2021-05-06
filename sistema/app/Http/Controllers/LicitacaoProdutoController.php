@@ -136,7 +136,7 @@ class LicitacaoProdutoController extends Controller
             if (Gate::allows('Edit_LicitacaoProduto')) {
 
                 $titulo = "Total de produtos nesta licitação  ";
-                $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->paginate(2);
+                $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->paginate(10);
                 return view('licitacaoproduto.editar', compact('licitacaoProdutos', 'titulo', 'licitacaoProduto'));
             } else {
                 return view('errors.sem_permissao');

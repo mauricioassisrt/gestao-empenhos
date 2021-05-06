@@ -22,8 +22,8 @@ class CreatePessoasTable extends Migration
             $table->string('foto_pessoa');
             $table->integer('user_id')->unsigned();
             $table->integer('secretaria_id')->unsigned()->nullable();
-            $table->foreign('secretaria_id')->references('id')->on('secretarias')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('secretaria_id')->references('id')->on('secretarias');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
         Schema::create('pessoa_unidades', function (Blueprint $table) {

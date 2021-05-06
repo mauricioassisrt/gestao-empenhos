@@ -42,7 +42,7 @@ class LicitacaoController extends Controller
         if (Gate::allows('Insert_licitacao')) {
 
             Licitacao::create($request->all());
-            return redirect('licitacao');
+            return redirect('licitacao/vincular');
         } else {
             return view('errors.sem_permissao');
         }
@@ -66,7 +66,7 @@ class LicitacaoController extends Controller
         if (Gate::allows('Edit_licitacao')) {
             $licitacao = Licitacao::findOrFail($id);
             $update =  $licitacao->update($request->all());
-            return redirect('licitacao');
+            return redirect('licitacao/vincular');
         } else {
             return view('errors.sem_permissao');
         }
@@ -78,7 +78,7 @@ class LicitacaoController extends Controller
         if (Gate::allows('Delete_licitacao')) {
             $licitacao = Licitacao::findOrFail($id);
             $licitacao->delete();
-            return redirect('licitacao');
+            return redirect('licitacao.vincular');
         } else {
             return view('errors.sem_permissao');
         }
