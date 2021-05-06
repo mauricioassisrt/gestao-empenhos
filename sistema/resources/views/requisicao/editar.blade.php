@@ -205,11 +205,11 @@
 
                                         <label>Enviar para empenho? </label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status" value="Empenho">
+                                            <input class="form-check-input" type="radio" name="status" value="Empenho" @if($requisicao->status == 'Empenho') checked=""@endif>
                                             <label class="form-check-label">Sim</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status" checked=""
+                                            <input class="form-check-input" type="radio" name="status" @if($requisicao->status == 'Contabilidade' ) checked=""@endif
                                                 value="Contabilidade">
                                             <label class="form-check-label">Não</label>
                                         </div>
@@ -246,11 +246,11 @@
 
                                     <label>Finalizar a requisição? </label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" value="Finalizado">
+                                        <input class="form-check-input" type="radio" name="status" value="Finalizado"  @if($requisicao->status == 'Finalizado' ) checked=""@endif>
                                         <label class="form-check-label">Sim</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" checked="" value="Empenho">
+                                        <input class="form-check-input" type="radio" name="status" @if($requisicao->status == 'Empenho' ) checked=""@endif value="Empenho">
                                         <label class="form-check-label">Não</label>
                                     </div>
 

@@ -50,7 +50,17 @@
     <!-- CALENDARIo-->
     <script src="/js/moment.min.js"></script>
     <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- TOAST SWEETALERT -->
+    <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
+    <script src=" {{ asset('js/toastr.min.js') }}"></script>
+    <!-- FIM TOAST SWEETALERT  -->
+    <script>
+        @if (session('status'))
+            toastr.warning( "{{ session()->get('status') }}" );
 
+        @endif
+
+    </script>
 @endsection
 
 @endsection

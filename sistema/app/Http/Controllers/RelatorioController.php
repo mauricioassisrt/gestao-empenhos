@@ -41,12 +41,18 @@ class RelatorioController extends Controller
     public function unidadeResultados(Request $request)
     {
         try {
-         //   dd($request->all());
 
             $requisicao =  Requisicao::whereBetween('created_at', [$request->inicio, $request->fim])->get();
-            dd($requisicao);
+
+            $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
+
+            if ($requisicao->isEmpty()) {
+                return redirect('relatorio/requsicao/periodo')->with('status', 'A busca não retornou nenhum resultado correspondente a pesquisa ');
+            } else {
+                dd($requisicao);
+            }
         } catch (\Throwable $th) {
-            //throw $th;
+            return view('errors.404', );
         }
     }
     /*

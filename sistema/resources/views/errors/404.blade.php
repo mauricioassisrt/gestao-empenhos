@@ -23,7 +23,9 @@
             <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                 Não foi possível encontrar a página que você estava procurando. </font><font style="vertical-align: inherit;">Enquanto isso, você pode </font></font><a href="{{url('/dashboard')}}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">retornar ao painel</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> ou tentar usar o formulário de pesquisa.
                 </font></font></p>
+                <h6>
 
+                </h6>
         </div>
         <!-- /.error-content -->
     </div>
