@@ -18,7 +18,11 @@
 
         </div>
         <div class="card-body">
-
+            <div class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-info"></i> Informação !</h5>
+                Informe no máximo um intervalo de 31 dias entre as datas !
+              </div>
 
             {!! Form::open(['route' => 'relatorio.requisicao.unidade.exibir', 'method' => 'post']) !!}
             <div class="row">

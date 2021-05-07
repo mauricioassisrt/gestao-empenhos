@@ -176,14 +176,14 @@ class PessoaController extends Controller
 
                     $pessoa->update($request->all());
                     return redirect('pessoas')->with('status', 'Definido o secretário com sucesso !');
-                }  else {
+                } else {
                     $titulo = "SEM ACESSO ";
                     return view('errors.sem_permissao', compact('titulo'));
                 }
-            }else if ($pessoa->secretaria_id != null) {
+            } else if ($pessoa->secretaria_id != null) {
                 $pessoa->update($request->all());
                 return redirect('pessoas')->with('remove', 'Apagado com sucesso !!');
-            }else{
+            } else {
                 return redirect('pessoas')->with('remove', 'Atenção essa secretária já está vinculado a outro secretário(a) !');
             }
         } catch (\Throwable $th) {
@@ -242,7 +242,9 @@ class PessoaController extends Controller
                 $pessoas = new Pessoa();
                 $search = $request->get('table_search');
                 $pessoas = Pessoa::where('name', 'like', '%' . $search . '%')->paginate(10);
-                return view('pessoa.index', compact('titulo', 'pessoas'));
+                $secretarias = Secretaria::all();
+
+                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias'));
             } else {
                 return view('errors.404', compact('titulo'));
             }

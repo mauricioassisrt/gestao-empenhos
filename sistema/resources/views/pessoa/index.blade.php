@@ -102,7 +102,7 @@
                         <tr>
 
                             <td>
-                                @if (!$pessoa->foto_pessoa)
+                                @if ($pessoa->foto_pessoa == null)
                                     Sem foto
                                 @else
                                     <img src="{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
@@ -120,7 +120,7 @@
                                     @foreach ($secretarias as $secretaria)
                                         @if ($secretaria->id == $pessoa->secretaria_id)
 
-                                            <span class="card bg-success">   Secretario de {{ $secretaria->nome }}</span>
+                                            <span class="card bg-success"> Secretario de {{ $secretaria->nome }}</span>
                                         @endif
                                     @endforeach
                                 @endif

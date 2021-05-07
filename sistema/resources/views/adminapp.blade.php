@@ -344,7 +344,7 @@ $empresa = Empresa::all();
                                 <li class="nav-item">
                                     <a href="{{ url('relatorio/requisicao/unidade') }}" class="nav-link active">
                                         <i class="fas fa-archway nav-icon"></i>
-                                        <p>Quantitativo Requisições </p>
+                                        <p>Requisições por unidade  </p>
                                     </a>
                                 </li>
                                 @can('Edit_requisicao')

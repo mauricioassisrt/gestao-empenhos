@@ -21,44 +21,32 @@
 
         </div>
         <div class="card-body">
+            {!! Form::open(['route' => 'relatorio.requisicao.unidade.exibir', 'method' => 'post']) !!}
 
 
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Selecione a Secretaria na qual a Unidade pertence </label>
+                    <select name="unidade_id" class="form-control select2" style="width: 100%;">
 
-            {!! Form::open(['url' => '']) !!}
-            <div class="form-group">
-                <label>Selecione a Secretaria na qual a Unidade pertence </label>
-                <select name="unidade_id" class="form-control select2" style="width: 100%;">
+                        @foreach ($unidades as $unidade)
+                            <option value="{{ $unidade->id }}">
+                                {{ $unidade->nome }}
+                            </option>
+                        @endforeach
 
-                    @foreach ($unidades as $unidade)
-                        <option value="{{ $unidade->id }}">
-                            {{ $unidade->nome }}
-                        </option>
-                    @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label>Data inicio do período :</label>
+                    <input type="date" name="inicio" class="form-control datepicker-input" data-target="#datainicio" />
+                </div>
 
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Data inicio do período :</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" class="form-control" name="inicio" placeholder="dia-mes-ano"
-                        data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                <div class="col-md-4">
+                    <label>Data fim do período :</label>
+                    <input type="date" name="fim" class="form-control datepicker-input" data-target="#datafim" />
                 </div>
             </div>
-
-            <div class="form-group">
-                <label>Data fim do período :</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" class="form-control" name="fim" placeholder="dia-mes-ano"
-                        data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
-                </div>
-            </div>
-
         </div>
         <div class="card-footer clearfix">
 
