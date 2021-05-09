@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-sm-12">
 
-                        
+
                     {!! Form::open(['url' => 'relatorioFaturamento/relatorioFaturamentoEquipamento']) !!}
 
                     <div class="col-md-12">
@@ -43,8 +43,8 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input type="text" class="form-control" id="datepicker" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask="" name="inicial" required="true" >
-                            </div>               
-                        </div>    
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <label>Data Final</label>
                             <div class="input-group">
@@ -52,11 +52,8 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input type="text" class="form-control" id="datepicker1" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask="" name="final" required="true" >
-                            </div>               
-                        </div>  
-
-
-
+                            </div>
+                        </div>
 
 
                     </div>

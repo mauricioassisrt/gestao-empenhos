@@ -86,10 +86,7 @@ Route::post('pessoas/carregaSenha', 'PessoaController@retorna_senhas');
 Route::get('vincularUnidade/{pessoa}', 'PessoaController@vincularUnidade');
 Route::post('vincularUnidade/insert', 'PessoaController@insertUnidadePessoa');
 Route::get('vincularUnidade/deletar/{id}/{pessoa}', 'PessoaController@destroyUnidadePessoa');
-
 /*
-
-
 
 /*
     Fornecedor Routers
@@ -130,7 +127,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('secretaria/visualizar/{secretaria}', 'SecretariaController@view');
     Route::get('secretaria/search', 'SecretariaController@search');
 });
-
 /*
     Setores Routers
 */
@@ -144,7 +140,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('setor/visualizar/{setor}', 'SetorController@view');
     Route::get('setor/search', 'SetorController@search');
 });
-
 /*
     Produtos Routers
 */
@@ -180,10 +175,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('relatorio/requsicao/periodo/buscar', 'RelatorioController@periodoBusca');
     Route::get('relatorio/requisicao/unidade', 'RelatorioController@unidade');
     Route::post('relatorio/requisicao/unidade/exibir', 'RelatorioController@unidadeResultados')->name('relatorio.requisicao.unidade.exibir');
+    Route::post('relatorio/requisicao/resumo/exibir', 'RelatorioController@porDataResultados')->name('relatorio.requisicao.resumo.exibir');
     Route::get('relatorio/requisicao/resumo/{requisicao}', 'RelatorioController@requisicaoResumo');
-
 });
-
 /**
  *
  *      Licitação
@@ -200,13 +194,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('licitacao/visualizar/{licitacao}', 'LicitacaoController@view')->name('licitacao.view');
     Route::get('licitacao/pesquisar', 'LicitacaoController@search')->name('licitacao.search');
 });
-
 /**
  *
  *      RELACIONAR PRODUTOS EM LICITAÇÃO
  *
  */
-
 Route::group(['middleware' => 'web'], function () {
     Route::get('licitacao/vincular', 'LicitacaoProdutoController@index')->name('licitacao.vincular');
     Route::get('licitacao/vincular/cadastrar/{licitacao}', 'LicitacaoProdutoController@cadastrar')->name('licitacao.vincular.create');
@@ -223,7 +215,7 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' => 'web'], function () {
     Route::get('requisicao', 'RequisicaoController@index');
     Route::get('requisicao/cadastrar', 'RequisicaoController@cadastrar');
-    Route::patch('requisicao/update/{requisicao}','RequisicaoController@update');
+    Route::patch('requisicao/update/{requisicao}', 'RequisicaoController@update');
     Route::post('requisicao/insert', 'RequisicaoController@insert');
     Route::get('requisicao/editar/{requisicao}', 'RequisicaoController@editar');
     Route::get('requisicao/search', 'RequisicaoController@search');

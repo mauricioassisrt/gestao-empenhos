@@ -24,7 +24,7 @@
                 Informe no máximo um intervalo de 31 dias entre as datas !
               </div>
 
-            {!! Form::open(['route' => 'relatorio.requisicao.unidade.exibir', 'method' => 'post']) !!}
+            {!! Form::open(['route' => 'relatorio.requisicao.resumo.exibir', 'method' => 'post']) !!}
             <div class="row">
 
 

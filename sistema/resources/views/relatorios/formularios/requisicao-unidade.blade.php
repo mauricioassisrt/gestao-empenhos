@@ -63,6 +63,13 @@
     <script src="{{ asset('js/select2.full.min.js') }}"></script>
     <!-- mask de telefone -->
     <script src=" {{ asset('js/jquery.inputmask.min.js') }}"></script>
+    <!-- CALENDARIo-->
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- TOAST SWEETALERT -->
+    <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
+    <script src=" {{ asset('js/toastr.min.js') }}"></script>
+    <!-- FIM TOAST SWEETALERT  -->
     <script type="text/javascript">
         $(document).ready(function() {
             //chama a mascara do campo de telefone
@@ -78,6 +85,11 @@
                 theme: 'bootstrap4'
             })
         });
+
+        @if (session('status'))
+            toastr.warning( "{{ session()->get('status') }}" );
+
+        @endif
 
     </script>
 @endsection
