@@ -52,8 +52,8 @@
 @section('rodape')
 
     <!-- CALENDARIo-->
-    <script src="/js/moment.min.js"></script>
-    <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <!-- TOAST SWEETALERT -->
     <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
     <script src=" {{ asset('js/toastr.min.js') }}"></script>
