@@ -31,7 +31,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>Selecione a Secretaria na qual a Unidade pertence </label>
-                    <select name="secretaria_id" class="form-control select2" style="width: 100%;">
+                    <select name="secretaria_id" class="form-control select2" style="width: 100%;" required>
                         @if (Request::is('*/editar/*'))
                             <option value="{{ $unidade->secretaria->id }}">
                                 {{ $unidade->secretaria->nome }}
