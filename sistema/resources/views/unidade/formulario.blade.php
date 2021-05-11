@@ -88,7 +88,7 @@
                     </div>
                     <div class="col-sm-9">
                         <label>Rua:<b class="text-danger">*</b></label></label>
-                        <input name="endereco" type="text" id="rua" size="60" class="form-control" @if (Request::is('*/editar/*')) value="{{ $unidade->rua }}" @endif />
+                        <input name="endereco" type="text" id="rua" size="60" required class="form-control" @if (Request::is('*/editar/*')) value="{{ $unidade->endereco }}" @endif />
                     </div>
                 </div>
                 <div class="row">
