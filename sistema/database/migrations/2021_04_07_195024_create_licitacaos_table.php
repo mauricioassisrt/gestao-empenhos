@@ -18,10 +18,7 @@ class CreateLicitacaosTable extends Migration
             $table->string('ano');
             $table->integer('numero_licitacao');
             $table->string('modalidade');
-            $table->string('pregoeiro')->nullable();
             $table->string('pregao');
-            $table->string('fonte_recurso')->nullable();
-            $table->string('reduzido')->nullable();
             $table->double('total_produtos', 8, 2)->nullable();
             $table->double('valor_final', 8, 2)->nullable();
             $table->timestamps();
@@ -35,6 +32,5 @@ class CreateLicitacaosTable extends Migration
      */
     public function down()
     {
-
     }
 }
