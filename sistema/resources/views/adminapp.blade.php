@@ -264,7 +264,7 @@ $empresa = Empresa::all();
                                         @endcan
 
                                         @can('View_licitacao')
-                                            <a href="{{ url('/licitacao') }}" class="nav-link active">
+                                            <a href="{{ url('/licitacao/vincular') }}" class="nav-link active">
                                                 <i class="fas fa-gavel nav-icon"></i>
                                                 <p>Licitação</p>
                                             </a>
