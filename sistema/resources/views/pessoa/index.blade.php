@@ -66,7 +66,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+            <table class="table table-hover text-nowrap projects">
 
                 <thead>
                     <tr>
@@ -105,8 +105,14 @@
                                 @if ($pessoa->foto_pessoa == null)
                                     Sem foto
                                 @else
-                                    <img src="{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <img src="{{ $pessoa->foto_pessoa }}" alt="Img" class="table-avatar"
                                         width="40px" height="40px" />
+                                    </li>
+                                </ul>
+
+
                                 @endif
 
                             </td>
@@ -119,8 +125,8 @@
                                 @else
                                     @foreach ($secretarias as $secretaria)
                                         @if ($secretaria->id == $pessoa->secretaria_id)
+                                        <span class="badge badge-success"> Secretario de {{ $secretaria->nome }}</span>
 
-                                            <span class="card bg-success"> Secretario de {{ $secretaria->nome }}</span>
                                         @endif
                                     @endforeach
                                 @endif

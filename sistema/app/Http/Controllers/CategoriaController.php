@@ -76,6 +76,7 @@ class CategoriaController extends Controller
 
     public function deletar($id)
     {
+       try {
         if (Gate::allows('Delete_categoria')) {
             $categoria = Categoria::findOrFail($id);
             $categoria->delete();
@@ -83,6 +84,9 @@ class CategoriaController extends Controller
         } else {
             return view('errors.sem_permissao');
         }
+       } catch (\Throwable $th) {
+         return view('errors.404');
+       }
     }
 
     public function search(Request $request)
