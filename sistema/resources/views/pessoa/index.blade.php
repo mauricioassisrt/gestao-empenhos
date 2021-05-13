@@ -74,6 +74,11 @@
                         <th>
                             #
                         </th>
+                        @can('Autentica_user')
+                            <th>
+                                Autenticar
+                            </th>
+                        @endcan
                         <th>
                             Nome
                         </th>
@@ -100,17 +105,24 @@
 
                     @foreach ($pessoas as $pessoa)
                         <tr>
+                            @can('Autentica_user')
+                                <td>
 
+                                    <a href="{{ url('autenticar/' . $pessoa->user_id) }}" class="btn btn-success"><span
+                                            class="fa fa-key"> </span> </a>
+
+                                </td>
+                            @endcan
                             <td>
                                 @if ($pessoa->foto_pessoa == null)
                                     Sem foto
                                 @else
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <img src="{{ $pessoa->foto_pessoa }}" alt="Img" class="table-avatar"
-                                        width="40px" height="40px" />
-                                    </li>
-                                </ul>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <img src="{{ $pessoa->foto_pessoa }}" alt="Img" class="table-avatar"
+                                                width="40px" height="40px" />
+                                        </li>
+                                    </ul>
 
 
                                 @endif
@@ -125,7 +137,8 @@
                                 @else
                                     @foreach ($secretarias as $secretaria)
                                         @if ($secretaria->id == $pessoa->secretaria_id)
-                                        <span class="badge badge-success"> Secretario de {{ $secretaria->nome }}</span>
+                                            <span class="badge badge-success"> Secretario de
+                                                {{ $secretaria->nome }}</span>
 
                                         @endif
                                     @endforeach
@@ -185,133 +198,179 @@
 
                                 @endcan
                                 @if ($pessoa->secretaria_id == null)
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-secretario-{{ $pessoa->id }}"
-                                        title="Definir como Secretário(a) Municipal "><span></span> <i
-                                            class="fas fa-university nav-icon"></i>
 
+                                    @foreach ($pessoasUnidades as $pessoaUnidade)
+                                        @if ($pessoaUnidade->pessoa_id == $pessoa->id)
+                                            <span class="right badge badge-danger"> Possui unidade vinculada</span>
+                                        @break;
+                                    @else
+                                        <a href="" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#modal-secretario-{{ $pessoa->id }}"
+                                            title="Definir como Secretário(a) Municipal "><span></span> <i
+                                                class="fas fa-university nav-icon"></i>
+
+                                        </a>
+
+                                    @break;
+                                @endif
+                    @endforeach
+                    @endif
+                    @if ($pessoa->secretaria_id != null)
+
+                        <a href="" class="btn btn-primary" data-toggle="modal"
+                            data-target="#modal-secretario-remover-{{ $pessoa->id }}"
+                            title="Remover Secretário(a) Municipal "><span></span> <i
+                                class="fas fa-window-close nav-icon"></i>
+                    @endif
+                    </a>
+                    </td>
+
+                    </tr>
+
+                    <div class="modal fade" id="modal-default-{{ $pessoa->id }}" style="display: none;" tabindex='-1'
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Deseja excluir esse registro ?</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Tem certeza que deseja excluir esta pessoa {{ $pessoa->name }}</p>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                    <a href="{{ url('pessoas/deletar/' . $pessoa->id) }}" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i>
+                                        Sim
                                     </a>
-                                @endif
-                                @if ($pessoa->secretaria_id != null)
 
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-secretario-remover-{{ $pessoa->id }}"
-                                        title="Remover Secretário(a) Municipal "><span></span> <i
-                                            class="fas fa-window-close nav-icon"></i>
-                                @endif
-                                </a>
-                            </td>
 
-                        </tr>
-
-                        <div class="modal fade" id="modal-default-{{ $pessoa->id }}" style="display: none;" tabindex='-1'
-                            aria-hidden="true">
-                            <div class="modal-dialog">
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal-redefinir senha -->
+                    <div class="modal fade" id="modal-redefinir-senha-{{ $pessoa->id }}" style="display: none;"
+                        tabindex='-1' aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form method="POST" action="{{ route('pessoas.redefinirSenha') }}"
+                                aria-label="{{ __('Reset Password') }}">
+                                {{ csrf_field() }}
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Deseja excluir esse registro ?</h4>
+                                        <h5 class="modal-title">Deseja enviar um e-mail de redefinição de senha para a
+                                            pesssoa ?</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Tem certeza que deseja excluir esta pessoa {{ $pessoa->name }}</p>
+                                        <p>Tem certeza que deseja enviar um email de redefinição de senha para esta
+                                            pessoa {{ $pessoa->name }}</p>
+                                        <input id="email" type="email" disabled
+                                            class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                            name="email" value="{{ $pessoa->users->email }}" required>
+
                                     </div>
                                     <div class="modal-footer justify-content-between">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                        <a href="{{ url('pessoas/deletar/' . $pessoa->id) }}" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i>
-                                            Sim
-                                        </a>
+                                        <button type="submit" class="btn btn-success ">
+                                            {{ __('Recuperar E-mail') }}
+                                        </button>
 
 
                                     </div>
                                 </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
+                            </form>
+                            <!-- /.modal-content -->
                         </div>
-                        <!-- /.modal-redefinir senha -->
-                        <div class="modal fade" id="modal-redefinir-senha-{{ $pessoa->id }}" style="display: none;"
-                            tabindex='-1' aria-hidden="true">
-                            <div class="modal-dialog">
-                                <form method="POST" action="{{ route('pessoas.redefinirSenha') }}"
-                                    aria-label="{{ __('Reset Password') }}">
-                                    {{ csrf_field() }}
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Deseja enviar um e-mail de redefinição de senha para a
-                                                pesssoa ?</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Tem certeza que deseja enviar um email de redefinição de senha para esta
-                                                pessoa {{ $pessoa->name }}</p>
-                                            <input id="email" type="email" disabled
-                                                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                                name="email" value="{{ $pessoa->users->email }}" required>
+                        <!-- /.modal-dialog -->
+                    </div>
 
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default"
-                                                data-dismiss="modal">Fechar</button>
-                                            <button type="submit" class="btn btn-success ">
-                                                {{ __('Recuperar E-mail') }}
-                                            </button>
+                    <!--MODAL VINCULO SECRETARIo -->
+                    <div class="modal fade" id="modal-secretario-{{ $pessoa->id }}" style="display: none;" tabindex='-1'
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            {!! Form::model($pessoa, ['method' => 'POST', 'url' => 'pessoas/vincularSecretaria/' . $pessoa->id]) !!}
+
+                            <div class="modal-content">
+                                <!-- CABEÇALHO  -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Escolha uma Secretaria ?</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <!-- CONTEUDO -->
+                                <div class="modal-body">
 
 
-                                        </div>
-                                    </div>
-                                </form>
-                                <!-- /.modal-content -->
+
+                                    <label>Escolha a Secretaria na qual deseja definir para o secretário(a) </label>
+                                    <select name="secretaria_id" class="form-control secretaria" style="width: 100%;">
+                                        @foreach ($secretarias as $secretaria)
+
+
+                                            <option value="{{ $secretaria->id }}">
+
+                                                {{ $secretaria->nome }}
+                                            </option>
+
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                                <!-- RODA PE DIALOG -->
+                                <div class="modal-footer justify-content-between">
+
+                                    <a href="" class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times-circle" data-dismiss="modal"></i>
+                                        Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-success float-right" id="resumo"> <i
+                                            class=" fas fa-pen-alt"></i> Atualizar </button>
+
+
+                                </div>
+                                {!! Form::close() !!}
                             </div>
-                            <!-- /.modal-dialog -->
+                            <!-- /.modal-content -->
                         </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!--MODAL REMOVE  VINCULO SECRETARIo -->
+                    <div class="modal fade" id="modal-secretario-remover-{{ $pessoa->id }}" style="display: none;"
+                        tabindex='-1' aria-hidden="true">
+                        <div class="modal-dialog">
+                            {!! Form::model($pessoa, ['method' => 'POST', 'url' => 'pessoas/vincularSecretaria/' . $pessoa->id]) !!}
 
-                        <!--MODAL VINCULO SECRETARIo -->
-                        <div class="modal fade" id="modal-secretario-{{ $pessoa->id }}" style="display: none;"
-                            tabindex='-1' aria-hidden="true">
-                            <div class="modal-dialog">
-                                {!! Form::model($pessoa, ['method' => 'POST', 'url' => 'pessoas/vincularSecretaria/' . $pessoa->id]) !!}
-
-                                <div class="modal-content">
-                                    <!-- CABEÇALHO  -->
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Escolha uma Secretaria ?</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <!-- CONTEUDO -->
-                                    <div class="modal-body">
-
-
-
-                                        <label>Escolha a Secretaria na qual deseja definir para o secretário(a) </label>
-                                        <select name="secretaria_id" class="form-control secretaria" style="width: 100%;">
-                                            @foreach ($secretarias as $secretaria)
-
-
-                                                <option value="{{ $secretaria->id }}">
-
-                                                    {{ $secretaria->nome }}
-                                                </option>
-
-                                            @endforeach
-
-                                        </select>
-                                    </div>
+                            <div class="modal-content">
+                                <!-- CABEÇALHO  -->
+                                <div class="modal-header">
+                                    <h6 class="modal-title">Atenção ?</h6>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <!-- CONTEUDO -->
+                                <div class="modal-body">
+                                    <input type="hidden" name="secretaria_id" value="" </div>
+                                    <h4> <b> Tem certeza que deseja remover {{ $pessoa->name }} de secretário(a)
+                                            municipal ? </b></h4>
                                     <!-- RODA PE DIALOG -->
-                                    <div class="modal-footer justify-content-between">
+                                    <div class="modal-footer ">
 
                                         <a href="" class="btn btn-primary" data-dismiss="modal">
                                             <i class="fas fa-times-circle" data-dismiss="modal"></i>
                                             Cancelar
                                         </a>
-                                        <button type="submit" class="btn btn-success float-right" id="resumo"> <i
-                                                class=" fas fa-pen-alt"></i> Atualizar </button>
+                                        <button type="submit" class="btn btn-danger float-right" id="resumo"> <i
+                                                class=" fas fa-trash"></i> Remover </button>
 
 
                                     </div>
@@ -321,44 +380,7 @@
                             </div>
                             <!-- /.modal-dialog -->
                         </div>
-                        <!--MODAL REMOVE  VINCULO SECRETARIo -->
-                        <div class="modal fade" id="modal-secretario-remover-{{ $pessoa->id }}" style="display: none;"
-                            tabindex='-1' aria-hidden="true">
-                            <div class="modal-dialog">
-                                {!! Form::model($pessoa, ['method' => 'POST', 'url' => 'pessoas/vincularSecretaria/' . $pessoa->id]) !!}
-
-                                <div class="modal-content">
-                                    <!-- CABEÇALHO  -->
-                                    <div class="modal-header">
-                                        <h6 class="modal-title">Atenção ?</h6>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <!-- CONTEUDO -->
-                                    <div class="modal-body">
-                                        <input type="hidden" name="secretaria_id" value="" </div>
-                                        <h4> <b> Tem certeza que deseja remover {{ $pessoa->name }} de secretário(a)
-                                                municipal ? </b></h4>
-                                        <!-- RODA PE DIALOG -->
-                                        <div class="modal-footer ">
-
-                                            <a href="" class="btn btn-primary" data-dismiss="modal">
-                                                <i class="fas fa-times-circle" data-dismiss="modal"></i>
-                                                Cancelar
-                                            </a>
-                                            <button type="submit" class="btn btn-danger float-right" id="resumo"> <i
-                                                    class=" fas fa-trash"></i> Remover </button>
-
-
-                                        </div>
-                                        {!! Form::close() !!}
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                        </div>
+                    </div>
                     @endforeach
 
                 </tbody>
@@ -369,30 +391,30 @@
         </div>
     </div>
 
-@section('rodape')
-    <!-- TOAST SWEETALERT -->
-    <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
-    <script src=" {{ asset('js/toastr.min.js') }}"></script>
-    <!-- FIM TOAST SWEETALERT  -->
-    <!-- SELECT2 -->
-    <script src="{{ asset('js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-switch.min.js') }}"></script>
+    @section('rodape')
+        <!-- TOAST SWEETALERT -->
+        <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
+        <script src=" {{ asset('js/toastr.min.js') }}"></script>
+        <!-- FIM TOAST SWEETALERT  -->
+        <!-- SELECT2 -->
+        <script src="{{ asset('js/select2.full.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-switch.min.js') }}"></script>
 
-    <script>
-        $('.secretaria').select2()
-        //toast alert
-        @if (session('status'))
-            toastr.success( "{{ session()->get('status') }}" );
+        <script>
+            $('.secretaria').select2()
+            //toast alert
+            @if (session('status'))
+                toastr.success( "{{ session()->get('status') }}" );
 
-        @endif
-        @if (session('remove'))
-            toastr.info( "{{ session()->get('remove') }}" );
+            @endif
+            @if (session('remove'))
+                toastr.info( "{{ session()->get('remove') }}" );
 
-        @endif
-        $("input[data-bootstrap-switch]").each(function() {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        })
+            @endif
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
 
-    </script>
-@endsection
+        </script>
+    @endsection
 @endsection

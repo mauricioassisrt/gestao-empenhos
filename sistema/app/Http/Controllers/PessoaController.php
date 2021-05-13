@@ -39,8 +39,8 @@ class PessoaController extends Controller
                 $titulo = "Pessoas  ";
                 $pessoas = Pessoa::paginate(10);
                 $secretarias = Secretaria::all();
-
-                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias'));
+                $pessoasUnidades = PessoaUnidade::all();
+                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias', 'pessoasUnidades'));
             } else {
                 $titulo = "SEM ACESSO ";
 
@@ -282,6 +282,7 @@ class PessoaController extends Controller
     {
 
         $credentials = ['email' => $request->email];
+
         $response = Password::sendResetLink($credentials, function (Message $message) {
             $message->subject($this->getEmailSubject());
         });
@@ -289,9 +290,9 @@ class PessoaController extends Controller
         switch ($response) {
             case Password::RESET_LINK_SENT:
 
-                return redirect('/pessoas')->with('status', trans($response));
+                return redirect('/pessoas')->with('status', 'Enviado! !!!');
             case Password::INVALID_USER:
-                return redirect('/pessoas')->with('email', trans($response));
+                return redirect('/pessoas')->with('status', 'Erro!!');
         }
     }
 
@@ -365,4 +366,27 @@ class PessoaController extends Controller
             return view('errors.404');
         }
     }
+    /*
+        Autenticar Usuario
+    */
+    public function autenticar($id) {
+
+        //verifico se o usuario possui a permissão de autenticação
+        if (Gate::allows('Autentica_user')) {
+            if ($id == auth()->user()->id) {
+                \Session::flash('autentica_ok', 'Usuário já está logado!');
+                return Redirect::to('users');
+            } else {
+                //metodo nativo auth no qual passa o ID desejado
+                Auth::loginUsingId($id);
+                //redireciona para a pagina
+                \Session::flash('autentica_ok', 'Seja bem vindo !!');
+                return Redirect::to('dashboard');
+            }
+        } else {
+            \Session::flash('autentica_ok', 'Erro Sem permissão!');
+            return Redirect::to('dashboard');
+        }
+    }
+
 }

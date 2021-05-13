@@ -130,13 +130,13 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            @can('vincular_unidade')
-                <a href="{{ url('/pessoas') }}" class="btn btn-primary">
 
-                    <i class="fas fa-arrow-left"></i> Voltar </a>
-            @endcan
 
-            <button class='btn btn-primary'><i class=" fas fa-plus"></i> Vincular Unidade selecionada </button>
+
+            <a href="{{ url('/pessoas') }}" class="btn btn-primary">
+
+                <i class="fas fa-arrow-left"></i> Voltar </a>
+            <button class='btn btn-success'><i class=" fas fa-plus"></i> Vincular Unidade selecionada </button>
 
         </div>
         {!! Form::close() !!}
