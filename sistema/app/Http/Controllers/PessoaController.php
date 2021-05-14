@@ -39,8 +39,8 @@ class PessoaController extends Controller
                 $titulo = "Pessoas  ";
                 $pessoas = Pessoa::paginate(10);
                 $secretarias = Secretaria::all();
-                $pessoasUnidades = PessoaUnidade::all();
-                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias', 'pessoasUnidades'));
+
+                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias', ));
             } else {
                 $titulo = "SEM ACESSO ";
 
