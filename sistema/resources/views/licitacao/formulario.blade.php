@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-sm-4">
                     <label>Modalidade</label>
-                    <select class="form-control" name="modalidade" id="modalidade">
+                    <select class="form-control" name="modalidade" id="modalidade" required>
                         <option  @if (Request::is('*/editar/*')) value="{{ $licitacao->modalidade }}" @endif selected="selected" >@if (Request::is('*/editar/*')){{ $licitacao->modalidade }}@endif</option>
                         <option value="Concorrência">Concorrência</option>
                         <option value="Tomada de preços">Tomada de preços</option>
@@ -60,26 +60,7 @@
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <label>Pregoeiro </label>
-                    <input type="text" class="form-control" placeholder="Digite somente o ano " max="4" min="4"
-                        name="pregoeiro" @if (Request::is('*/editar/*')) value="{{ $licitacao->pregoeiro }}" @endif >
 
-                </div>
-                <div class="col-sm-4">
-                    <label>Fonte do Recurso </label>
-                    <input type="numeric" class="form-control"  placeholder="Exemplo 405 " max="10"
-                        min="1" name="fonte_recurso" @if (Request::is('*/editar/*')) value="{{ $licitacao->fonte_recurso }}" @endif required>
-
-                </div>
-                <div class="col-sm-4">
-                    <label>Reduzido</label>
-                    <input type="text" class="form-control"
-                        name="reduzido" @if (Request::is('*/editar/*')) value="{{ $licitacao->reduzido }}" @endif required>
-
-                </div>
-            </div>
 
         </div>
         <div class="card-footer clearfix">

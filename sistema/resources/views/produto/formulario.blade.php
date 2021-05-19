@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label>Categoria</label>
-                <select name="categoria_id" class="form-control select2" style="width: 100%;">
+                <select name="categoria_id" class="form-control select2" style="width: 100%;" required>
                     @if (Request::is('*/editar/*'))
                         <option value="{{ $produto->categoria->id }}">
                             {{ $produto->categoria->nome_categoria }}

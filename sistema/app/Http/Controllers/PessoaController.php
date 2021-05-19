@@ -40,7 +40,7 @@ class PessoaController extends Controller
                 $pessoas = Pessoa::paginate(10);
                 $secretarias = Secretaria::all();
 
-                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias'));
+                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias', ));
             } else {
                 $titulo = "SEM ACESSO ";
 
@@ -176,14 +176,14 @@ class PessoaController extends Controller
 
                     $pessoa->update($request->all());
                     return redirect('pessoas')->with('status', 'Definido o secretário com sucesso !');
-                }  else {
+                } else {
                     $titulo = "SEM ACESSO ";
                     return view('errors.sem_permissao', compact('titulo'));
                 }
-            }else if ($pessoa->secretaria_id != null) {
+            } else if ($pessoa->secretaria_id != null) {
                 $pessoa->update($request->all());
                 return redirect('pessoas')->with('remove', 'Apagado com sucesso !!');
-            }else{
+            } else {
                 return redirect('pessoas')->with('remove', 'Atenção essa secretária já está vinculado a outro secretário(a) !');
             }
         } catch (\Throwable $th) {
@@ -242,7 +242,9 @@ class PessoaController extends Controller
                 $pessoas = new Pessoa();
                 $search = $request->get('table_search');
                 $pessoas = Pessoa::where('name', 'like', '%' . $search . '%')->paginate(10);
-                return view('pessoa.index', compact('titulo', 'pessoas'));
+                $secretarias = Secretaria::all();
+
+                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias'));
             } else {
                 return view('errors.404', compact('titulo'));
             }
@@ -280,6 +282,7 @@ class PessoaController extends Controller
     {
 
         $credentials = ['email' => $request->email];
+
         $response = Password::sendResetLink($credentials, function (Message $message) {
             $message->subject($this->getEmailSubject());
         });
@@ -287,9 +290,9 @@ class PessoaController extends Controller
         switch ($response) {
             case Password::RESET_LINK_SENT:
 
-                return redirect('/pessoas')->with('status', trans($response));
+                return redirect('/pessoas')->with('status', 'Enviado! !!!');
             case Password::INVALID_USER:
-                return redirect('/pessoas')->with('email', trans($response));
+                return redirect('/pessoas')->with('status', 'Erro!!');
         }
     }
 
@@ -363,4 +366,27 @@ class PessoaController extends Controller
             return view('errors.404');
         }
     }
+    /*
+        Autenticar Usuario
+    */
+    public function autenticar($id) {
+
+        //verifico se o usuario possui a permissão de autenticação
+        if (Gate::allows('Autentica_user')) {
+            if ($id == auth()->user()->id) {
+                \Session::flash('autentica_ok', 'Usuário já está logado!');
+                return Redirect::to('users');
+            } else {
+                //metodo nativo auth no qual passa o ID desejado
+                Auth::loginUsingId($id);
+                //redireciona para a pagina
+                \Session::flash('autentica_ok', 'Seja bem vindo !!');
+                return Redirect::to('dashboard');
+            }
+        } else {
+            \Session::flash('autentica_ok', 'Erro Sem permissão!');
+            return Redirect::to('dashboard');
+        }
+    }
+
 }

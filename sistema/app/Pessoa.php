@@ -18,4 +18,9 @@ class Pessoa extends Model
     {
         return $this->belongsTo(Secretaria::class, 'secretaria_id' );
     }
+
+    public function pessoaUnidades()
+    {
+        return $this->hasMany('App\PessoaUnidade');
+    }
 }

@@ -290,6 +290,11 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'finalizar_requisicao',
                 'label' => 'É possível finalizar uma requisição '
             ],
+            [
+                'name' => 'Autentica_user',
+                'label' => 'Habilita a autenticação de qualquer usuario cadastrado no sistema  '
+            ],
+
 
         );
         foreach ($permissions as $key => $value) {
@@ -831,6 +836,10 @@ class PermissionTableSeeder extends Seeder
             [
                 'permission_id' => '5',
                 'role_id' => '2'
+            ],
+            [
+                'permission_id' => '68',
+                'role_id' => '1'
             ],
         );
         foreach ($permission_roles as $key => $value) {

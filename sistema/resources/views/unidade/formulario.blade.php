@@ -31,7 +31,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>Selecione a Secretaria na qual a Unidade pertence </label>
-                    <select name="secretaria_id" class="form-control select2" style="width: 100%;">
+                    <select name="secretaria_id" class="form-control select2" style="width: 100%;" required>
                         @if (Request::is('*/editar/*'))
                             <option value="{{ $unidade->secretaria->id }}">
                                 {{ $unidade->secretaria->nome }}
@@ -88,7 +88,7 @@
                     </div>
                     <div class="col-sm-9">
                         <label>Rua:<b class="text-danger">*</b></label></label>
-                        <input name="endereco" type="text" id="rua" size="60" class="form-control" @if (Request::is('*/editar/*')) value="{{ $unidade->rua }}" @endif />
+                        <input name="endereco" type="text" id="rua" size="60" required class="form-control" @if (Request::is('*/editar/*')) value="{{ $unidade->endereco }}" @endif />
                     </div>
                 </div>
                 <div class="row">

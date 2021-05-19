@@ -2,9 +2,9 @@
 @section('topo')
     <!-- DATA TIME PICKER Style -->
 
-    <link rel="stylesheet" href="/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- toast CSS-->
-    <link rel="stylesheet" href="/css/toastr.min.css">
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -18,9 +18,13 @@
 
         </div>
         <div class="card-body">
+            <div class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-info"></i> Informação !</h5>
+                Informe no máximo um intervalo de 31 dias entre as datas !
+              </div>
 
-
-            {!! Form::open(['route' => 'relatorio.requisicao.unidade.exibir', 'method' => 'post']) !!}
+            {!! Form::open(['route' => 'relatorio.requisicao.resumo.exibir', 'method' => 'post']) !!}
             <div class="row">
 
 
@@ -48,8 +52,8 @@
 @section('rodape')
 
     <!-- CALENDARIo-->
-    <script src="/js/moment.min.js"></script>
-    <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/tempusdominus-bootstrap-4.min.js')}}"></script>
     <!-- TOAST SWEETALERT -->
     <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
     <script src=" {{ asset('js/toastr.min.js') }}"></script>

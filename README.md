@@ -3,7 +3,7 @@
 ## Install Project Caso seja o primeiro clone rodar o comando composer update 
 
 ## 1° Copie o arquivo env.example 
-cp .env.example .env
+ cp .env.example .env
 ## 2° Caso haja necessidade 
  exculte o comando para gerar uma nova key 
 ```shell php artisan key:generate ```

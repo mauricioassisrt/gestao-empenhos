@@ -17,7 +17,7 @@ class CreateProdutosTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('descricao');
-            $table->integer('categoria_id')->unsigned()->nullable();
+            $table->integer('categoria_id')->unsigned();
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->timestamps();
         });

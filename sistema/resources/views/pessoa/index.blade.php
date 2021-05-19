@@ -66,7 +66,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+            <table class="table table-hover text-nowrap projects">
 
                 <thead>
                     <tr>
@@ -74,6 +74,11 @@
                         <th>
                             #
                         </th>
+                        @can('Autentica_user')
+                            <th>
+                                Autenticar
+                            </th>
+                        @endcan
                         <th>
                             Nome
                         </th>
@@ -100,13 +105,26 @@
 
                     @foreach ($pessoas as $pessoa)
                         <tr>
+                            @can('Autentica_user')
+                                <td>
 
+                                    <a href="{{ url('autenticar/' . $pessoa->user_id) }}" class="btn btn-success"><span
+                                            class="fa fa-key"> </span> </a>
+
+                                </td>
+                            @endcan
                             <td>
-                                @if (!$pessoa->foto_pessoa)
+                                @if ($pessoa->foto_pessoa == null)
                                     Sem foto
                                 @else
-                                    <img src="{{ $pessoa->foto_pessoa }}" alt="Product 1" class="img-circle mr-2"
-                                        width="40px" height="40px" />
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <img src="{{ $pessoa->foto_pessoa }}" alt="Img" class="table-avatar"
+                                                width="40px" height="40px" />
+                                        </li>
+                                    </ul>
+
+
                                 @endif
 
                             </td>
@@ -115,12 +133,18 @@
                             </td>
                             <td>
                                 @if ($pessoa->secretaria_id == null)
-                                    Sem vinculo a nenhuma secretaria
+                                    @if ($pessoa->pessoaUnidades()->count() >= 1)
+                                        <span class="right badge badge-danger"> Possui unidade vinculada</span>
+                                    @else
+                                    <span class="right badge badge-primary">  Sem vinculo a nenhuma secretaria</span>
+
+                                    @endif
                                 @else
                                     @foreach ($secretarias as $secretaria)
                                         @if ($secretaria->id == $pessoa->secretaria_id)
+                                            <span class="badge badge-success"> Secretario de
+                                                {{ $secretaria->nome }}</span>
 
-                                            <span class="card bg-success">   Secretario de {{ $secretaria->nome }}</span>
                                         @endif
                                     @endforeach
                                 @endif
@@ -138,7 +162,7 @@
                             <td>
                                 @can('pessoa_edit')
 
-                                    <a href="{{ url('pessoas/editar/' . $pessoa->users->id) }}" class="btn btn-primary"
+                                    <a href="{{ url('pessoas/editar/' . $pessoa->users->id) }}" class="btn btn-success"
                                         title="Editar"><span class="glyphicon glyphicon-pencil">
                                         </span>
                                         <i class="fas fa-edit"></i> </a>
@@ -148,6 +172,14 @@
                                         title="Permissões">
 
                                         <i class="fas fa-eye"></i>
+                                    </a>
+                                @endcan
+                                @can('pessoa_delete')
+
+                                    <a href="" class="btn btn-danger " data-toggle="modal"
+                                        data-target="#modal-default-{{ $pessoa->id }}" title="Apagar"><span
+                                            class="glyphicon glyphicon-remove"> </span> <i class="fas fa-trash"></i>
+                                    </a>
                                     </a>
                                 @endcan
                                 @can('pessoa_vincular_unidade')
@@ -160,14 +192,7 @@
                                     @endif
                                 @endcan
 
-                                @can('pessoa_delete')
 
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-default-{{ $pessoa->id }}" title="Apagar"><span
-                                            class="glyphicon glyphicon-remove"> </span> <i class="fas fa-trash"></i>
-                                    </a>
-                                    </a>
-                                @endcan
                                 @can('pessoa_redefinir_senha')
 
 
@@ -179,12 +204,21 @@
 
                                 @endcan
                                 @if ($pessoa->secretaria_id == null)
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modal-secretario-{{ $pessoa->id }}"
-                                        title="Definir como Secretário(a) Municipal "><span></span> <i
-                                            class="fas fa-university nav-icon"></i>
 
-                                    </a>
+
+                                    @if ($pessoa->pessoaUnidades()->count() <= 0)
+                                        <a href="" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#modal-secretario-{{ $pessoa->id }}"
+                                            title="Definir como Secretário(a) Municipal "><span></span> <i
+                                                class="fas fa-university nav-icon"></i>
+
+                                        </a>
+
+
+
+                                    @endif
+
+
                                 @endif
                                 @if ($pessoa->secretaria_id != null)
 
