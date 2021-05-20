@@ -58,9 +58,9 @@
                 <hr />
                 <button class="btn btn-lg btn-success btn-block" type="submit"> <i class="fas fa-sign-in-alt"></i>
                     Entrar</button>
-                {{--  <a class="btn btn-link" href="{{ route('password.request') }}">
+                <a class="btn btn-link" href="{{ route('password.request') }}">
                     {{ __('Esqueceu a senha?') }}
-                </a>  --}}
+                </a>
 
 
             </form>

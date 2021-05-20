@@ -3,10 +3,10 @@
 
 return [
     'driver' => env('MAIL_DRIVER', 'smtp'),
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
-    'port' => env('MAIL_PORT', 587),
-    'from' => ['address' => 'evento.tads@gmail.com', 'name' => 'Admin'],
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'host' => env('MAIL_HOST', 'mail.syspublico.com.br'),
+    'port' => env('MAIL_PORT', 465),
+    'from' => ['address' => 'noreply@syspublico.com.br', 'name' => 'não responda'],
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
     'username' => env('MAIL_USERNAME'),
     'password' => env('MAIL_PASSWORD'),
     'sendmail' => '/usr/sbin/sendmail -bs',

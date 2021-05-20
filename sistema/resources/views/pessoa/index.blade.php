@@ -280,7 +280,7 @@
                                             <input id="email" type="email" disabled
                                                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                                 name="email" value="{{ $pessoa->users->email }}" required>
-
+                                                <input type="hidden" name="email" value="{{ $pessoa->users->email }}">
                                         </div>
                                         <div class="modal-footer justify-content-between">
                                             <button type="button" class="btn btn-default"

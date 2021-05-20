@@ -290,9 +290,10 @@ class PessoaController extends Controller
         switch ($response) {
             case Password::RESET_LINK_SENT:
 
-                return redirect('/pessoas')->with('status', 'Enviado! !!!');
+                return redirect('/pessoas')->with('status', '  E-mail enviado com sucesso!!  caso não encontrar nenhum e-mail na caixa de entrada,<br> favor verificar no span(lixo eletrônico)!!');
             case Password::INVALID_USER:
-                return redirect('/pessoas')->with('status', 'Erro!!');
+
+                return redirect('/pessoas')->with('status', 'Ocorreu um erro inesperado!!!');
         }
     }
 

@@ -15,7 +15,7 @@ $empresa = Empresa::all();
             <form method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
                 {{ csrf_field() }}
                 <div class="login-logo ">
-                    <img src="{{ $empresa[0]->foto_caminho }}" alt="" class="img_login" width="120px" height="30%" />
+                    <img src="/{{  $empresa[0]->foto_caminho  }}" alt="" class="img_login" width="120px" height="30%" />
                     <h5>
 
                         <br />
@@ -26,7 +26,8 @@ $empresa = Empresa::all();
                 <hr />
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
+                        E-mail enviado com sucesso!! <br>
+                        caso não encontrar nenhum e-mail na caixa de entrada,<br> favor verificar no span(lixo eletrônico)!
                     </div>
                 @endif
                 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
