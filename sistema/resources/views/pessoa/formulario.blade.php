@@ -63,11 +63,8 @@
                             <div class="form-group">
                                 <label>Data de nascimento :</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" name="data_nascimento" placeholder="dia-mes-ano"
-                                        data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask
+
+                                    <input type="date"  name="data_nascimento" class="form-control datepicker-input" data-target="#datainicio"
                                         @if (Request::is('*/editar/*')) value="{{ date('d/m/Y', strtotime($pessoa->data_nascimento)) }}" @endif>
                                 </div>
                             </div>
@@ -77,10 +74,14 @@
                         <div class="col-sm-3">
                             <label>Sexo</label>
                             <select class="custom-select " name="sexo">
-                                <option @if (Request::is('*/editar/*')) value="{{ $pessoa->sexo }}" >{{ $pessoa->sexo }} @endif </option>
+
+                                @if (Request::is('*/editar/*'))
+                                    <option value="{{ $pessoa->sexo }}">{{ $pessoa->sexo }} </option>
+                                @endif
+                                <option value="Prefiro não informar">Prefiro não informar</option>
                                 <option value="Feminino">Feminino </option>
                                 <option value="Masculino">Masculino </option>
-                                <option value="Prefiro não informar">Prefiro não informar</option>
+
                             </select>
                         </div>
                         <div class="col-sm-3">
@@ -89,7 +90,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control" name="celular"
+                                <input type="text" class="form-control" name="celular" required
                                     data-inputmask="'mask': ['(99) 9 9999-9999 ']" data-mask="" inputmode="text" @if (Request::is('*/editar/*')) value="{{ $pessoa->celular }}" @endif>
                             </div>
                         </div>
