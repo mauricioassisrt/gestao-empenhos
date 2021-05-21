@@ -52,16 +52,16 @@
                                 @can('Edit_licitacao')
 
                                     <a href="{{ route('licitacao.vincular.edit', ['licitacaoProduto' => $licitacao->id]) }}"
-                                        class="btn btn-primary">
+                                        class="btn btn-success">
                                         <span class="glyphicon glyphicon-pencil"> </span>
                                         <i class="fas fa-edit"></i>
-                                        Visualizar licitação
+                                        Visualizar
                                     </a>
 
                                     <a href="{{ route('licitacao.vincular.create', ['licitacao' => $licitacao->id]) }}"
                                         class="btn btn-primary ">
                                         <i class="fas fa-plus"></i>
-                                        Vincular produtos
+                                        Vincular
                                     </a>
                                 @endcan
                                 @can('Edit_licitacao')
@@ -69,14 +69,14 @@
                                     <a href="{{ route('licitacao.edit', ['licitacao' => $licitacao->id]) }}"
                                         class="btn btn-primary"><span class="glyphicon glyphicon-pencil">
                                         </span>
-                                        <i class="fas fa-edit"></i> Editar </a>
+                                        <i class="fas fa-edit"></i>  </a>
                                 @endcan
                                 @can('Delete_licitacao')
 
 
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
+                                    <a href="" class="btn btn-danger" data-toggle="modal"
                                         data-target="#modal-default-{{ $licitacao->id }}"><span
-                                            class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
+                                            class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i>
                                     </a>
                                     </a>
                                     <div class="modal fade" id="modal-default-{{ $licitacao->id }}" style="display: none;"

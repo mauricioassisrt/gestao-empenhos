@@ -87,14 +87,14 @@
                                     <a href="{{ url('unidade/editar/' . $unidade->id) }}" class="btn btn-primary"><span
                                             class="glyphicon glyphicon-pencil">
                                         </span>
-                                        <i class="fas fa-edit"></i> Editar </a>
+                                        <i class="fas fa-edit"></i>  </a>
                                 @endcan
                                 @can('Delete_unidade')
 
 
-                                    <a href="" class="btn btn-primary" data-toggle="modal"
+                                    <a href="" class="btn btn-danger" data-toggle="modal"
                                         data-target="#modal-default-{{ $unidade->id }}"><span
-                                            class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i> Apagar
+                                            class="glyphicon glyphicon-remove"></span> <i class="fas fa-trash"></i>
                                     </a>
                                     </a>
                                     <div class="modal fade" id="modal-default-{{ $unidade->id }}" style="display: none;"

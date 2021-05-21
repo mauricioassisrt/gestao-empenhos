@@ -12,26 +12,27 @@ class CategoriaSeeder extends Seeder
      */
     public function run()
     {
-        $categorias = array(
-            [
-                'nome_categoria' => 'Limpeza ',
+        // $categorias = array(
+        //     [
+        //         'nome_categoria' => 'Limpeza ',
 
-            ],
-            [
-                'nome_categoria' => 'Higiene',
+        //     ],
+        //     [
+        //         'nome_categoria' => 'Higiene',
 
-            ],
+        //     ],
 
-            [
-                'nome_categoria' => 'Alimentos',
+        //     [
+        //         'nome_categoria' => 'Alimentos',
 
-            ],
+        //     ],
 
-        );
+        // );
 
 
-        foreach ($categorias as $key => $value) {
-            Categoria::create($value);
-        }
+        // foreach ($categorias as $key => $value) {
+        //     Categoria::create($value);
+        // }
+        factory(Categoria::class, 100)->create();
     }
 }
