@@ -27,7 +27,7 @@
 
             <!-- /.box-header -->
             @if (Request::is('*/editar/*'))
-                {!! Form::model($secretaria, ['method' => 'PATCH', 'url' => 'categoria/update/' . $secretaria->id]) !!}
+                {!! Form::model($secretaria, ['method' => 'PATCH', 'url' => 'secretaria/update/' . $secretaria->id]) !!}
             @else
                 {!! Form::open(['url' => 'secretaria/insert']) !!}
             @endif

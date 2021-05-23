@@ -66,7 +66,7 @@ class RequisicaoController extends Controller
 
         try {
             if (Gate::allows('Insert_requisicao')) {
-                $titulo = "Novo cadastro de Requisicao ";
+                $titulo = " Requisição sem licitação vinculada!";
                 $unidades = Unidade::all();
                 $fornecedors = Fornecedor::all();
                 $pessoa_unidades = PessoaUnidade::all();
