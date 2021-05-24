@@ -19,11 +19,7 @@ class FornecedorController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         try {
@@ -31,7 +27,7 @@ class FornecedorController extends Controller
                 $titulo = "Fornecedores ";
                 $fornecedors = Fornecedor::paginate(20);
                 return view('fornecedor.index', compact('fornecedors', 'titulo'));
-            }else{
+            } else {
                 return view('errors.sem_permissao');
             }
         } catch (\Throwable $th) {
@@ -40,79 +36,79 @@ class FornecedorController extends Controller
     }
     public function cadastrar()
     {
-        if (Gate::allows('Insert_fornecedor')) {
-            $titulo = "Fornecedores ";
-            return view('fornecedor.formulario', compact('titulo'));
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Insert_fornecedor')) {
+                $titulo = "Fornecedores ";
+                return view('fornecedor.formulario', compact('titulo'));
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function insert(Request $request)
     {
-        if (Gate::allows('Insert_fornecedor')) {
-            Fornecedor::create($request->all());
-            return redirect('fornecedor');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Insert_fornecedor')) {
+                Fornecedor::create($request->all());
+                return redirect('fornecedor');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Fornecedor  $Fornecedor
-     * @return \Illuminate\Http\Response
-     */
+
     public function editar(Fornecedor $fornecedor)
     {
-        if (Gate::allows('Edit_fornecedor')) {
-            $fornecedor = Fornecedor::findOrFail($fornecedor->id);
-            $titulo = "Editar ";
-            return view('fornecedor.formulario', compact('fornecedor', 'titulo'));
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Edit_fornecedor')) {
+                $fornecedor = Fornecedor::findOrFail($fornecedor->id);
+                $titulo = "Editar ";
+                return view('fornecedor.formulario', compact('fornecedor', 'titulo'));
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Fornecedor  $Fornecedor
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        if (Gate::allows('Edit_fornecedor')) {
-            $fornecedor = Fornecedor::findOrFail($id);
-            $formRequest = $request->all();
-            $update =  $fornecedor->update($formRequest);
-            return redirect('fornecedor');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Edit_fornecedor')) {
+                $fornecedor = Fornecedor::findOrFail($id);
+                $formRequest = $request->all();
+                $update =  $fornecedor->update($formRequest);
+                return redirect('fornecedor');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Fornecedor  $Fornecedor
-     * @return \Illuminate\Http\Response
-     */
+
     public function deletar($id)
     {
-        if (Gate::allows('Delete_fornecedor')) {
-            $fornecedor = Fornecedor::findOrFail($id);
-            $fornecedor->delete();
-            return redirect('fornecedor');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Delete_fornecedor')) {
+                $fornecedor = Fornecedor::findOrFail($id);
+                $fornecedor->delete();
+                return redirect('fornecedor');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
 

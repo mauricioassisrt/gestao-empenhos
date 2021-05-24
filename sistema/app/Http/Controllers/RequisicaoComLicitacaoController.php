@@ -27,13 +27,9 @@ class RequisicaoComLicitacaoController extends Controller
         try {
             if (Gate::allows('Insert_requisicao')) {
                 $produtos = Produto::all();
-                // $collection = collect(LicitacaoProduto::all());
 
-                // $licitacaos = $collection->unique('licitacao_id');
-
-                // $licitacaos->values()->all();
                 $licitacaos = Licitacao::all();
-                $titulo = "Novo cadastro de Requisicao ";
+                $titulo = "Requisição com licitação vinculada ";
                 $unidades = Unidade::all();
                 $fornecedors = Fornecedor::all();
                 $pessoa_unidades = PessoaUnidade::all();

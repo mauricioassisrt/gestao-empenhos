@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-sm-9">
                         @if (Gate::allows('minhas_requisicoes'))
-                            <label>Pessoa e suas unidades </label>
+                            <label>Unidades vinculadas ao seu perfil  </label>
                             <select name="unidade_id" class="form-control unidade" style="width: 100%;" required>
                                 <option> </option>
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
@@ -62,13 +62,15 @@
 
                             </select>
                         @else
-                            <label>Pessoa e suas unidades </label>
-                            <select name="unidade_id" class="form-control unidade" style="width: 100%;" required>
-                                <option> </option>
-                                @foreach ($pessoa_unidades as $pessoa_unidade)
 
-                                    <option value="{{ $pessoa_unidade->unidade->id }}">
-                                        UNIDADE: {{ $pessoa_unidade->unidade->nome }}
+                            <label>Todas as Unidades </label>
+                            <select name="unidade_id" class="form-control unidade" style="width: 100%;">
+
+                                @foreach ($unidades as $unidade)
+
+                                    <option value="{{ $unidade->id }}">
+                                        Unidade {{ $unidade->nome }}/Secretaria
+                                        {{ $unidade->secretaria->nome }}
                                     </option>
 
                                 @endforeach
@@ -96,11 +98,7 @@
             </div>
 
             <hr>
-            <div class="  callout callout-success ">
-                <h5><b>Vamos escolher os produtos da requisição ? !!!</b> </h5>
 
-                <p> Basta informar a quantidade somente para montar a requisição </p>
-            </div>
             <div class="row" id="divProdutos">
                 <div class="col-sm-12">
                     <label>Selecione uma categoria para exibir os itens </label>

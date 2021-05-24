@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Licitacao;
 use Illuminate\Http\Request;
 use Gate;
+
 class LicitacaoController extends Controller
 {
     public function __construct()
@@ -75,12 +76,16 @@ class LicitacaoController extends Controller
 
     public function deletar($id)
     {
-        if (Gate::allows('Delete_licitacao')) {
-            $licitacao = Licitacao::findOrFail($id);
-            $licitacao->delete();
-            return redirect('licitacao.vincular');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Delete_licitacao')) {
+                $licitacao = Licitacao::findOrFail($id);
+                $licitacao->delete();
+                return redirect('licitacao.vincular');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            return view('errors.404');
         }
     }
 

@@ -14,10 +14,9 @@ $empresa= Empresa::all();
             <form method="POST" action="{{ route('password.request') }}" aria-label="{{ __('Reset Password') }}">
 
                 {{ csrf_field() }}
-                <!--          <img src="{{ url('https://img.icons8.com/cotton/2x/workers-male.png') }}" alt="" class="img_login"/>-->
 
                 <div class="login-logo ">
-                    <img src="{{ $empresa[0]->foto_caminho }}" alt="" class="img_login" width="120px" height="30%" />
+                    <img src="/{{  $empresa[0]->foto_caminho  }}" alt="" class="img_login" width="120px" height="30%" />
                     <h5>
 
                         <br />

@@ -18,11 +18,16 @@
 
         </div>
         <div class="card-body">
+            <div class=" alert alert-info alert-dismissible ">
 
+                <h5><i class="icon fas fa-info"></i> <b>Informações de localização da Secretária/Orgão</b> </h5>
+                <p> Ao digitar o CEP somente as outras informações são preenchidas de forma automática, ficando
+                    obrigatório informar o número somente </p>
+            </div>
 
             <!-- /.box-header -->
             @if (Request::is('*/editar/*'))
-                {!! Form::model($secretaria, ['method' => 'PATCH', 'url' => 'categoria/update/' . $secretaria->id]) !!}
+                {!! Form::model($secretaria, ['method' => 'PATCH', 'url' => 'secretaria/update/' . $secretaria->id]) !!}
             @else
                 {!! Form::open(['url' => 'secretaria/insert']) !!}
             @endif
@@ -48,12 +53,7 @@
                 </div>
 
                 <hr>
-                <div class="  callout callout-success ">
-                    <h5><b>Informações de localização da Secretária/Orgão</b> </h5>
 
-                    <p> Ao digitar o CEP somente as outras informações são preenchidas de forma automática, ficando
-                        obrigatório informar o número somente </p>
-                </div>
                 <div class="row">
                     <div class="col-sm-3">
 
@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-sm-9">
                         <label>Rua:<b class="text-danger">*</b></label></label>
-                        <input name="endereco" type="text" id="rua" size="60" required class="form-control" @if (Request::is('*/editar/*')) value="{{ $secretaria->enderecote }}" @endif />
+                        <input name="endereco" type="text" id="rua" size="60" required class="form-control" @if (Request::is('*/editar/*')) value="{{ $secretaria->endereco }}" @endif />
                     </div>
                 </div>
                 <div class="row">

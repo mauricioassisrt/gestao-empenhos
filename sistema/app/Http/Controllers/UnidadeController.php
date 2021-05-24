@@ -83,12 +83,17 @@ class UnidadeController extends Controller
 
     public function deletar($id)
     {
-        if (Gate::allows('Delete_unidade')) {
-            $unidade = Unidade::findOrFail($id);
-            $unidade->delete();
-            return redirect('unidade');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Delete_unidade')) {
+                $unidade = Unidade::findOrFail($id);
+                $unidade->delete();
+                return redirect('unidade');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            dd($th);
+            return view('errors.404');
         }
     }
 

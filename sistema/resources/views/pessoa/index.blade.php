@@ -136,7 +136,7 @@
                                     @if ($pessoa->pessoaUnidades()->count() >= 1)
                                         <span class="right badge badge-danger"> Possui unidade vinculada</span>
                                     @else
-                                    <span class="right badge badge-primary">  Sem vinculo a nenhuma secretaria</span>
+                                        <span class="right badge badge-primary"> Sem vinculo a nenhuma secretaria</span>
 
                                     @endif
                                 @else
@@ -175,12 +175,15 @@
                                     </a>
                                 @endcan
                                 @can('pessoa_delete')
+                                    @if (Auth::user()->id != $pessoa->user_id)
+                                        <a href="" class="btn btn-danger " data-toggle="modal"
+                                            data-target="#modal-default-{{ $pessoa->id }}" title="Apagar"><span
+                                                class="glyphicon glyphicon-remove"> </span> <i class="fas fa-trash"></i>
+                                        </a>
 
-                                    <a href="" class="btn btn-danger " data-toggle="modal"
-                                        data-target="#modal-default-{{ $pessoa->id }}" title="Apagar"><span
-                                            class="glyphicon glyphicon-remove"> </span> <i class="fas fa-trash"></i>
-                                    </a>
-                                    </a>
+                                    @endif
+
+
                                 @endcan
                                 @can('pessoa_vincular_unidade')
                                     @if ($pessoa->secretaria_id == null)
@@ -280,7 +283,7 @@
                                             <input id="email" type="email" disabled
                                                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                                 name="email" value="{{ $pessoa->users->email }}" required>
-
+                                            <input type="hidden" name="email" value="{{ $pessoa->users->email }}">
                                         </div>
                                         <div class="modal-footer justify-content-between">
                                             <button type="button" class="btn btn-default"

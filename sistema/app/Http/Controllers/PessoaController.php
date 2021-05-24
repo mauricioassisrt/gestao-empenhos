@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pessoa;
 use App\PessoaUnidade;
+use App\Role_user;
 use App\Secretaria;
 use App\Unidade;
 use App\User;
@@ -40,7 +41,7 @@ class PessoaController extends Controller
                 $pessoas = Pessoa::paginate(10);
                 $secretarias = Secretaria::all();
 
-                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias', ));
+                return view('pessoa.index', compact('titulo', 'pessoas', 'secretarias',));
             } else {
                 $titulo = "SEM ACESSO ";
 
@@ -194,10 +195,18 @@ class PessoaController extends Controller
     public function destroy(Pessoa $pessoa)
     {
         try {
+
+
             if (Gate::allows('pessoa_delete')) {
+
+                $role = Role_user::where('user_id', $pessoa->user_id)->first();
+
+                $role->delete();
+
                 Pessoa::find($pessoa->id)->delete();
+
                 User::find($pessoa->user_id)->delete();
-                return redirect()->to('pessoas');
+                return redirect('pessoas')->with('remove', 'Apagado com sucesso !!');
             }
         } catch (\Throwable $th) {
             return view('errors.404');
@@ -290,9 +299,10 @@ class PessoaController extends Controller
         switch ($response) {
             case Password::RESET_LINK_SENT:
 
-                return redirect('/pessoas')->with('status', 'Enviado! !!!');
+                return redirect('/pessoas')->with('status', '  E-mail enviado com sucesso!!  caso não encontrar nenhum e-mail na caixa de entrada, favor verificar no span(lixo eletrônico)!!');
             case Password::INVALID_USER:
-                return redirect('/pessoas')->with('status', 'Erro!!');
+
+                return redirect('/pessoas')->with('status', 'Ocorreu um erro inesperado!!!');
         }
     }
 
@@ -369,7 +379,8 @@ class PessoaController extends Controller
     /*
         Autenticar Usuario
     */
-    public function autenticar($id) {
+    public function autenticar($id)
+    {
 
         //verifico se o usuario possui a permissão de autenticação
         if (Gate::allows('Autentica_user')) {
@@ -388,5 +399,4 @@ class PessoaController extends Controller
             return Redirect::to('dashboard');
         }
     }
-
 }

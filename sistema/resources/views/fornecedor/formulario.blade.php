@@ -38,7 +38,7 @@
             </div>
 
             <div class="custom-control custom-radio col-sm-6">
-                <input class="custom-control-input" type="radio" id="radioCpf" name="juridica" value="0">
+                <input class="custom-control-input" type="radio" id="radioCpf" name="juridica" value="0" required>
                 <label for="radioCpf" class="custom-control-label">Pessoa Fisíca </label>
             </div>
             <div class="custom-control custom-radio col-sm-6">
@@ -77,7 +77,7 @@
                     </div>
                     <div id="cpf" class="col-sm-12" style="display: none">
                         <label>CPF</label>
-                        <input type="text" class="form-control" placeholder="Número do CPF" name="cpf"
+                        <input type="text"  class="form-control" placeholder="Número do CPF" name="cpf"
                             data-inputmask="'mask': ['999.999.999-99']" data-mask="" inputmode="text" @if (Request::is('*/editar/*')) value="{{ $fornecedor->cpf }}" @endif>
                     </div>
                 @endif
@@ -87,11 +87,11 @@
                 <div class="col-sm-6">
                     <label>Telefone </label>
                     <input type="text" data-inputmask="'mask': ['(99)9 9999-9999']" data-mask="" inputmode="text"
-                        name="telefone" class="form-control" id="telefone" @if (Request::is('*/editar/*')) value="{{ $fornecedor->telefone }}" @endif>
+                        name="telefone" required class="form-control" id="telefone" @if (Request::is('*/editar/*')) value="{{ $fornecedor->telefone }}" @endif>
                 </div>
                 <div class="col-sm-6">
                     <label>Email </label>
-                    <input type="text" name="email" class="form-control" @if (Request::is('*/editar/*')) value="{{ $fornecedor->email }}" @endif>
+                    <input type="text" name="email" class="form-control" required @if (Request::is('*/editar/*')) value="{{ $fornecedor->email }}" @endif>
                 </div>
             </div>
             <hr>
