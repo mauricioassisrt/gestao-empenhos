@@ -200,7 +200,7 @@ class RequisicaoController extends Controller
 
             $titulo = "Detalhes da requisição ";
 
-            if ($requisicao->unidades->unidadesPessoa->pessoa->users->id == Auth::user()->id && Gate::allows('minhas_requisicoes')) {
+            if ( Gate::allows('minhas_requisicoes')) {
 
                 $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
                     ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
