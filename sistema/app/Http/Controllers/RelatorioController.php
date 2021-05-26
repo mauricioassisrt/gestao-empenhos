@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Pessoa;
+use App\PessoaUnidade;
 use App\Requisicao;
 use App\RequisicaoProduto;
 use App\Unidade;
@@ -92,17 +94,26 @@ class RelatorioController extends Controller
     {
         $titulo = "Relatório de requisição realizada por unidade ";
         $empresa = Empresa::all();
-
-        if ($requisicao->unidades->unidadesPessoa->pessoa->users->id == Auth::user()->id && Gate::allows('minhas_requisicoes')) {
-
+        $user = Auth::user();
+        $pessoa = Pessoa::where('user_id', $user->id)->first();
+        $pessoaUnidades = PessoaUnidade::where('pessoa_id', $pessoa->id)->get();
+        $contador = 0;
+        foreach ($pessoaUnidades as $unidadesF) {
+            if ($unidadesF->unidade_id == $requisicao->unidade_id) {
+                $contador += 1;
+            }
+        }
+        if ($contador != 0) {
             $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
                 ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
             if ($requisicaoProdutos->isEmpty()) {
                 $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
             }
-            dd('no if');
-            return \PDF::loadView('relatorios.requisicao-resumo')->download('nome-arquivo-pdf-gerado.pdf', compact('requisicaoProdutos', 'requisicao', 'titulo'));
-        } else if (Gate::allows('Edit_requisicao')) {
+
+            return view('relatorios.requisicao-resumo', compact('requisicaoProdutos', 'requisicao', 'titulo', 'empresa', 'pessoaUnidades'));
+        }
+
+        if ($pessoaUnidades->isEmpty() && Gate::allows('Visualizar_relatorios_geral')) {
 
             $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
                 ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
@@ -117,6 +128,8 @@ class RelatorioController extends Controller
 
             // return \PDF::loadView('relatorios.requisicao-resumo')->download('nome-arquivo-pdf-gerado.pdf', );
             return view('relatorios.requisicao-resumo', compact('requisicaoProdutos', 'requisicao', 'titulo', 'empresa'));
+        } else {
+            return redirect('requisicao')->with('status', 'Sem dados para emissão !!! ');
         }
     }
     public function unidade(Request $request)

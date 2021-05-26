@@ -294,7 +294,10 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'Autentica_user',
                 'label' => 'Habilita a autenticação de qualquer usuario cadastrado no sistema  '
             ],
-
+            [
+                'name' => 'Visualizar_relatorios_geral',
+                'label' => 'O usuário consegue visualizar os relatorios finalizados, mesmo que não tenha sido o responsável por realizar a requisição! '
+            ],
 
         );
         foreach ($permissions as $key => $value) {
@@ -840,6 +843,15 @@ class PermissionTableSeeder extends Seeder
             [
                 'permission_id' => '68',
                 'role_id' => '1'
+            ],
+            [
+                'permission_id' => '69',
+                'role_id' => '1'
+
+            ],
+            [
+                'permission_id' => '69',
+                'role_id' => '2'
             ],
         );
         foreach ($permission_roles as $key => $value) {
