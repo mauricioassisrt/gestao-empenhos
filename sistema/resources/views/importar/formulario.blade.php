@@ -43,7 +43,7 @@
             <!-- /.box-header -->
             @if (Request::is('*/editar/*'))
 
-                {!! Form::model($pessoa, ['method' => 'PATCH', 'url' => 'pessoas/update/' . $pessoa->id, 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::model( ['method' => 'PATCH', 'route' => 'importar.insert', 'enctype' => 'multipart/form-data']) !!}
 
             @else
                 <form action="{{ route('importar.insert') }}" method="post" enctype="multipart/form-data">
@@ -57,7 +57,7 @@
                         <label for='arquivo'>
                             <i class="fas fa-upload"></i> Arquivo
                         </label>
-                        <input id='arquivo' type='file' accept="application/xls" name='arquivo' />
+                        <input id='arquivo' type='file' accept="application/xlsx" name='arquivo' />
                         <span id='arquivo_label'></span>
                     </div>
 

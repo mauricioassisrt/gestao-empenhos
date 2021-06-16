@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CategoriaExport;
+use App\Imports\CategoriaImport;
 
 class LicitacaoProdutoController extends Controller
 {
@@ -225,11 +226,10 @@ class LicitacaoProdutoController extends Controller
     {
         try {
 
-            // $titulo = 'Importar licitações ';
-
-            // $file = $request->file('arquivo');
-            // Excel::import(new )
-            // return view('importar.formulario', compact('titulo'));
+            $file = $request->file('arquivo');
+            Excel::import(new CategoriaImport, $file);
+            return back()->with('message', 'Importado com sucesso !!!');
+           // return view('importar.formulario', compact('titulo'));
         } catch (\Throwable $th) {
             return view('errors.404', $th);
         }
