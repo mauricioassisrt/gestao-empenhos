@@ -10,6 +10,8 @@ use App\LicitacaoProdutoProduto;
 use App\Produto;
 use Illuminate\Http\Request;
 use Gate;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CategoriaExport;
 
 class LicitacaoProdutoController extends Controller
 {
@@ -114,7 +116,7 @@ class LicitacaoProdutoController extends Controller
                         $valorIten = ($request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto) * $request->valorUnitario[$key];
 
                         $licitacaoProdutoAtualizar['quantidade_produto'] = $request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto;
-                        $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten ;
+                        $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten;
                         $produtoLicitacao->update($licitacaoProdutoAtualizar);
                     }
                 }
@@ -203,6 +205,45 @@ class LicitacaoProdutoController extends Controller
             } else {
                 return view('errors.404', compact('titulo'));
             }
+        } catch (\Throwable $th) {
+            return view('errors.404', $th);
+        }
+    }
+    /*
+    IMPORT EXCEL
+    */
+    public function importar()
+    {
+        try {
+            $titulo = 'Importar/exportar ';
+            return view('importar.formulario', compact('titulo'));
+        } catch (\Throwable $th) {
+            return view('errors.404', $th);
+        }
+    }
+    public function importarInsert(Request $request)
+    {
+        try {
+
+            // $titulo = 'Importar licitações ';
+
+            // $file = $request->file('arquivo');
+            // Excel::import(new )
+            // return view('importar.formulario', compact('titulo'));
+        } catch (\Throwable $th) {
+            return view('errors.404', $th);
+        }
+    }
+     /*
+    EXPORT  EXCEL
+    */
+    public function exportExcelCategoria(Request $request)
+    {
+        try {
+
+            // $titulo = 'Importar licitações ';
+
+           return Excel::download(new CategoriaExport, 'categoria.xlsx');
         } catch (\Throwable $th) {
             return view('errors.404', $th);
         }

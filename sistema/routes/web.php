@@ -233,3 +233,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('requisicaoComLicitacao/editar/{requisicao}', 'RequisicaoComLicitacaoController@editar');
     Route::post('requisicaoComLicitacao/getLicitacao', 'RequisicaoComLicitacaoController@getLicitacao');
 });
+/*
+    IMPORTAR
+*/
+Route::group(['middleware' => 'web'], function () {
+    Route::get('importar/exportar', 'LicitacaoProdutoController@importar')->name('importar');
+    Route::post('importar/categoria', 'LicitacaoProdutoController@importarInsert')->name('importar.insert');
+    Route::get('export/categoria', 'LicitacaoProdutoController@exportExcelCategoria')->name('export.categoria');
+
+});
+
+
+

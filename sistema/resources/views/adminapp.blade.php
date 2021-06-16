@@ -284,10 +284,13 @@ $empresa = Empresa::all();
                                                 <p>Permissões</p>
                                             </a>
 
-                                            </a>
+
                                         @endcan
 
-
+                                        <a href="{{ route('importar') }}" class="nav-link active">
+                                            <i class="fas fa-check-square nav-icon"></i>
+                                            <p>Importar/exportar </p>
+                                        </a>
                                     </li>
 
                                 </ul>
