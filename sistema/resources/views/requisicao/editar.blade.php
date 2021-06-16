@@ -5,6 +5,10 @@
     <link rel="stylesheet" href=" {{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- toast CSS-->
     <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }}">
+    <!-- SELECT -->
+    <link rel="stylesheet" href=" {{ asset('css/select2.min.css') }}" />
+    <link rel="stylesheet" href=" {{ asset('css/select2-bootstrap4.min.css') }}" />
+
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -182,13 +186,24 @@
                             <div class="col-sm-3">
 
                                 <label>Secretaria </label>
-                                <input type="text" name="secretaria" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->secretaria }}" @endif>
+                                <input disabled type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->unidades->secretaria->nome }}" @endif disabled>
 
                             </div>
                             <div class="col-sm-3">
 
-                                <label>Unidade na qual fez a requisição </label>
-                                <input type="text" name="orgao" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>
+                                <label>Código/Orgão-unidade</label>
+                                <select name="orgao" id="" class="form-control unidade" @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>
+                                    <option  @if (Request::is('*/editar/*')) value="{{ $requisicao->orgao }}" @endif>{{ $requisicao->orgao }}</option>
+                                    @foreach ($unidades as $unidade)
+
+                                        <option value="{{ $unidade->codigo }}/{{ $unidade->nome }}">
+                                            {{ $unidade->codigo }}/{{ $unidade->nome }}
+                                        </option>
+
+
+
+                                    @endforeach
+                                </select>
 
                             </div>
                             <div class="col-sm-6">
@@ -205,12 +220,11 @@
 
                                         <label>Enviar para empenho? </label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status" value="Empenho" @if($requisicao->status == 'Empenho') checked=""@endif>
+                                            <input class="form-check-input" type="radio" name="status" value="Empenho" @if ($requisicao->status == 'Empenho') checked="" @endif>
                                             <label class="form-check-label">Sim</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status" @if($requisicao->status == 'Contabilidade' ) checked=""@endif
-                                                value="Contabilidade">
+                                            <input class="form-check-input" type="radio" name="status" @if ($requisicao->status == 'Contabilidade') checked="" @endif value="Contabilidade">
                                             <label class="form-check-label">Não</label>
                                         </div>
 
@@ -246,11 +260,11 @@
 
                                     <label>Finalizar a requisição? </label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" value="Finalizado"  @if($requisicao->status == 'Finalizado' ) checked=""@endif>
+                                        <input class="form-check-input" type="radio" name="status" value="Finalizado" @if ($requisicao->status == 'Finalizado') checked="" @endif>
                                         <label class="form-check-label">Sim</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" @if($requisicao->status == 'Empenho' ) checked=""@endif value="Empenho">
+                                        <input class="form-check-input" type="radio" name="status" @if ($requisicao->status == 'Empenho') checked="" @endif value="Empenho">
                                         <label class="form-check-label">Não</label>
                                     </div>
 
@@ -268,7 +282,7 @@
                             </div>
                             {!! Form::close() !!}
                         @else
-                        <br>
+                            <br>
                             <div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <h5><i class="icon fas fa-exclamation-triangle"></i> Atenção!</h5>
@@ -302,9 +316,17 @@
         <script src=" {{ asset('js/sweetalert2.all.js') }}"></script>
         <script src=" {{ asset('js/toastr.min.js') }}"></script>
         <!-- FIM TOAST SWEETALERT  -->
+        <!-- SELECT2 -->
+        <script src="{{ asset('js/select2.full.min.js') }}"></script>
 
 
+        <script>
+            // Configuracao select2
+            $('.unidade').select2({
+                placeholder: "Selecione uma unidade "
+            });
 
+        </script>
     @endsection
 
 @endsection

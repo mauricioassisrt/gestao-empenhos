@@ -111,7 +111,7 @@ $empresa = Empresa::all();
                                         </a>
                                     </li>
 
-
+                                    @can('View_LicitacaoProduto')
                                     <li class="nav-item">
                                         <a href="{{ url('requisicaoComLicitacao/cadastrar') }}" class="nav-link active">
                                             <i class="nav-icon fas fa-gavel"></i>
@@ -120,6 +120,8 @@ $empresa = Empresa::all();
                                             </p>
                                         </a>
                                     </li>
+                                    @endcan
+
 
                                     @can('minhas_requisicoes')
                                         <li class="nav-item">
@@ -332,6 +334,8 @@ $empresa = Empresa::all();
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                @can('pessoa_view')
+
                                 <li class="nav-item">
                                     <a href="{{ url('relatorio/requsicao/periodo') }}" class="nav-link active">
                                         <i class="fas fa-calendar-alt nav-icon"></i>
@@ -347,6 +351,8 @@ $empresa = Empresa::all();
                                         <p>Requisições por unidade  </p>
                                     </a>
                                 </li>
+
+                                @endcan
                                 @can('Edit_requisicao')
                                     <li class="nav-item">
 

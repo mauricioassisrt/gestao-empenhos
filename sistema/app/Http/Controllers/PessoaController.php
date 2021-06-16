@@ -95,13 +95,17 @@ class PessoaController extends Controller
                 $objetoPessoa['user_id'] = $new_user->id;
                 /* fim do insere usuario */
                 /* UPLOAD de imagem  */
-                $image = $request->file('foto_pessoa');
-                $dir = "img/pessoa";
-                $extencao = $image->guessClientExtension();
-                $nomeImagem = "pessoa-perfil-" . $request->email . "." . $extencao;
-                $image->move($dir, $nomeImagem);
-                $imageSalvar = $dir . "/" . $nomeImagem;
-                $objetoPessoa['foto_pessoa'] = $imageSalvar;
+
+                if ($request->hasFile('foto_pessoa')) {
+                    $image = $request->file('foto_pessoa');
+                    $dir = "img/pessoa";
+                    $extencao = $image->guessClientExtension();
+                    $nomeImagem = "pessoa-perfil-" . $request->email . "." . $extencao;
+                    $image->move($dir, $nomeImagem);
+                    $imageSalvar = $dir . "/" . $nomeImagem;
+                    $objetoPessoa['foto_pessoa'] = $imageSalvar;
+                }
+
                 //convert data nascimento
                 $objetoPessoa['data_nascimento'] =  date('Y-m-d');
                 /* fim do upload  */
@@ -109,7 +113,7 @@ class PessoaController extends Controller
                 return redirect()->to("users/visualizar/" . $new_user->id);
             }
         } catch (\Throwable $th) {
-            //dd($th);
+            dd($th);
             return view('errors.404');
         }
     }
@@ -137,12 +141,17 @@ class PessoaController extends Controller
 
                     /* fim do insere usuario */
                     /* UPLOAD de imagem  */
-                    $image = $request->file('foto_pessoa');
-                    $dir = "img/pessoa";
-                    $extencao = $image->guessClientExtension();
-                    $nomeImagem = "pessoa-perfil-" . $request->email . "." . $extencao;
-                    $image->move($dir, $nomeImagem);
-                    $imageSalvar = $dir . "/" . $nomeImagem;
+                    $imageSalvar =null;
+                    if ($request->hasFile('foto_pessoa')) {
+                        $image = $request->file('foto_pessoa');
+                        $dir = "img/pessoa";
+                        $extencao = $image->guessClientExtension();
+                        $nomeImagem = "pessoa-perfil-" . $request->email . "." . $extencao;
+                        $image->move($dir, $nomeImagem);
+                        $imageSalvar = $dir . "/" . $nomeImagem;
+                    }
+
+
                     /* fim do upload  */
                     $atualizarPessoa = $request->all();
                     $dataConvertida = date('Y-m-d', strtotime($objetoPessoa['data_nascimento']));
@@ -162,6 +171,7 @@ class PessoaController extends Controller
                 $titulo = 't';
             }
         } catch (\Throwable $th) {
+            dd($th);
             return view('errors.404');
         }
     }

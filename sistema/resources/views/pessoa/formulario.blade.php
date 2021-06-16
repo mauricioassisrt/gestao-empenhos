@@ -35,7 +35,7 @@
 
                     @if (Request::is('*/editar/*'))
                         <img @if (Request::is('*/editar/*')) src="/{{ $pessoa->foto_pessoa }}" @endif
-                            class="brand-image img-circle elevation-3" alt="User Image" width="60px" height="60px">
+                            class="brand-image img-circle elevation-3" alt="Sem foto" width="60px" height="60px">
                     @else
                         @csrf
                         <img src="/../img/empresa/empresa.png " class="brand-image img-circle elevation-3"
@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <label for="exampleInputFile">FOTO </label>
                         <div class="input-group" width="2px">
-                            <input type="file" name="foto_pessoa" id="" required> <br>
+                            <input type="file" name="foto_pessoa" id="" > <br>
                         </div>
                     </div>
                 </div>

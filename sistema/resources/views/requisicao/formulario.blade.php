@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-sm-9">
                         @if (Gate::allows('minhas_requisicoes'))
-                        <label>Unidades vinculadas ao seu perfil  </label>
+                            <label>Unidades vinculadas ao seu perfil </label>
                             <select name="unidade_id" class="form-control unidade" style="width: 100%;">
 
                                 @foreach ($pessoa_unidades as $pessoa_unidade)
@@ -108,7 +108,7 @@
                         @else
 
                             <label>Todas as Unidades </label>
-                            <select name="unidade_id" class="form-control unidade" style="width: 100%;">
+                            <select name="unidade_id" class="form-control unidade" style="width: 100%;" required>
 
                                 @foreach ($unidades as $unidade)
 
@@ -463,6 +463,7 @@
                 });
             });
         });
+
 
     </script>
 

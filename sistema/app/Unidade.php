@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Unidade extends Model
 {
     protected $fillable = [
-        'nome', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cep', 'telefone', 'email', 'secretaria_id'
+        'nome', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cep', 'telefone', 'email', 'secretaria_id','codigo'
      ];
 
      public function secretaria()
