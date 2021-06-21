@@ -122,11 +122,13 @@ class PessoaController extends Controller
     {
         try {
 
-            if (Gate::allows('pessoa_edit')) {
 
-                $usuario = User::findOrFail($request->user_id);
-                if ($usuario->email === $request->email && Hash::check($request->senha_antiga, $usuario->password)) {
-                    $new_user = User::findOrFail($request->user_id);
+
+            $usuario = User::findOrFail($request->user_id);
+            $new_user = User::findOrFail($request->user_id);
+            if ($usuario->email === $request->email && Hash::check($request->senha_antiga, $usuario->password)) {
+                if (Gate::allows('pessoa_edit')) {
+
                     $input = $request->all();
                     $user = array(
                         'remember_token' => $input['_token'],
@@ -141,7 +143,7 @@ class PessoaController extends Controller
 
                     /* fim do insere usuario */
                     /* UPLOAD de imagem  */
-                    $imageSalvar =null;
+                    $imageSalvar = null;
                     if ($request->hasFile('foto_pessoa')) {
                         $image = $request->file('foto_pessoa');
                         $dir = "img/pessoa";
@@ -166,12 +168,11 @@ class PessoaController extends Controller
                     $objetoPessoa->update($atualizarPessoa);
                     return redirect()->to("users/visualizar/" . $new_user->id);
                 } else {
-                    dd('no else');
+                    return redirect()->to("pessoas/editar/" . $new_user->id);
                 }
-                $titulo = 't';
             }
         } catch (\Throwable $th) {
-            dd($th);
+
             return view('errors.404');
         }
     }
@@ -246,7 +247,7 @@ class PessoaController extends Controller
             }
         } catch (\Throwable $th) {
             $titulo = "dsa";
-            return view('errors.404', compact('titulo', 'th'));
+            return view('errors.sem_permissao', compact('titulo', 'th'));
         }
     }
 
