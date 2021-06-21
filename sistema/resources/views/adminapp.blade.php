@@ -288,7 +288,7 @@ $empresa = Empresa::all();
                                         @endcan
 
                                         <a href="{{ route('importar') }}" class="nav-link active">
-                                            <i class="fas fa-check-square nav-icon"></i>
+                                            <i class="fas fa-cloud-upload-alt nav-icon"></i>
                                             <p>Importar/exportar </p>
                                         </a>
                                     </li>

@@ -150,7 +150,7 @@
         </div>
         <div class="card-footer clearfix">
 
-            <a href="{{ url('licitacao/vincular') }}" class="btn btn-primary ">
+            <a href="{{ route('licitacao.vincular.edit',['licitacaoProduto' => $licitacao->id])}}" class="btn btn-primary ">
 
                 <i class="fas fa-arrow-left"></i> Voltar </a>
             @if (Request::is('*/editar/*'))

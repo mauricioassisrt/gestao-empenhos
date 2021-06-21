@@ -55,7 +55,7 @@
                     <div class="row">
                         <div class="col-sm-3 ">
                             <label>Nome completo</label>
-                            <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $pessoa->name }}" @endif required>
+                             <input type="text" name="name" class=" form-control form-control-border" @if (Request::is('*/editar/*')) value="{{ $pessoa->name }}" @endif required>
 
                         </div>
                         <div class="col-sm-3 ">

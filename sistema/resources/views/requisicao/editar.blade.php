@@ -111,10 +111,21 @@
                 <div class="tab-pane fade" id="custom-content-above-profile" role="tabpanel">
                     <br>
                     <div class="row">
+                        @php
+                        $valor_total=0;
+                        $quantidade_total=0;
+
+                        foreach ($requisicaoProdutos as $requisicaoProduto){
+
+                        $valor_total+=$requisicaoProduto->valor_total_iten;
+                        $quantidade_total+=$requisicaoProduto->quantidade_produto;
+
+                        }
+                        @endphp
                         <div class="col-sm-6">
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>{{ $requisicao->total_produtos }}</h3>
+                                    <h3>  {{  $quantidade_total }}</h3>
 
                                     <p> Total de produtos</p>
                                 </div>
@@ -127,7 +138,7 @@
                         <div class="col-sm-6">
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3> R$ {{ $requisicao->valor_final }}</h3>
+                                    <h3> R$ {{number_format($valor_total, 2)  }}</h3>
 
                                     <p>Valor total da requisição</p>
                                 </div>
@@ -143,7 +154,7 @@
                     <div class="card-body table-responsive p-0">
                         <table class="table table-striped" style='background:#fff'>
                             <thead>
-                                <th> Licitação </th>
+                                <th> Licitação Nº </th>
                                 <th> Produto</th>
                                 <th>Valor Unitário do produto/item </th>
                                 <th>Quantidade Solicitada </th>
@@ -158,17 +169,17 @@
                                                 Sem licitação vinculada
                                             @else
 
-                                                {!! $requisicaoProduto->numero_licitacao !!}
+                                            Nº {!! $requisicaoProduto->numero_licitacao !!}
                                             @endif
 
                                         </td>
                                         <td>{!! $requisicaoProduto->produtos->nome !!}</td>
 
-                                        <td>R${!! $requisicaoProduto->valor_total_iten / $requisicaoProduto->quantidade_produto !!}</td>
+                                        <td>R${{ number_format($requisicaoProduto->valor_total_iten / $requisicaoProduto->quantidade_produto , 2)  }}  </td>
 
                                         <td>{!! $requisicaoProduto->quantidade_produto !!}</td>
 
-                                        <td>R${!! $requisicaoProduto->valor_total_iten !!}</td>
+                                        <td>R${!!  number_format( $requisicaoProduto->valor_total_iten,  2) !!}</td>
 
                                     </tr>
                                 @endforeach

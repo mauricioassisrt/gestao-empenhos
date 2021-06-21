@@ -80,7 +80,7 @@ class LicitacaoController extends Controller
             if (Gate::allows('Delete_licitacao')) {
                 $licitacao = Licitacao::findOrFail($id);
                 $licitacao->delete();
-                return redirect('licitacao.vincular');
+                return redirect('licitacao/vincular');
             } else {
                 return view('errors.sem_permissao');
             }

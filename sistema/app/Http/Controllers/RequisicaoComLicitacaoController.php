@@ -72,17 +72,17 @@ class RequisicaoComLicitacaoController extends Controller
     {
         if (Gate::allows('Insert_requisicao')) {
 
-            $valor_final = 0;
-            $total_produtos = 0;
+            // $valor_final = 0;
+            // $total_produtos = 0;
 
-            foreach ($request->produto_id as $key => $value) {
-               // $produto = Produto::findOrfail($value);
-                $valor_final += $request->quantidadeItens[$key] * $request->valor_unitario[$key];
-                $total_produtos += $request->quantidadeItens[$key];
-            }
+            // foreach ($request->produto_id as $key => $value) {
+            //    // $produto = Produto::findOrfail($value);
+            //     $valor_final += $request->quantidadeItens[$key] * $request->valor_unitario[$key];
+            //     $total_produtos += $request->quantidadeItens[$key];
+            // }
 
-            $request['valor_final'] = $valor_final;
-            $request['total_produtos'] =   $total_produtos;
+            // $request['valor_final'] = $valor_final;
+            // $request['total_produtos'] =   $total_produtos;
             $request['status'] = "Enviado";
 
             $id = Requisicao::create($request->all())->id;
