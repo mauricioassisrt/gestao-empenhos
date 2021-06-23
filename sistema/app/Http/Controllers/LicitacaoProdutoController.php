@@ -115,20 +115,7 @@ class LicitacaoProdutoController extends Controller
                     }
                 }
 
-                // $quantidade = 0;
-                // $valor_total = 0;
 
-                // $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $request->licitacao_id)->get();
-                // $licitacao = Licitacao::findOrFail($request->licitacao_id);
-                // foreach ($licitacaoProdutos as $licitacaoProduto) {
-                //     $quantidade += $licitacaoProduto->quantidade_produto;
-                //     $valor_total += $licitacaoProduto->valor_total_iten;
-                // }
-
-                // $licitacaoAtualizar['valor_final'] = $valor_total;
-                // $licitacaoAtualizar['total_produtos'] =  $quantidade;
-
-                // $licitacao->update($licitacaoAtualizar);
 
                 return redirect('licitacao/vincular/cadastrar/' . $request->licitacao_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
             } else {
@@ -143,16 +130,28 @@ class LicitacaoProdutoController extends Controller
     public function editar(Licitacao $licitacaoProduto)
     {
 
+
         try {
             if (Gate::allows('Edit_LicitacaoProduto')) {
-
+                $valor_total = 0;
+                $quantidade_total = 0;
                 $titulo = "Total de produtos nesta licitação  ";
+                //pega os itens da licitação e pagina
                 $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->paginate(10);
-                return view('licitacaoproduto.editar', compact('licitacaoProdutos', 'titulo', 'licitacaoProduto'));
+                //pega os itens da licitação para fazer o calculo matematico
+                $licitacaoContador = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->get();
+                foreach ($licitacaoContador as $item) {
+
+                    $valor_total += $item->valor_total_iten;
+                    $quantidade_total += $item->quantidade_produto;
+                }
+
+                return view('licitacaoproduto.editar', compact('licitacaoProdutos', 'titulo', 'licitacaoProduto',  'valor_total', 'quantidade_total'));
             } else {
                 return view('errors.sem_permissao');
             }
         } catch (\Throwable $th) {
+
             return view('errors.sem_permissao');
         }
     }
@@ -236,5 +235,4 @@ class LicitacaoProdutoController extends Controller
             return view('errors.404', $th);
         }
     }
-
 }

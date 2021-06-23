@@ -78,7 +78,7 @@
                             <label for='arquivo'>
                                 <i class="fas fa-upload"></i> Selecionar arquivo
                             </label>
-                            <input id='arquivo' type='file' accept="application/xlsx" name='arquivo' />
+                            <input id='arquivo' type='file' accept="application/xlsx" name='arquivo' required/>
                             <span id='arquivo_label'></span>
 
                             <a href="{{ route('export.categoria') }}">
@@ -132,7 +132,7 @@
                             <label for='produto'>
                                 <i class="fas fa-upload"></i> Selecionar arquivo
                             </label>
-                            <input id='produto' type='file' accept="application/xlsx" name='produto' />
+                            <input id='produto' type='file' accept="application/xlsx" name='produto' required />
                             <span id='produto_label'></span>
 
                             <a href="{{ route('export.produto') }}">
@@ -188,7 +188,7 @@
                             <label for='licitacao'>
                                 <i class="fas fa-upload"></i> Selecionar arquivo
                             </label>
-                            <input id='licitacao' type='file' accept="application/xlsx" name='licitacao' />
+                            <input id='licitacao' type='file' accept="application/xlsx" name='licitacao' required />
                             <span id='licitacao_label'></span>
 
                             <a href="{{ route('export.licitacao') }}">
@@ -263,7 +263,7 @@
                             <label for='fornecedores'>
                                 <i class="fas fa-upload"></i> Selecionar arquivo
                             </label>
-                            <input id='fornecedores' type='file' accept="application/xlsx" name='fornecedores' />
+                            <input id='fornecedores' type='file' accept="application/xlsx" name='fornecedores' required/>
                             <span id='fornecedores'></span>
 
                             <a href="{{ route('export.fornecedores') }}">
@@ -322,7 +322,7 @@
                             <label for='licitacao_itens'>
                                 <i class="fas fa-upload"></i> Selecionar arquivo
                             </label>
-                            <input id='licitacao_itens' type='file' accept="application/xlsx" name='licitacao_itens' />
+                            <input id='licitacao_itens' type='file' accept="application/xlsx" name='licitacao_itens' required />
                             <span id='licitacao_itens_label'></span>
 
                             <a href="{{ route('export.licitacao.itens') }}">

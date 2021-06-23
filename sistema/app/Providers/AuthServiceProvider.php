@@ -36,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
                 dd( $user->hasRole($permission->roles));
             });
         }
+
     }
 
     protected function getPermissions()

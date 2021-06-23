@@ -3,6 +3,7 @@
 use RealRashid\SweetAlert\Facades\Alert;
 
 use Illuminate\Support\Facades\Auth;
+
 /*
     rotas autenticadas
 */
@@ -56,7 +57,7 @@ Route::get('users/ordenar/desc/{ordenar}', 'UsersController@ordenar_desc');
 */
 Route::get('acl/roles', 'Permissions_rolesController@roles');
 Route::get('acl/permissions', 'Permissions_rolesController@permissions');
-Route::get('acl/role_view/{role}', 'Permissions_rolesController@view_role');
+Route::get('acl/role_view/{role}', 'Permissions_ rolesController@view_role');
 Route::get('acl/role_cadastrar', 'Permissions_rolesController@cadastrar_role')->name('acl/role_cadastrar');
 Route::get('acl/permission_cadastrar', 'Permissions_rolesController@cadastrar_permission');
 Route::post('acl/role_insert', 'Permissions_rolesController@insert_role');

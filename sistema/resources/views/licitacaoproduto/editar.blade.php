@@ -119,24 +119,14 @@
                             </div>
 
                     @else
-                        @php
-                        $valor_total=0;
-                        $quantidade_total=0;
 
-                        foreach ($licitacaoProdutos as $licitacaoProduto){
-
-                        $valor_total+=$licitacaoProduto->valor_total_iten;
-                        $quantidade_total+=$licitacaoProduto->quantidade_produto;
-
-                        }
-                        @endphp
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="small-box bg-info">
                                     <div class="inner">
                                         <h3>
 
-                                            {{  $quantidade_total }}
+                                            {{number_format($quantidade_total, 0, '', '.') }}
                                         </h3>
 
                                         <p> Total de produtos</p>
@@ -150,7 +140,7 @@
                             <div class="col-sm-6">
                                 <div class="small-box bg-success">
                                     <div class="inner">
-                                        <h3> R$ {{number_format($valor_total, 2)  }}</h3>
+                                        <h3> R$ {{number_format($valor_total, 2, ',', '.')  }}</h3>
 
                                         <p>Valor total da requisição</p>
                                     </div>
@@ -164,7 +154,7 @@
 
 
                         <div class="card-body table-responsive p-0">
-                            <a href="{{ route('licitacao.vincular.create',['licitacao' => $licitacaoProduto->licitacao_id]) }}" class="btn btn-primary float-left">
+                            <a href="{{ route('licitacao.vincular.create',['licitacao' => $licitacaoProduto->id]) }}" class="btn btn-primary float-left">
                                 <i class="fas fa-plus"></i> Adicionar  </a>
                             <table class="table table-striped" style='background:#fff'>
                                 <thead>
@@ -243,6 +233,8 @@
 
                                 </tbody>
                             </table>
+                            <hr>
+                            {{ $licitacaoProdutos->links() }}
                         </div>
                     @endif
                 </div>
@@ -253,7 +245,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            {{ $licitacaoProdutos->links() }}
+
             <a href="{{ url('licitacao/vincular') }}" class="btn btn-primary">
 
                 <i class="fas fa-arrow-left"></i> Voltar </a>

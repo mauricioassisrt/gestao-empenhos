@@ -174,7 +174,7 @@
                         class=" fas fa-pen-alt"></i> Resumo da requisição </button> --}}
 
                 <a href="" class="btn btn-success " data-toggle="modal" data-target="#modal-confirmar" id="resumo"
-                    style="display:none"><span class="glyphicon glyphicon-remove"><i class=" fas fa-pen-alt"></i>  Finalizar Licitação
+                    style="display:none"><span class="glyphicon glyphicon-remove"><i class=" fas fa-plus"></i>  Adicionar
                          </a>
 
 
@@ -188,7 +188,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h4>Tem certeza que deseja finalizar a requisição ?!
+                                <h4>Tem certeza que deseja adicionar os itens a licitação  ?!
                                 </h4>
                             </div>
                             <div class="modal-footer justify-content-between">
@@ -330,7 +330,7 @@
             });
             //cria o cabeçalho da pagina
             listaRequisicao =
-                '    <thead>    <th>Produto </th> <th>Valor unitario </th><th>Quantidade </th></thead></thead>';
+                '    <thead>    <th>Produto </th> <th>Valor unitario </th><th>Quantidade Uni/KG</th></thead></thead>';
 
             //add as linhas na tabela
             $.each(listaProdutosNova, function(key, value) {

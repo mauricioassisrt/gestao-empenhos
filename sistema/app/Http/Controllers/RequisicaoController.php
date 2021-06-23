@@ -180,7 +180,8 @@ class RequisicaoController extends Controller
                 }
 
 
-                return redirect('requisicao');
+                return redirect('requisicao')->with('status', 'Requisição adicionada com sucesso!');
+
             } else {
                 return view('errors.sem_permissao');
             }
