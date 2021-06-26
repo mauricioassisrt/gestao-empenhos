@@ -208,7 +208,7 @@ $empresa = Empresa::all();
 
                     @endcan
 
-                    @can('View_categoria')
+                    @can('view_menu_cadastro')
                     <li class="nav-item has-treeview menu-close">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-edit"></i>
@@ -217,6 +217,8 @@ $empresa = Empresa::all();
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+
+
 
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
@@ -271,12 +273,13 @@ $empresa = Empresa::all();
                                 </a>
                                 @endcan
 
-
+                                @can('View_role')
 
                                 <a href="{{ route('importar') }}" class="nav-link active">
                                     <i class="fas fa-cloud-upload-alt nav-icon"></i>
                                     <p>Importar/exportar </p>
                                 </a>
+                                @endcan
                             </li>
 
                         </ul>

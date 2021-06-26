@@ -18,4 +18,8 @@ class Unidade extends Model
      {
          return $this->belongsTo(PessoaUnidade::class, 'id' );
      }
+     public function pessoaUnidades()
+     {
+         return $this->hasMany('App\PessoaUnidade');
+     }
 }

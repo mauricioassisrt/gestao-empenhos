@@ -181,7 +181,6 @@ class RequisicaoController extends Controller
 
 
                 return redirect('requisicao')->with('status', 'Requisição adicionada com sucesso!');
-
             } else {
                 return view('errors.sem_permissao');
             }
@@ -195,11 +194,14 @@ class RequisicaoController extends Controller
     {
 
         try {
+            $valor_total = 0;
+            $quantidade_total = 0;
 
             $titulo = "Detalhes da requisição ";
             $unidades = Unidade::where('secretaria_id', $requisicao->unidades->secretaria->id)->get();
             $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)
                 ->join('licitacaos', 'licitacaos.id', '=', 'licitacao_produto_id')->get();
+
             /*
                 Caso a requisição não possua licitação vinculada entra no if
             */
@@ -207,10 +209,29 @@ class RequisicaoController extends Controller
                 $requisicaoProdutos = RequisicaoProduto::where('requisicao_id', $requisicao->id)->get();
             }
 
-            if (Gate::allows('minhas_requisicoes')) {
-                return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo', 'unidades'));
+            //CALCULOS MATEMATICOS PARA EXIBIR NO FRONT
+            foreach ($requisicaoProdutos  as $item) {
+                $valor_total += $item->valor_total_iten;
+                $quantidade_total += $item->quantidade_produto;
+            }
+
+            $users = Auth::user();
+            //verifica se a consulta eloquent é null
+            if ($requisicao->unidades->pessoaUnidades->first() != null) {
+                //verifica se a requisicao e o usuario logado tem relação
+                if (Gate::allows('minhas_requisicoes') && $users->pessoas->first()->id ==  $requisicao->unidades->pessoaUnidades->first()->pessoa_id) {
+
+                    return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo', 'unidades', 'valor_total', 'quantidade_total'));
+                    // se tem permissão de edit é pq é um adm do sistema ou contabilidade
+                } else if (Gate::allows('Edit_requisicao')) {
+                    return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo', 'unidades', 'valor_total', 'quantidade_total'));
+                } else {
+                    return view('errors.sem_permissao');
+                }
+                //caso a consulta seja null no if porém o user logado é admin ou contabilidade
             } else if (Gate::allows('Edit_requisicao')) {
-                return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo', 'unidades'));
+
+                return view('requisicao.editar', compact('requisicaoProdutos', 'requisicao', 'titulo', 'unidades', 'valor_total', 'quantidade_total'));
             } else {
                 return view('errors.sem_permissao');
             }
