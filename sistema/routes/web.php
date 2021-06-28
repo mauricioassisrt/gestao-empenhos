@@ -3,6 +3,7 @@
 use RealRashid\SweetAlert\Facades\Alert;
 
 use Illuminate\Support\Facades\Auth;
+
 /*
     rotas autenticadas
 */
@@ -205,6 +206,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('licitacao/vincular/cadastrar/{licitacao}', 'LicitacaoProdutoController@cadastrar')->name('licitacao.vincular.create');
     Route::post('licitacao/vincular/novo', 'LicitacaoProdutoController@insert')->name('licitacao.vincular.insert');
     Route::get('licitacao/vincular/editar/{licitacaoProduto}', 'LicitacaoProdutoController@editar')->name('licitacao.vincular.edit');
+    Route::post('licitacao/vincular/editar/atualizar/{licitacaoProduto}', 'LicitacaoProdutoController@atualizarLicitacaoProduto');
     Route::patch('licitacao/vincular/update/{id}', 'LicitacaoProdutoController@update')->name('licitacao.vincular.update');
     Route::get('licitacao/vincular/deletar/{licitacao}', 'LicitacaoProdutoController@deletar')->name('licitacao.vincular.delete');
     Route::get('licitacao/vincular/visualizar/{licitacao/vincular}', 'LicitacaoProdutoController@view')->name('licitacao.vincular.view');
@@ -232,4 +234,20 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('requisicaoComLicitacao/insert', 'RequisicaoComLicitacaoController@insert');
     Route::get('requisicaoComLicitacao/editar/{requisicao}', 'RequisicaoComLicitacaoController@editar');
     Route::post('requisicaoComLicitacao/getLicitacao', 'RequisicaoComLicitacaoController@getLicitacao');
+});
+/*
+    IMPORTAR
+*/
+Route::group(['middleware' => 'web'], function () {
+    Route::get('importar/exportar', 'ExportImportExcelController@importar')->name('importar');
+    Route::post('importar/categoria', 'ExportImportExcelController@importarInsert')->name('importar.insert');
+    Route::post('importar/produto', 'ExportImportExcelController@importarProdutos')->name('importar.insert.produto');
+    Route::post('importar/licitacao', 'ExportImportExcelController@importarLicitacao')->name('importar.insert.licitacao');
+    Route::post('importar/licitacao/itens', 'ExportImportExcelController@importarLicitacaoItens')->name('importar.insert.licitacao.itens');
+    Route::post('importar/fornecedores', 'ExportImportExcelController@importarFornecedores')->name('importar.insert.fornecedores');
+    Route::get('export/categoria', 'ExportImportExcelController@exportExcelCategoria')->name('export.categoria');
+    Route::get('export/produtos', 'ExportImportExcelController@exportProdutosCategoria')->name('export.produto');
+    Route::get('export/licitacao', 'ExportImportExcelController@exportLicitacao')->name('export.licitacao');
+    Route::get('export/licitacao/itens', 'ExportImportExcelController@exportLicitacaoItens')->name('export.licitacao.itens');
+    Route::get('export/fornecedores', 'ExportImportExcelController@exportFornecedores')->name('export.fornecedores');
 });

@@ -60,13 +60,18 @@
                             @if (Request::is('*/editar/*')) value="{{ $unidade->nome }}" @endif required>
 
                     </div>
+                    <div class="col-sm-3 ">
+                        <label>Código unidade </label>
+                        <input type="number" class="form-control" id="codigo" placeholder="Digite o número desejado" name="codigo"
+                            @if (Request::is('*/editar/*')) value="{{ $unidade->codigo }}" @endif >
 
-                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-2">
                         <label>Contato </label>
                         <input type="text" class="form-control" id="telefone" placeholder="Telefone de contato "
                             name="telefone" @if (Request::is('*/editar/*')) value="{{ $unidade->telefone }}" @endif required>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <label>Email </label>
                         <input type="text" class="form-control" id="email" placeholder="Digite o email" name="email" @if (Request::is('*/editar/*')) value="{{ $unidade->email }}" @endif required>
                     </div>

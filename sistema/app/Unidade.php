@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Unidade extends Model
 {
     protected $fillable = [
-        'nome', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cep', 'telefone', 'email', 'secretaria_id'
+        'nome', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cep', 'telefone', 'email', 'secretaria_id','codigo'
      ];
 
      public function secretaria()
@@ -17,5 +17,9 @@ class Unidade extends Model
      public function unidadesPessoa()
      {
          return $this->belongsTo(PessoaUnidade::class, 'id' );
+     }
+     public function pessoaUnidades()
+     {
+         return $this->hasMany('App\PessoaUnidade');
      }
 }

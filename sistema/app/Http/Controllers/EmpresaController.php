@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
-use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Http\Request;
+
 class EmpresaController extends Controller
 {
     public function __construct()
@@ -23,12 +24,13 @@ class EmpresaController extends Controller
             } else {
                 $titulo = "SEM ACESSO ";
 
-                return view('errors.404', compact( 'titulo'));
+                return view('errors.404', compact('titulo'));
             }
         } catch (\Throwable $th) {
-            return view('errors.404', compact( 'titulo'));
+            return view('errors.404', compact('titulo'));
         }
     }
+
     public function atualizar(Request $request)
     {
         try {
@@ -37,27 +39,27 @@ class EmpresaController extends Controller
             $titulo = "Dados da empresa ";
 
 
-        if ($request->hasFile('foto_input')) {
-            $image = $request->file('foto_input');
+            if ($request->hasFile('foto_input')) {
+                $image = $request->file('foto_input');
 
-            $dir = "img/empresa";
-            $extencao = $image->guessClientExtension();
-            $nomeImagem = "empresa" ."." . $extencao;
-            $image->move($dir, $nomeImagem);
-            $imageSalvar = $dir . "/" . $nomeImagem;
+                $dir = "img/empresa";
+                $extencao = $image->guessClientExtension();
+                $nomeImagem = "empresa" . "." . $extencao;
+                $image->move($dir, $nomeImagem);
+                $imageSalvar = $dir . "/" . $nomeImagem;
 
-            $empresa->foto_caminho = $imageSalvar;
+                $empresa->foto_caminho = $imageSalvar;
 
-            $empresa->update($request->all());
+                $empresa->update($request->all());
 
-         return redirect('empresa');
+                return redirect('empresa');
 
-        }
+            }
 
         } catch (\Throwable $th) {
             $titulo = "SEM ACESSO ";
             dd($th);
-            return view('errors.404', compact( 'titulo'));
+            return view('errors.404', compact('titulo'));
         }
     }
 }

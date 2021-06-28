@@ -10,6 +10,12 @@ use App\LicitacaoProdutoProduto;
 use App\Produto;
 use Illuminate\Http\Request;
 use Gate;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CategoriaExport;
+use App\Exports\LicitacaoExport;
+use App\Exports\ProdutoExport;
+use App\Imports\CategoriaImport;
+use App\Imports\ProdutoImport;
 
 class LicitacaoProdutoController extends Controller
 {
@@ -50,24 +56,11 @@ class LicitacaoProdutoController extends Controller
     {
 
         try {
+
             if (Gate::allows('Insert_LicitacaoProduto')) {
 
-                $valor_final = 0;
-                $total_produtos = 0;
-                $licitacaoProduto = Licitacao::findOrFail($request->licitacao_id);
 
-                foreach ($request->produto_id as $key => $value) {
-                    //$produto = Produto::findOrfail($value);
-                    $valor_final += $request->quantidadeItens[$key] * $request->valorUnitario[$key];
-                    $total_produtos += $request->quantidadeItens[$key];
-                }
-
-                $request['valor_final'] = $valor_final + $licitacaoProduto->valor_final;
-                $request['total_produtos'] =   $total_produtos + $licitacaoProduto->total_produtos;
-
-                //verificar o produto inserido se já existe e inserir ou atualizar a quantidade
-
-                $licitacaoProduto->update($request->all());
+                // //verificar o produto inserido se já existe e inserir ou atualizar a quantidade
 
                 $licitacaoProdutoProduto = new LicitacaoProduto();
 
@@ -96,9 +89,11 @@ class LicitacaoProdutoController extends Controller
                         */
                     } else if ($produtoLicitacao->fornecedor_id != $request->fornecedor_id) {
 
-                        $valorIten = $request->quantidadeItens[$key] * $request->valorUnitario[$key];
+                        $valorIten = ($request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto) * $request->valorUnitario[$key];
+
                         $licitacaoProdutoProduto->quantidade_produto = $request->quantidadeItens[$key];
                         $licitacaoProdutoProduto->valor_total_iten = $valorIten;
+
                         $licitacaoProdutoProduto->licitacao_id = $request->licitacao_id;
                         $licitacaoProdutoProduto->produto_id = $request->produto_id[$key];
                         $licitacaoProdutoProduto->fornecedor_id = $request->fornecedor_id;
@@ -108,16 +103,19 @@ class LicitacaoProdutoController extends Controller
                          * Caso a consulta produtoLicitacao não seja null e o fornecedor vindo da view seja igual o do banco, dai faz update
                         */
                     } else {
+                        // dd('no else ');
                         /*
                             obtem o valor vindo do form e atualiza
                         */
                         $valorIten = ($request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto) * $request->valorUnitario[$key];
 
                         $licitacaoProdutoAtualizar['quantidade_produto'] = $request->quantidadeItens[$key] + $produtoLicitacao->quantidade_produto;
-                        $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten ;
+                        $licitacaoProdutoAtualizar['valor_total_iten'] = $valorIten;
                         $produtoLicitacao->update($licitacaoProdutoAtualizar);
                     }
                 }
+
+
 
                 return redirect('licitacao/vincular/cadastrar/' . $request->licitacao_id)->with('status', 'Fornecedor e produtos vinculado a licitação!');
             } else {
@@ -132,16 +130,28 @@ class LicitacaoProdutoController extends Controller
     public function editar(Licitacao $licitacaoProduto)
     {
 
+
         try {
             if (Gate::allows('Edit_LicitacaoProduto')) {
-
+                $valor_total = 0;
+                $quantidade_total = 0;
                 $titulo = "Total de produtos nesta licitação  ";
+                //pega os itens da licitação e pagina
                 $licitacaoProdutos = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->paginate(10);
-                return view('licitacaoproduto.editar', compact('licitacaoProdutos', 'titulo', 'licitacaoProduto'));
+                //pega os itens da licitação para fazer o calculo matematico
+                $licitacaoContador = LicitacaoProduto::where('licitacao_id', $licitacaoProduto->id)->get();
+                foreach ($licitacaoContador as $item) {
+
+                    $valor_total += $item->valor_total_iten;
+                    $quantidade_total += $item->quantidade_produto;
+                }
+
+                return view('licitacaoproduto.editar', compact('licitacaoProdutos', 'titulo', 'licitacaoProduto',  'valor_total', 'quantidade_total'));
             } else {
                 return view('errors.sem_permissao');
             }
         } catch (\Throwable $th) {
+
             return view('errors.sem_permissao');
         }
     }
@@ -149,16 +159,34 @@ class LicitacaoProdutoController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (Gate::allows('Edit_LicitacaoProduto')) {
-            $LicitacaoProduto = LicitacaoProduto::findOrFail($id);
-            $update =  $LicitacaoProduto->update($request->all());
-            return redirect('licitacaoproduto');
-        } else {
-            return view('errors.sem_permissao');
+        try {
+            if (Gate::allows('Edit_LicitacaoProduto')) {
+                $LicitacaoProduto = LicitacaoProduto::findOrFail($id);
+                $update =  $LicitacaoProduto->update($request->all());
+                return redirect('licitacaoproduto');
+            } else {
+                return view('errors.sem_permissao');
+            }
+        } catch (\Throwable $th) {
+            dd($th);
         }
     }
 
+    public function atualizarLicitacaoProduto(Request $request)
+    {
 
+        try {
+
+            $LicitacaoProduto = LicitacaoProduto::findOrFail($request->licitacao_item);
+            $LicitacaoProduto['quantidade_produto'] = $request->quantidade_produto;
+            $LicitacaoProduto['valor_total_iten'] = $request->quantidade_produto * $request->valor_total_iten;
+
+            $LicitacaoProduto->save();
+            return back()->with('message', 'Atualizado com sucesso ');
+        } catch (\Throwable $th) {
+            return view('errors.404', $th);
+        }
+    }
     public function deletar(Licitacao $licitacao)
     {
         try {
