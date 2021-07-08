@@ -21,6 +21,7 @@ class RequisicaoComLicitacaoController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function cadastrar()
     {
 
@@ -53,8 +54,8 @@ class RequisicaoComLicitacaoController extends Controller
     {
         //consulta inner join categoria licitacao_produtos
         $produto = LicitacaoProduto::where('licitacao_id', $request->licitacao_id)
-        ->join('produtos' , 'produtos.id' , '=','produto_id')
-        ->join('categorias' , 'produtos.categoria_id' , '=','categorias.id')->get();
+            ->join('produtos', 'produtos.id', '=', 'produto_id')
+            ->join('categorias', 'produtos.categoria_id', '=', 'categorias.id')->get();
         $collection = collect($produto);
 
         $produto = $collection->unique('produto_id');
@@ -70,50 +71,54 @@ class RequisicaoComLicitacaoController extends Controller
 
     public function insert(Request $request)
     {
-        if (Gate::allows('Insert_requisicao')) {
+        try {
+            if (Gate::allows('Insert_requisicao')) {
 
-            // $valor_final = 0;
-            // $total_produtos = 0;
+                // $valor_final = 0;
+                // $total_produtos = 0;
 
-            // foreach ($request->produto_id as $key => $value) {
-            //    // $produto = Produto::findOrfail($value);
-            //     $valor_final += $request->quantidadeItens[$key] * $request->valor_unitario[$key];
-            //     $total_produtos += $request->quantidadeItens[$key];
-            // }
+                // foreach ($request->produto_id as $key => $value) {
+                //    // $produto = Produto::findOrfail($value);
+                //     $valor_final += $request->quantidadeItens[$key] * $request->valor_unitario[$key];
+                //     $total_produtos += $request->quantidadeItens[$key];
+                // }
 
-            // $request['valor_final'] = $valor_final;
-            // $request['total_produtos'] =   $total_produtos;
-            $request['status'] = "Enviado";
+                // $request['valor_final'] = $valor_final;
+                // $request['total_produtos'] =   $total_produtos;
+                $request['status'] = "Enviado";
 
-            $id = Requisicao::create($request->all())->id;
-            $requisicaoAno = $id . '-' . $year = date('Y');
-            $requisicao = Requisicao::findOrFail($id);
+                $id = Requisicao::create($request->all())->id;
+                $requisicaoAno = $id . '-' . $year = date('Y');
+                $requisicao = Requisicao::findOrFail($id);
 
-            $reqArray = array(
-                'requisicao_ano' => $requisicaoAno,
+                $reqArray = array(
+                    'requisicao_ano' => $requisicaoAno,
 
-            );
-            $requisicao->update($reqArray);
-            $requisicaoProduto = new RequisicaoProduto();
-            foreach ($request->produto_id as $key => $value) {
-               // $produto = Produto::findOrfail($value);
-                $valorIten = $request->quantidadeItens[$key] * $request->valor_unitario[$key];
-                $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
-                $requisicaoProduto->valor_total_iten = $valorIten;
-                $requisicaoProduto->requisicao_id = $id;
-                $requisicaoProduto->produto_id = $request->produto_id[$key];
-                $requisicaoProduto->licitacao_produto_id = $request->licitacao_id[$key];
-                $requisicaoProduto->save();
+                );
+                $requisicao->update($reqArray);
                 $requisicaoProduto = new RequisicaoProduto();
+                foreach ($request->produto_id as $key => $value) {
+                    // $produto = Produto::findOrfail($value);
+                    $valorIten = $request->quantidadeItens[$key] * $request->valor_unitario[$key];
+                    $requisicaoProduto->quantidade_produto = $request->quantidadeItens[$key];
+                    $requisicaoProduto->valor_total_iten = $valorIten;
+                    $requisicaoProduto->requisicao_id = $id;
+                    $requisicaoProduto->produto_id = $request->produto_id[$key];
+                    $requisicaoProduto->licitacao_produto_id = $request->licitacao_id[$key];
+                    $requisicaoProduto->save();
+                    $requisicaoProduto = new RequisicaoProduto();
+                }
+
+
+                return redirect('requisicao');
+            } else {
+                return view('errors.sem_permissao');
             }
-
-
-            return redirect('requisicao');
-        } else {
-            return view('errors.sem_permissao');
+        } catch (\Throwable $th) {
+            return view('errors.404', $th);
         }
-    }
 
+    }
 
 
     public function search(Request $request)
